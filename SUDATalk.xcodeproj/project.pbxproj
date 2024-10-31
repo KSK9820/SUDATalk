@@ -8,7 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		535077292CD2311500213CBC /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 535077282CD2311500213CBC /* .swiftlint.yml */; };
+		53616DD92CD35D49005D02E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53616DD82CD35D49005D02E9 /* User.swift */; };
+		53616DDB2CD35D61005D02E9 /* UserNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53616DDA2CD35D61005D02E9 /* UserNetworkManager.swift */; };
 		53C01D252CD246FE00D35B95 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 53C01D242CD246FE00D35B95 /* RealmSwift */; };
+		53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D2A2CD249A700D35B95 /* HTTPMethod.swift */; };
+		53C01D2D2CD24A1E00D35B95 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D2C2CD24A1E00D35B95 /* NetworkError.swift */; };
+		53C01D2F2CD24C3900D35B95 /* EndPointConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D2E2CD24C3900D35B95 /* EndPointConfigurable.swift */; };
+		53C01D312CD24FFE00D35B95 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D302CD24FFE00D35B95 /* EndPoint.swift */; };
+		53C01D332CD25BBE00D35B95 /* URLRequestConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D322CD25BBE00D35B95 /* URLRequestConvertible.swift */; };
 		53D0C8222CD213EB00034179 /* SUDATalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C8212CD213EB00034179 /* SUDATalkApp.swift */; };
 		53D0C8242CD213EB00034179 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D0C8232CD213EB00034179 /* ContentView.swift */; };
 		53D0C8262CD213ED00034179 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53D0C8252CD213ED00034179 /* Assets.xcassets */; };
@@ -18,6 +25,13 @@
 
 /* Begin PBXFileReference section */
 		535077282CD2311500213CBC /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		53616DD82CD35D49005D02E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		53616DDA2CD35D61005D02E9 /* UserNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetworkManager.swift; sourceTree = "<group>"; };
+		53C01D2A2CD249A700D35B95 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		53C01D2C2CD24A1E00D35B95 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		53C01D2E2CD24C3900D35B95 /* EndPointConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointConfigurable.swift; sourceTree = "<group>"; };
+		53C01D302CD24FFE00D35B95 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		53C01D322CD25BBE00D35B95 /* URLRequestConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestConvertible.swift; sourceTree = "<group>"; };
 		53D0C81E2CD213EB00034179 /* SUDATalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SUDATalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D0C8212CD213EB00034179 /* SUDATalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUDATalkApp.swift; sourceTree = "<group>"; };
 		53D0C8232CD213EB00034179 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -40,6 +54,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53616DD72CD35D3E005D02E9 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				53616DDC2CD36D02005D02E9 /* DTO */,
+				53616DD82CD35D49005D02E9 /* User.swift */,
+				53616DDA2CD35D61005D02E9 /* UserNetworkManager.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		53616DDC2CD36D02005D02E9 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		53C01D262CD248EC00D35B95 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				53616DD72CD35D3E005D02E9 /* User */,
+				53C01D292CD2499A00D35B95 /* Enum */,
+				53C01D282CD248F300D35B95 /* Implement */,
+				53C01D272CD248F000D35B95 /* HTTPRequestBuilder */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		53C01D272CD248F000D35B95 /* HTTPRequestBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				53C01D2E2CD24C3900D35B95 /* EndPointConfigurable.swift */,
+				53C01D322CD25BBE00D35B95 /* URLRequestConvertible.swift */,
+			);
+			path = HTTPRequestBuilder;
+			sourceTree = "<group>";
+		};
+		53C01D282CD248F300D35B95 /* Implement */ = {
+			isa = PBXGroup;
+			children = (
+				53C01D302CD24FFE00D35B95 /* EndPoint.swift */,
+			);
+			path = Implement;
+			sourceTree = "<group>";
+		};
+		53C01D292CD2499A00D35B95 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				53C01D2A2CD249A700D35B95 /* HTTPMethod.swift */,
+				53C01D2C2CD24A1E00D35B95 /* NetworkError.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		53D0C8152CD213EB00034179 = {
 			isa = PBXGroup;
 			children = (
@@ -62,6 +130,7 @@
 		53D0C8202CD213EB00034179 /* SUDATalk */ = {
 			isa = PBXGroup;
 			children = (
+				53C01D262CD248EC00D35B95 /* Network */,
 				53D0C8322CD215A100034179 /* Info.plist */,
 				53D0C8212CD213EB00034179 /* SUDATalkApp.swift */,
 				53D0C8232CD213EB00034179 /* ContentView.swift */,
@@ -159,8 +228,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53C01D332CD25BBE00D35B95 /* URLRequestConvertible.swift in Sources */,
+				53C01D312CD24FFE00D35B95 /* EndPoint.swift in Sources */,
 				53D0C8242CD213EB00034179 /* ContentView.swift in Sources */,
+				53C01D2D2CD24A1E00D35B95 /* NetworkError.swift in Sources */,
+				53616DD92CD35D49005D02E9 /* User.swift in Sources */,
+				53C01D2F2CD24C3900D35B95 /* EndPointConfigurable.swift in Sources */,
+				53616DDB2CD35D61005D02E9 /* UserNetworkManager.swift in Sources */,
 				53D0C8222CD213EB00034179 /* SUDATalkApp.swift in Sources */,
+				53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
