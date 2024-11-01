@@ -32,16 +32,18 @@ extension EndPointConfigurable {
             components.path = "/" + path.joined(separator: "/")
         }
         
-        if let parameter,
-           let port {
+        if let parameter {
             components.queryItems = parameter
+        }
+        
+        if let port {
             components.port = port
         }
         
         guard let url = components.url else {
             throw NetworkError.unknown
         }
-        
+
         return url
     }
     

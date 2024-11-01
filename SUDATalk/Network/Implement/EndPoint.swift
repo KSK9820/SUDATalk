@@ -8,7 +8,7 @@
 import Foundation
 
 struct EndPoint: EndPointConfigurable {
-    var scheme: String = "https"
+    var scheme: String = "http"
     var baseURL: String {
         get throws {
             guard let baseURL = Bundle.main.infoDictionary?["BaseURL"] as? String
@@ -25,28 +25,4 @@ struct EndPoint: EndPointConfigurable {
     var body: Encodable?
     var version: String? = "v1"
     var port: Int? = 39093
-}
-
-enum EndPointHeader {
-    case authorization
-    case nonAuthroization
-    
-    var header: [String: String] {
-        get throws {
-            guard let apiKey = Bundle.main.infoDictionary?["SesacKey"] as? String
-            else {
-                throw NetworkError.notFoundAPIKey
-            }
-            
-            switch self {
-            case .authorization:
-                return ["Authroization": "",
-                        "Content-Type": "application/json",
-                        "SesacKey": apiKey]
-            case .nonAuthroization:
-                return ["Content-Type": "application/json",
-                        "SesacKey": apiKey]
-            }
-        }
-    }
 }
