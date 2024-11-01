@@ -14,6 +14,9 @@
 		48088BB82CD4B2C9008DC165 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BB72CD4B2C9008DC165 /* LoginView.swift */; };
 		48088BBA2CD4B8CD008DC165 /* SampleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BB92CD4B8CD008DC165 /* SampleTest.swift */; };
 		48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BBC2CD4B9B2008DC165 /* EndPointHeader.swift */; };
+		48088BC22CD504B7008DC165 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BC12CD504B7008DC165 /* Images.swift */; };
+		48088BC42CD5052E008DC165 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BC32CD5052E008DC165 /* Colors.swift */; };
+		48088BC62CD507F5008DC165 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BC52CD507F5008DC165 /* TextStyle.swift */; };
 		4815F8CD2CD37218009FC599 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4815F8CC2CD37218009FC599 /* Secret.xcconfig */; };
 		4815F8D62CD37414009FC599 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D32CD37414009FC599 /* NetworkManager.swift */; };
 		4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D52CD37414009FC599 /* UserRouter.swift */; };
@@ -40,6 +43,9 @@
 		48088BB72CD4B2C9008DC165 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		48088BB92CD4B8CD008DC165 /* SampleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTest.swift; sourceTree = "<group>"; };
 		48088BBC2CD4B9B2008DC165 /* EndPointHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointHeader.swift; sourceTree = "<group>"; };
+		48088BC12CD504B7008DC165 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		48088BC32CD5052E008DC165 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		48088BC52CD507F5008DC165 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		4815F8CC2CD37218009FC599 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		4815F8D32CD37414009FC599 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4815F8D52CD37414009FC599 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
@@ -118,6 +124,16 @@
 				48088BB92CD4B8CD008DC165 /* SampleTest.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		48088BC02CD504A5008DC165 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				48088BC12CD504B7008DC165 /* Images.swift */,
+				48088BC32CD5052E008DC165 /* Colors.swift */,
+				48088BC52CD507F5008DC165 /* TextStyle.swift */,
+			);
+			path = DesignSystem;
 			sourceTree = "<group>";
 		};
 		4815F8CE2CD3737B009FC599 /* User */ = {
@@ -203,6 +219,7 @@
 		53D0C8202CD213EB00034179 /* SUDATalk */ = {
 			isa = PBXGroup;
 			children = (
+				48088BC02CD504A5008DC165 /* DesignSystem */,
 				48088BB42CD4AEB8008DC165 /* View */,
 				53C01D262CD248EC00D35B95 /* Network */,
 				53D0C8322CD215A100034179 /* Info.plist */,
@@ -314,8 +331,11 @@
 				4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */,
 				53D0C8222CD213EB00034179 /* SUDATalkApp.swift in Sources */,
 				53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */,
+				48088BC42CD5052E008DC165 /* Colors.swift in Sources */,
 				4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */,
+				48088BC22CD504B7008DC165 /* Images.swift in Sources */,
 				48088BBA2CD4B8CD008DC165 /* SampleTest.swift in Sources */,
+				48088BC62CD507F5008DC165 /* TextStyle.swift in Sources */,
 				48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */,
 				48088BB82CD4B2C9008DC165 /* LoginView.swift in Sources */,
 				4815F8D62CD37414009FC599 /* NetworkManager.swift in Sources */,
