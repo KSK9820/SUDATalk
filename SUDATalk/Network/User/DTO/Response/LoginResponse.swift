@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct Login {
-    
-}
-
 struct LoginResponse: Decodable {
     let user_id: String
     let email: String
@@ -20,10 +16,6 @@ struct LoginResponse: Decodable {
     let provider: String?
     let createdAt: String
     let token: Token
-    
-    func conver2Model() -> Login {
-        
-    }
 }
 
 struct Token: Decodable {

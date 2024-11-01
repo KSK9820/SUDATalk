@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  UserRouter.swift
 //  SUDATalk
 //
 //  Created by 김수경 on 10/31/24.
@@ -7,24 +7,20 @@
 
 import Foundation
 
-enum User {
-    case login(a: Encodable)
-    
+enum UserRouter {
+    case login(query: Encodable)
+}
+
+extension UserRouter {
     func makeRequest() throws -> URLRequest {
         switch self {
         case .login(let login):
             return try EndPoint(
                 method: .post,
                 path: ["users", "login"],
-                header: EndPointHeader.authorization.header,
+                header: EndPointHeader.nonAuthorization.header,
                 body: login
             ).asURLRequest()
         }
     }
-}
-
-struct LoginQuery: Encodable {
-    let email: String
-    let password: String
-    let deviceToken: String
 }
