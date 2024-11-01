@@ -17,4 +17,6 @@ opt_in_rules:
     - empty_string
     - closure_end_indentation
     - let_var_whitespace
- 
+    - trailing_newline: warning
+    - force_cast
+    - force_unwrapping
