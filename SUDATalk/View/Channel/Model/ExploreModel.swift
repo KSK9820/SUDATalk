@@ -1,5 +1,5 @@
 //
-//  ChannelExploreModel.swift
+//  ExploreModel.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/2/24.
@@ -8,35 +8,48 @@
 import Combine
 import Foundation
 
-// 1
-final class ListModel: ObservableObject, ListModelStateProtocol {
+final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     var cancellables: Set<AnyCancellable> = []
     
-    @Published var text: String = ""
+    @Published var channelList: [ChannelList] = []
+    @Published var showAlert: Bool = false
 }
 
-// 2
-extension ListModel: ListModelActionsProtocol {
-    
-    
-    func parse(number: Int) {
-        text = "Random number: " + String(number)
+extension ExploreModel: ExploreActionsProtocol {
+    func fetchChennelList(_ workspaceID: String) {
+        do {
+            let requestChannel = try ChannelRouter.channel(param: workspaceID).makeRequest()
+            let requestMyChannel = try ChannelRouter.myChannel(param: workspaceID).makeRequest()
+            
+            let requestChannelPublisher = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+                .fetchDecodedData(requestChannel, model: [ExploreResponse].self)
+            let requestMyChannelPublisher = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+                .fetchDecodedData(requestMyChannel, model: [ExploreResponse].self)
+            
+            requestChannelPublisher
+                .zip(requestMyChannelPublisher)
+                .sink(receiveCompletion: { completion in
+                    if case .failure(let failure) = completion {
+                        print(failure)
+                    }
+                }, receiveValue: { [weak self] returnedChannelItems, returnedMyChannelItems in
+                    returnedChannelItems.forEach { item in
+                        var newItem = item.convertToModel()
+                        if returnedMyChannelItems.contains(where: { $0.channelID == item.channelID }) {
+                            newItem.isMyChannel = true
+                        }
+                        self?.channelList.append(newItem)
+                    }
+                })
+                .store(in: &cancellables)
+            
+        } catch {
+            print(error)
+        }
     }
     
-    func postData() {
-        let urlString = "http://slp1.sesac.co.kr:39093/v1/users/validation/email"
-
-        NetworkManager.shared.postItem(to: urlString, item: EmailQuery(email: "sesac@sesac.com"))
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    print("Item posted successfully.")
-                case .failure(let error):
-                    print("Error posting item: \(error)")
-                }
-            }, receiveValue: { returnedItem in
-                print("Returned Item: \(returnedItem)")
-            })
-            .store(in: &cancellables)
+    func toggleAlert() {
+        self.showAlert.toggle()
     }
 }
+

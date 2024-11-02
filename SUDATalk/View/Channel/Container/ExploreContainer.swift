@@ -1,5 +1,5 @@
 //
-//  ChannelExploreContainer.swift
+//  ExploreContainer.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/2/24.
@@ -8,9 +8,9 @@
 import Combine
 import Foundation
 
-final class ChannelExploreContainer<Intent, Model>: ObservableObject {
+final class ExploreContainer<Intent, Model>: ObservableObject {
     let intent: Intent
-    let model: Model
+    var model: Model
 
     private var cancellable: Set<AnyCancellable> = []
 
