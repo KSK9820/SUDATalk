@@ -9,7 +9,6 @@ import Combine
 import SwiftUI
 
 struct LoginView: View {
-    
     private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
     @State var cancellables = Set<AnyCancellable>()
