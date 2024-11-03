@@ -1,5 +1,5 @@
 //
-//  ExploreContainer.swift
+//  Container.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/2/24.
@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-final class ExploreContainer<Intent, Model>: ObservableObject {
+final class Container<Intent, Model>: ObservableObject {
     let intent: Intent
     var model: Model
 
