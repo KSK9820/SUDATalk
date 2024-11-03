@@ -27,7 +27,7 @@ struct ExploreView: View {
                     ForEach(container.model.channelList, id: \.channelID) { item in
                         if item.isMyChannel {
                             NavigationLink {
-                                NavigationLazyView(ChannelChattingView.build())
+                                NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
                             } label: {
                                 listRow(item)
                             }
@@ -46,7 +46,7 @@ struct ExploreView: View {
             .navigationTitle("채널탐색")
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                container.intent.viewOnAppear()
+                container.intent.viewOnAppear(container.model.workspaceID)
             }
         }
     }

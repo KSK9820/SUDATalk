@@ -11,6 +11,7 @@ import Foundation
 final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     var cancellables: Set<AnyCancellable> = []
     
+    @Published var workspaceID: String = SampleTest.workspaceID
     @Published var channelList: [ChannelList] = []
     @Published var showAlert: Bool = false
 }
