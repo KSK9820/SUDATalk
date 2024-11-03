@@ -51,7 +51,7 @@ struct ExploreView: View {
         }
     }
     
-    func listRow(_ item: ChannelList) -> some View {
+    private func listRow(_ item: ChannelList) -> some View {
         HStack(alignment: .top) {
             Images.tag
             

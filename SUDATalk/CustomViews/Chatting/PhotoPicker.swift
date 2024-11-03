@@ -12,6 +12,7 @@ public struct PhotoPicker<Content: View>: View {
     @State private var selectedPhotos: [PhotosPickerItem]
     @Binding private var selectedImages: [UIImage]
     @Binding private var isPresentedError: Bool
+    
     private let maxSelectedCount: Int
     private var disabled: Bool {
         selectedImages.count >= maxSelectedCount
