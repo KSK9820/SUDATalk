@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ExploreView: View {
-    @StateObject private var container: ExploreContainer<ExploreIntent, ExploreModelStateProtocol>
+    @StateObject private var container: Container<ExploreIntent, ExploreModelStateProtocol>
     @State private var showAlert = false
     
     private func binding(for keyPath: WritableKeyPath<ExploreModelStateProtocol, Bool>) -> Binding<Bool> {
@@ -22,7 +22,7 @@ struct ExploreView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView{
+            ScrollView {
                 LazyVStack {
                     ForEach(container.model.channelList, id: \.channelID) { item in
                         if item.isMyChannel {
@@ -75,7 +75,7 @@ extension ExploreView {
         let model = ExploreModel()
         let intent = ExploreIntent(model: model)
         
-        let container = ExploreContainer(
+        let container = Container(
             intent: intent,
             model: model as ExploreModelStateProtocol,
             modelChangePublisher: model.objectWillChange)

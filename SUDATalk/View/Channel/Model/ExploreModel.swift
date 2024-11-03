@@ -52,4 +52,3 @@ extension ExploreModel: ExploreActionsProtocol {
         self.showAlert.toggle()
     }
 }
-
