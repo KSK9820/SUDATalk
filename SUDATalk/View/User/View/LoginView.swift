@@ -9,6 +9,8 @@ import Combine
 import SwiftUI
 
 struct LoginView: View {
+    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    
     @State var cancellables = Set<AnyCancellable>()
 
     var body: some View {
@@ -19,18 +21,19 @@ struct LoginView: View {
         }
         .padding()
         .task {
-            let query = SampleTest.login
+            let query = SampleTest.user1
             
             do {
                 let request = try UserRouter.login(query: query).makeRequest()
                 
-                NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices()).fetchDecodedData(request, model: LoginResponse.self)
+                networkManager.fetchDecodedData(request, model: LoginResponse.self)
                     .sink(receiveCompletion: { completion in
                         if case .failure(let failure) = completion {
                             print(failure)
                         }
-                    }, receiveValue: { returnedItem in
-                        print("Returned Item: \(returnedItem)")
+                    }, receiveValue: { value in
+                        let _ = KeyChainManager.shared.save(key: .accessToken, value: value.token.accessToken)
+                        let _ = KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
                     })
                     .store(in: &cancellables)
                 

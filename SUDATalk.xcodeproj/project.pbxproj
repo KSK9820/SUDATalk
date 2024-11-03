@@ -11,8 +11,6 @@
 		48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */; };
 		48088BAE2CD4A82B008DC165 /* DataTaskServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAD2CD4A82B008DC165 /* DataTaskServices.swift */; };
 		48088BB02CD4A886008DC165 /* DecodedServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAF2CD4A886008DC165 /* DecodedServices.swift */; };
-		48088BB82CD4B2C9008DC165 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BB72CD4B2C9008DC165 /* LoginView.swift */; };
-		48088BBA2CD4B8CD008DC165 /* SampleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BB92CD4B8CD008DC165 /* SampleTest.swift */; };
 		48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BBC2CD4B9B2008DC165 /* EndPointHeader.swift */; };
 		48088BC22CD504B7008DC165 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BC12CD504B7008DC165 /* Images.swift */; };
 		48088BC42CD5052E008DC165 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BC32CD5052E008DC165 /* Colors.swift */; };
@@ -43,6 +41,10 @@
 		4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D82CD37F0D009FC599 /* LoginQuery.swift */; };
 		4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8DC2CD38063009FC599 /* LoginResponse.swift */; };
 		535077292CD2311500213CBC /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 535077282CD2311500213CBC /* .swiftlint.yml */; };
+		53A95C6E2CD7B9CD00A49267 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A95C6D2CD7B9CD00A49267 /* LoginView.swift */; };
+		53B9EDC82CD61724000BF728 /* SampleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9EDC72CD61724000BF728 /* SampleTest.swift */; };
+		53B9EDCB2CD6182A000BF728 /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9EDCA2CD6182A000BF728 /* KeyChainManager.swift */; };
+		53B9EDCD2CD61A98000BF728 /* KeyChainValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9EDCC2CD61A98000BF728 /* KeyChainValue.swift */; };
 		53C01D252CD246FE00D35B95 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 53C01D242CD246FE00D35B95 /* RealmSwift */; };
 		53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D2A2CD249A700D35B95 /* HTTPMethod.swift */; };
 		53C01D2D2CD24A1E00D35B95 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53C01D2C2CD24A1E00D35B95 /* NetworkError.swift */; };
@@ -60,8 +62,6 @@
 		48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAD2CD4A82B008DC165 /* DataTaskServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTaskServices.swift; sourceTree = "<group>"; };
 		48088BAF2CD4A886008DC165 /* DecodedServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedServices.swift; sourceTree = "<group>"; };
-		48088BB72CD4B2C9008DC165 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		48088BB92CD4B8CD008DC165 /* SampleTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTest.swift; sourceTree = "<group>"; };
 		48088BBC2CD4B9B2008DC165 /* EndPointHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointHeader.swift; sourceTree = "<group>"; };
 		48088BC12CD504B7008DC165 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		48088BC32CD5052E008DC165 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -92,6 +92,10 @@
 		4815F8D82CD37F0D009FC599 /* LoginQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginQuery.swift; sourceTree = "<group>"; };
 		4815F8DC2CD38063009FC599 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		535077282CD2311500213CBC /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		53A95C6D2CD7B9CD00A49267 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		53B9EDC72CD61724000BF728 /* SampleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTest.swift; sourceTree = "<group>"; };
+		53B9EDCA2CD6182A000BF728 /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
+		53B9EDCC2CD61A98000BF728 /* KeyChainValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainValue.swift; sourceTree = "<group>"; };
 		53C01D2A2CD249A700D35B95 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		53C01D2C2CD24A1E00D35B95 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		53C01D2E2CD24C3900D35B95 /* EndPointConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointConfigurable.swift; sourceTree = "<group>"; };
@@ -133,13 +137,6 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
-		48088BB32CD4AE6A008DC165 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		48088BB42CD4AEB8008DC165 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				48088BB62CD4B2B6008DC165 /* View */,
-				48088BB32CD4AE6A008DC165 /* Model */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -161,8 +157,7 @@
 		48088BB62CD4B2B6008DC165 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				48088BB72CD4B2C9008DC165 /* LoginView.swift */,
-				48088BB92CD4B8CD008DC165 /* SampleTest.swift */,
+				53A95C6D2CD7B9CD00A49267 /* LoginView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -309,6 +304,23 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		53B9EDC92CD6181F000BF728 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				53B9EDCE2CD61A9A000BF728 /* KeyChain */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		53B9EDCE2CD61A9A000BF728 /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				53B9EDCA2CD6182A000BF728 /* KeyChainManager.swift */,
+				53B9EDCC2CD61A98000BF728 /* KeyChainValue.swift */,
+			);
+			path = KeyChain;
+			sourceTree = "<group>";
+		};
 		53C01D262CD248EC00D35B95 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -355,6 +367,7 @@
 		53D0C8152CD213EB00034179 = {
 			isa = PBXGroup;
 			children = (
+				53B9EDC72CD61724000BF728 /* SampleTest.swift */,
 				535077282CD2311500213CBC /* .swiftlint.yml */,
 				4815F8CC2CD37218009FC599 /* Secret.xcconfig */,
 				53D0C82F2CD214DA00034179 /* .gitignore */,
@@ -374,6 +387,7 @@
 		53D0C8202CD213EB00034179 /* SUDATalk */ = {
 			isa = PBXGroup;
 			children = (
+				53B9EDC92CD6181F000BF728 /* Utils */,
 				48088BF32CD6255F008DC165 /* CustomViews */,
 				48088BC02CD504A5008DC165 /* DesignSystem */,
 				48088BB42CD4AEB8008DC165 /* View */,
@@ -476,6 +490,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48088BB02CD4A886008DC165 /* DecodedServices.swift in Sources */,
+				53B9EDCD2CD61A98000BF728 /* KeyChainValue.swift in Sources */,
 				48088BE72CD607F9008DC165 /* ExploreModel.swift in Sources */,
 				4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */,
 				48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */,
@@ -495,10 +510,12 @@
 				53C01D2F2CD24C3900D35B95 /* EndPointConfigurable.swift in Sources */,
 				48088BDF2CD606A8008DC165 /* Container.swift in Sources */,
 				48088BAE2CD4A82B008DC165 /* DataTaskServices.swift in Sources */,
+				53B9EDC82CD61724000BF728 /* SampleTest.swift in Sources */,
 				48088BFD2CD658E8008DC165 /* ChatCellView.swift in Sources */,
 				4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */,
 				48088BE32CD6073C008DC165 /* ExploreModelStateProtocol.swift in Sources */,
 				53D0C8222CD213EB00034179 /* SUDATalkApp.swift in Sources */,
+				53A95C6E2CD7B9CD00A49267 /* LoginView.swift in Sources */,
 				48088BED2CD60B76008DC165 /* ChannelRouter.swift in Sources */,
 				53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */,
 				48088C0B2CD76F1E008DC165 /* TextFieldAttachedImageView.swift in Sources */,
@@ -512,7 +529,7 @@
 				48088C092CD7692F008DC165 /* PhotoPicker.swift in Sources */,
 				48088BC62CD507F5008DC165 /* TextStyle.swift in Sources */,
 				48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */,
-				48088BB82CD4B2C9008DC165 /* LoginView.swift in Sources */,
+				53B9EDCB2CD6182A000BF728 /* KeyChainManager.swift in Sources */,
 				4815F8D62CD37414009FC599 /* NetworkManager.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,
 			);
