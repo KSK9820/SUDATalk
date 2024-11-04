@@ -10,6 +10,7 @@ import Foundation
 
 final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     var cancellables: Set<AnyCancellable> = []
+    let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
     @Published var workspaceID: String = SampleTest.workspaceID
     @Published var channelList: [ChannelList] = []
@@ -22,10 +23,8 @@ extension ExploreModel: ExploreActionsProtocol {
             let requestChannel = try ChannelRouter.channel(param: workspaceID).makeRequest()
             let requestMyChannel = try ChannelRouter.myChannel(param: workspaceID).makeRequest()
             
-            let requestChannelPublisher = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
-                .fetchDecodedData(requestChannel, model: [ExploreResponse].self)
-            let requestMyChannelPublisher = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
-                .fetchDecodedData(requestMyChannel, model: [ExploreResponse].self)
+            let requestChannelPublisher = networkManager.fetchDecodedData(requestChannel, model: [ExploreResponse].self)
+            let requestMyChannelPublisher = networkManager.fetchDecodedData(requestMyChannel, model: [ExploreResponse].self)
             
             requestChannelPublisher
                 .zip(requestMyChannelPublisher)

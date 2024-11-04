@@ -23,9 +23,14 @@ extension EndPointHeader {
             
             switch self {
             case .authorization:
-                return ["Authroization": "",
-                        "Content-Type": "application/json",
-                        "SesacKey": apiKey]
+                if let accessToken = KeyChainManager.shared.read(key: .accessToken) {
+                    return ["Authroization": accessToken,
+                            "Content-Type": "application/json",
+                            "SesacKey": apiKey]
+                } else {
+                    return ["Content-Type": "application/json",
+                                    "SesacKey": apiKey]
+                }
             case .nonAuthorization:
                 return ["Content-Type": "application/json",
                         "SesacKey": apiKey]
