@@ -13,4 +13,8 @@ final class ChannelChattingIntent {
     init(model: ChannelChattingActionsProtocol) {
         self.model = model
     }
+    
+    func sendMessage(workspaceID: String, channelID: String, query: ChatQuery) {
+        model?.sendMessage(workspaceID: workspaceID, channelID: channelID, query: query)
+    }
 }

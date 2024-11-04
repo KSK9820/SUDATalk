@@ -8,6 +8,8 @@
 import SwiftUI
 
 protocol ChannelChattingModelStateProtocol { 
+    var workspaceID: String { get }
+    var channel: ChannelList? { get }
     var messageText: String { get set }
     var selectedImages: [UIImage] { get set }
 }

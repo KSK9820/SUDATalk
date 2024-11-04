@@ -37,6 +37,7 @@
 		48088C092CD7692F008DC165 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088C082CD7692F008DC165 /* PhotoPicker.swift */; };
 		48088C0B2CD76F1E008DC165 /* TextFieldAttachedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088C0A2CD76F1E008DC165 /* TextFieldAttachedImageView.swift */; };
 		48088C0F2CD79C1C008DC165 /* ChatQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088C0E2CD79C1C008DC165 /* ChatQuery.swift */; };
+		48088C112CD7C9D0008DC165 /* SendChatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088C102CD7C9D0008DC165 /* SendChatResponse.swift */; };
 		4815F8CD2CD37218009FC599 /* Secret.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4815F8CC2CD37218009FC599 /* Secret.xcconfig */; };
 		4815F8D62CD37414009FC599 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D32CD37414009FC599 /* NetworkManager.swift */; };
 		4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D52CD37414009FC599 /* UserRouter.swift */; };
@@ -86,6 +87,7 @@
 		48088C082CD7692F008DC165 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		48088C0A2CD76F1E008DC165 /* TextFieldAttachedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAttachedImageView.swift; sourceTree = "<group>"; };
 		48088C0E2CD79C1C008DC165 /* ChatQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatQuery.swift; sourceTree = "<group>"; };
+		48088C102CD7C9D0008DC165 /* SendChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendChatResponse.swift; sourceTree = "<group>"; };
 		4815F8CC2CD37218009FC599 /* Secret.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secret.xcconfig; sourceTree = "<group>"; };
 		4815F8D32CD37414009FC599 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4815F8D52CD37414009FC599 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				48088BEF2CD60C62008DC165 /* ExploreResponse.swift */,
+				48088C102CD7C9D0008DC165 /* SendChatResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				48088C0B2CD76F1E008DC165 /* TextFieldAttachedImageView.swift in Sources */,
 				48088BC42CD5052E008DC165 /* Colors.swift in Sources */,
 				4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */,
+				48088C112CD7C9D0008DC165 /* SendChatResponse.swift in Sources */,
 				48088C032CD733E7008DC165 /* ChannelChattingModel.swift in Sources */,
 				48088BC22CD504B7008DC165 /* Images.swift in Sources */,
 				48088C072CD73416008DC165 /* ChannelChattingActionsProtocol.swift in Sources */,

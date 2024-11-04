@@ -7,4 +7,6 @@
 
 import Foundation
 
-protocol ChannelChattingActionsProtocol: AnyObject {}
+protocol ChannelChattingActionsProtocol: AnyObject {
+    func sendMessage(workspaceID: String, channelID: String, query: ChatQuery)
+}

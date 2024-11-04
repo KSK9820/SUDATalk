@@ -10,6 +10,7 @@ import Foundation
 enum EndPointHeader {
     case authorization
     case nonAuthorization
+    case multipartType(boundary: String)
 }
 
 extension EndPointHeader {
@@ -27,6 +28,10 @@ extension EndPointHeader {
                         "SesacKey": apiKey]
             case .nonAuthorization:
                 return ["Content-Type": "application/json",
+                        "SesacKey": apiKey]
+            case .multipartType(let boundary):
+                return ["Authorization": "",
+                        "Content-Type": "multipart/form-data;boundary=\(boundary)",
                         "SesacKey": apiKey]
             }
         }

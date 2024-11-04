@@ -34,15 +34,29 @@ struct ChannelChattingView: View {
             ChatCellView(image: Image(systemName: "star"), userName: "닉네임", message: "메세지입니다.", images: [Image("testImage")], time: "2024.11.10")
             ChatCellView(image: Image(systemName: "star"), userName: "닉네임", message: "메세지입니다.", images: [Image("testImage"), Image("testImage")], time: "2024.11.10")
         }
+        
         Spacer()
-        ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages))
+        
+        ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
+            let query = ChatQuery(content: container.model.messageText, files: container.model.selectedImages)
+            
+            if let channel = container.model.channel {
+                container.intent.sendMessage(workspaceID: container.model.workspaceID,
+                                             channelID: channel.channelID,
+                                             query: query)
+            }
+        })
+        .navigationTitle(container.model.channel?.name ?? "")
     }
 }
 
 extension ChannelChattingView {
-    static func build() -> some View {
+    static func build(_ channel: ChannelList, workspaceID: String) -> some View {
         let model = ChannelChattingModel()
         let intent = ChannelChattingIntent(model: model)
+        
+        model.workspaceID = workspaceID
+        model.channel = channel
         
         let container = Container(
             intent: intent,

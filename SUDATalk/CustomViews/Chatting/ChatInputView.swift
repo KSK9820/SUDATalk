@@ -10,7 +10,9 @@ import SwiftUI
 struct ChatInputView: View {
     @Binding var messageText: String
     @Binding var selectedImages: [UIImage]
+    
     var onRemoveImage: ((Int) -> Void)?
+    var sendButtonTap: (() -> Void)?
     
     var body: some View {
         HStack {
@@ -29,7 +31,12 @@ struct ChatInputView: View {
                 .padding(.bottom, 5)
             }
             
-            Image("message")
+            Button(action: {
+                sendButtonTap?()
+            }, label: {
+                Image("message")
+            })
+            
         }
         .padding(.horizontal)
         .background(Colors.gray)
