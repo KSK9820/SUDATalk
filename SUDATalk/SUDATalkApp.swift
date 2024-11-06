@@ -11,7 +11,8 @@ import SwiftUI
 struct SUDATalkApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+//            LoginView()
+            DMChatView<DMChatModel>.build()
         }
     }
 }
