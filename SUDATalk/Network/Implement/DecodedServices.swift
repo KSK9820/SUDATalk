@@ -14,9 +14,24 @@ final class DecodedServices: DecodedDataFetchable {
     func getDecodedDataPublisher<D>(response: AnyPublisher<Data, any Error>, model: D.Type) -> AnyPublisher<D, any Error> where D: Decodable {
         response
             .mapError { error in
-                print(error.localizedDescription)
-                return error
+                guard let networkError = error as? NetworkError else {
+                    return NetworkAPIError.unknown
+                }
+
+                if case .code(let data) = networkError {
+                    guard let errorCode = try? self.decoder.decode([String: String].self, from: data),
+                          let errorValue = errorCode.values.first,
+                          let errorType = NetworkAPIError(rawValue: errorValue)
+                    else {
+                        return NetworkAPIError.unknown
+                    }
+
+                    return errorType
+                }
+                
+                return NetworkAPIError.unknown
             }
+
             .decode(type: model.self, decoder: decoder)
             .eraseToAnyPublisher()
     }

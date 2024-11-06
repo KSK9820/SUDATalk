@@ -16,13 +16,28 @@ final class DataTaskServices: RawDataFetchable {
     }
     
     func getDataTaskPublisher(_ request: URLRequest) -> AnyPublisher<Data, any Error> {
-
-        session.dataTaskPublisher(for: request)
-            .mapError { error in
-                print(error.localizedDescription)
-                return error
-            }
-            .map(\.data)
-            .eraseToAnyPublisher()
+        Future<Data, Error> { [weak self] promise in
+            guard let self else { return }
+            
+            self.session.dataTask(with: request) { data, response, error in
+                guard let response = response as? HTTPURLResponse,
+                      (200..<300).contains(response.statusCode) else {
+                    if let data {
+                        return promise(.failure(NetworkError .code(data: data)))
+                    } else if let error {
+                        return promise(.failure(error))
+                    }
+                    
+                    return promise(.failure(URLError(.unknown)))
+                }
+                
+                if let data {
+                    promise(.success(data))
+                }
+                
+                promise(.failure(URLError(.unknown)))
+            }.resume()
+        }
+        .eraseToAnyPublisher()
     }
 }
