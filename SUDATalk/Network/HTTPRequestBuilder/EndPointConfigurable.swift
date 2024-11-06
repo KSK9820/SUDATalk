@@ -15,6 +15,7 @@ protocol EndPointConfigurable: URLRequestConvertible {
     var header: [String: String] { get throws }
     var parameter: [URLQueryItem]? { get }
     var body: Encodable? { get }
+    var multipartBody: Data? { get }
     var version: String? { get }
     var port: Int? { get }
 }
@@ -56,6 +57,10 @@ extension EndPointConfigurable {
         
         if let body {
             urlRequest.httpBody = try JSONEncoder().encode(body)
+        }
+        
+        if let multipartBody {
+            urlRequest.httpBody = multipartBody
         }
         
         return urlRequest

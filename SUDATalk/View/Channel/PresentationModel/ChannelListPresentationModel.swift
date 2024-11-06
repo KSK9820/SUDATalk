@@ -1,5 +1,5 @@
 //
-//  ChannelList.swift
+//  ChannelListPresentationModel.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/2/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChannelList {
+struct ChannelListPresentationModel {
     let channelID, name: String
     let description, coverImage: String?
     let ownerID, createdAt: String
