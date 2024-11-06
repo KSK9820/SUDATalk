@@ -9,6 +9,6 @@ import Foundation
 
 protocol ExploreModelStateProtocol {
     var workspaceID: String { get }
-    var channelList: [ChannelList] { get set }
+    var channelList: [ChannelListPresentationModel] { get set }
     var showAlert: Bool { get set }
 }

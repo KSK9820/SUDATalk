@@ -13,7 +13,7 @@ final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
     @Published var workspaceID: String = SampleTest.workspaceID
-    @Published var channelList: [ChannelList] = []
+    @Published var channelList: [ChannelListPresentationModel] = []
     @Published var showAlert: Bool = false
 }
 
@@ -42,7 +42,6 @@ extension ExploreModel: ExploreActionsProtocol {
                     }
                 })
                 .store(in: &cancellables)
-            
         } catch {
             print(error)
         }

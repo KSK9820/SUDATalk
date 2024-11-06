@@ -10,7 +10,9 @@ import UIKit
 enum ChannelRouter {
     case channel(param: String)
     case myChannel(param: String)
-    case chat(workspaceId: String, channelID: String, query: ChatQuery)
+    case sendChat(workspaceId: String, channelID: String, query: ChatQuery)
+    case fetchChat(workspaceId: String, channelID: String, date: String)
+    case fetchImage(url: String)
 }
 
 extension ChannelRouter {
@@ -28,7 +30,7 @@ extension ChannelRouter {
                 path: ["workspaces", param, "my-channels"],
                 header: EndPointHeader.authorization.header
             ).asURLRequest()
-        case .chat(let workspaceId, let channelID, let query):
+        case .sendChat(let workspaceId, let channelID, let query):
             let boundary = "Boundary-\(UUID().uuidString)"
             let body = createMultipartBody(content: query.content, images: query.files, boundary: boundary, maxSizeMB: 10)
 
@@ -37,6 +39,21 @@ extension ChannelRouter {
                 path: ["workspaces", workspaceId, "channels", channelID, "chats"],
                 header: EndPointHeader.multipartType(boundary: boundary).header,
                 multipartBody: body
+            ).asURLRequest()
+        case .fetchChat(let workspaceId, let channelID, let date):
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces", workspaceId, "channels", channelID, "chats"],
+                header: EndPointHeader.authorization.header,
+                parameter: [URLQueryItem(name: "cursor_date", value: date)]
+            ).asURLRequest()
+        case .fetchImage(url: let url):
+            let arrUrl = url.split(separator: "/").map{ String($0) }
+            
+            return try EndPoint(
+                method: .get,
+                path: arrUrl,
+                header: EndPointHeader.multipartType(boundary: "Boundary-\(UUID().uuidString)").header
             ).asURLRequest()
         }
     }
@@ -63,7 +80,7 @@ extension ChannelRouter {
             }
 
             if let data = imageData {
-                let filename = "chatimage\(index).jpg" // 네이밍을 어떻게 하지?
+                let filename = "chatimage\(index).jpg"
                 let mimeType = "image/jpeg"
                 body.append("--\(boundary)\r\n".data(using: .utf8)!)
                 body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)

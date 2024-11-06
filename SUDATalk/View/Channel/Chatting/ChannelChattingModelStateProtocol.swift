@@ -9,7 +9,9 @@ import SwiftUI
 
 protocol ChannelChattingModelStateProtocol { 
     var workspaceID: String { get }
-    var channel: ChannelList? { get }
+    var channel: ChannelListPresentationModel? { get }
     var messageText: String { get set }
     var selectedImages: [UIImage] { get set }
+    var uploadStatus: Bool { get set }
+    var chatting: [ChattingPresentationModel] { get set }
 }

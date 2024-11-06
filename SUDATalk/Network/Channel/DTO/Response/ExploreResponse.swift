@@ -19,7 +19,7 @@ struct ExploreResponse: Decodable {
         case createdAt
     }
     
-    func convertToModel() -> ChannelList {
+    func convertToModel() -> ChannelListPresentationModel {
         .init(channelID: channelID, name: name, description: description, coverImage: coverImage, ownerID: ownerID, createdAt: createdAt)
     }
 }

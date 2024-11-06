@@ -24,20 +24,25 @@ extension EndPointHeader {
             switch self {
             case .authorization:
                 if let accessToken = KeyChainManager.shared.read(key: .accessToken) {
-                    return ["Authroization": accessToken,
+                    return ["Authorization": accessToken,
                             "Content-Type": "application/json",
                             "SesacKey": apiKey]
                 } else {
                     return ["Content-Type": "application/json",
-                                    "SesacKey": apiKey]
+                            "SesacKey": apiKey]
                 }
             case .nonAuthorization:
                 return ["Content-Type": "application/json",
                         "SesacKey": apiKey]
             case .multipartType(let boundary):
-                return ["Authorization": "",
-                        "Content-Type": "multipart/form-data;boundary=\(boundary)",
-                        "SesacKey": apiKey]
+                if let accessToken = KeyChainManager.shared.read(key: .accessToken) {
+                    return ["Authorization": accessToken,
+                            "Content-Type": "multipart/form-data;boundary=\(boundary)",
+                            "SesacKey": apiKey]
+                } else {
+                    return ["Content-Type": "multipart/form-data;boundary=\(boundary)",
+                            "SesacKey": apiKey]
+                }
             }
         }
     }

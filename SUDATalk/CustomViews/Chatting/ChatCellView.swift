@@ -11,7 +11,7 @@ struct ChatCellView: View {
     let image: Image
     let userName: String
     let message: String
-    let images: [Image]
+    let images: [Data]
     let time: String
     
     var body: some View {
@@ -41,20 +41,24 @@ struct ChatCellView: View {
                         if !images.isEmpty {
                             HStack(spacing: 3) {
                                 ForEach(0..<min(images.count, 3), id: \.self) { index in
-                                    images[index]
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(maxWidth: .infinity)
+                                    if let uiImage = UIImage(data: images[index]) {
+                                        Image(uiImage: uiImage)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(maxWidth: .infinity)
+                                    }
                                 }
                             }
                             
                             if images.count > 3 {
                                 HStack(spacing: 3) {
                                     ForEach(3..<min(images.count, 5), id: \.self) { index in
-                                        images[index]
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(maxWidth: .infinity)
+                                        if let uiImage = UIImage(data: images[index]) {
+                                            Image(uiImage: uiImage)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                                .frame(maxWidth: .infinity)
+                                        }
                                     }
                                 }
                             }
