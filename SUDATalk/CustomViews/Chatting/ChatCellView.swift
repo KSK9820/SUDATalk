@@ -41,8 +41,8 @@ struct ChatCellView: View {
                         if !images.isEmpty {
                             HStack(spacing: 3) {
                                 ForEach(0..<min(images.count, 3), id: \.self) { index in
-                                    if let uiImage = UIImage(data: images[index]) {
-                                        Image(uiImage: uiImage)
+                                    if let convertedImage = UIImage(data: images[index]) {
+                                        Image(uiImage: convertedImage)
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .frame(maxWidth: .infinity)

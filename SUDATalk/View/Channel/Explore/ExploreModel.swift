@@ -10,7 +10,7 @@ import Foundation
 
 final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     var cancellables: Set<AnyCancellable> = []
-    let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
     @Published var workspaceID: String = SampleTest.workspaceID
     @Published var channelList: [ChannelListPresentationModel] = []

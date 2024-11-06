@@ -10,7 +10,7 @@ import SwiftUI
 
 final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
     var cancellables: Set<AnyCancellable> = []
-    let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -23,7 +23,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func viewOnAppear(workspaceID: String, channelID: String, date: String) {
         do {
-            let requestChannel = try ChannelRouter.fetchChat(workspaceId: workspaceID, channelID: channelID, date: date).makeRequest()
+            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
 
             networkManager.fetchDecodedData(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
@@ -43,7 +43,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     
     func sendMessage(workspaceID: String, channelID: String, query: ChatQuery) {
         do {
-            let requestChannel = try ChannelRouter.sendChat(workspaceId: workspaceID, channelID: channelID, query: query).makeRequest()
+            let requestChannel = try ChannelRouter.sendChat(workspaceID: workspaceID, channelID: channelID, query: query).makeRequest()
 
             networkManager.fetchDecodedData(requestChannel, model: SendChatResponse.self)
                 .sink(receiveCompletion: { completion in

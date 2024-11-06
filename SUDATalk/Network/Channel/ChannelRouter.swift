@@ -10,8 +10,8 @@ import UIKit
 enum ChannelRouter {
     case channel(param: String)
     case myChannel(param: String)
-    case sendChat(workspaceId: String, channelID: String, query: ChatQuery)
-    case fetchChat(workspaceId: String, channelID: String, date: String)
+    case sendChat(workspaceID: String, channelID: String, query: ChatQuery)
+    case fetchChat(workspaceID: String, channelID: String, date: String)
     case fetchImage(url: String)
 }
 
@@ -30,20 +30,20 @@ extension ChannelRouter {
                 path: ["workspaces", param, "my-channels"],
                 header: EndPointHeader.authorization.header
             ).asURLRequest()
-        case .sendChat(let workspaceId, let channelID, let query):
+        case .sendChat(let workspaceID, let channelID, let query):
             let boundary = "Boundary-\(UUID().uuidString)"
             let body = createMultipartBody(content: query.content, images: query.files, boundary: boundary, maxSizeMB: 10)
 
             return try EndPoint(
                 method: .post,
-                path: ["workspaces", workspaceId, "channels", channelID, "chats"],
+                path: ["workspaces", workspaceID, "channels", channelID, "chats"],
                 header: EndPointHeader.multipartType(boundary: boundary).header,
                 multipartBody: body
             ).asURLRequest()
-        case .fetchChat(let workspaceId, let channelID, let date):
+        case .fetchChat(let workspaceID, let channelID, let date):
             return try EndPoint(
                 method: .get,
-                path: ["workspaces", workspaceId, "channels", channelID, "chats"],
+                path: ["workspaces", workspaceID, "channels", channelID, "chats"],
                 header: EndPointHeader.authorization.header,
                 parameter: [URLQueryItem(name: "cursor_date", value: date)]
             ).asURLRequest()
