@@ -208,42 +208,11 @@
 		48088BDA2CD60565008DC165 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
-				48088BF92CD63E3F008DC165 /* Intent */,
-				48088BE92CD60839008DC165 /* Model */,
-				48088BE82CD60818008DC165 /* Builder */,
-				48088BDB2CD605F5008DC165 /* View */,
+				536B832F2CDCA45F00DA3C96 /* Explore */,
+				536B83312CDCA4B900DA3C96 /* Chatting */,
+				536B83322CDCA4D500DA3C96 /* PresentationModel */,
 			);
 			path = Channel;
-			sourceTree = "<group>";
-		};
-		48088BDB2CD605F5008DC165 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				48088BDC2CD60612008DC165 /* ExploreView.swift */,
-				48088BF62CD625EF008DC165 /* ChannelChattingView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		48088BE82CD60818008DC165 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				48088BE22CD6073C008DC165 /* ExploreModelStateProtocol.swift */,
-				48088BE42CD607CA008DC165 /* ExploreActionsProtocol.swift */,
-				48088C042CD73402008DC165 /* ChannelChattingModelStateProtocol.swift */,
-				48088C062CD73416008DC165 /* ChannelChattingActionsProtocol.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		48088BE92CD60839008DC165 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				48088BE62CD607F9008DC165 /* ExploreModel.swift */,
-				48088BF12CD617EF008DC165 /* ChannelList.swift */,
-				48088C022CD733E7008DC165 /* ChannelChattingModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		48088BEA2CD60B48008DC165 /* Channel */ = {
@@ -287,15 +256,6 @@
 				5357ADEC2CD9312900FB391A /* InterfaceContainer.swift */,
 			);
 			path = Container;
-			sourceTree = "<group>";
-		};
-		48088BF92CD63E3F008DC165 /* Intent */ = {
-			isa = PBXGroup;
-			children = (
-				48088BE02CD606FC008DC165 /* ExploreIntent.swift */,
-				48088C002CD7336E008DC165 /* ChannelChattingIntent.swift */,
-			);
-			path = Intent;
 			sourceTree = "<group>";
 		};
 		48088C0C2CD77667008DC165 /* Chatting */ = {
@@ -400,6 +360,38 @@
 			path = Interface;
 			sourceTree = "<group>";
 		};
+		536B832F2CDCA45F00DA3C96 /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				48088BDC2CD60612008DC165 /* ExploreView.swift */,
+				48088BE02CD606FC008DC165 /* ExploreIntent.swift */,
+				48088BE62CD607F9008DC165 /* ExploreModel.swift */,
+				48088BE22CD6073C008DC165 /* ExploreModelStateProtocol.swift */,
+				48088BE42CD607CA008DC165 /* ExploreActionsProtocol.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		536B83312CDCA4B900DA3C96 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+				48088BF62CD625EF008DC165 /* ChannelChattingView.swift */,
+				48088C002CD7336E008DC165 /* ChannelChattingIntent.swift */,
+				48088C022CD733E7008DC165 /* ChannelChattingModel.swift */,
+				48088C042CD73402008DC165 /* ChannelChattingModelStateProtocol.swift */,
+				48088C062CD73416008DC165 /* ChannelChattingActionsProtocol.swift */,
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		536B83322CDCA4D500DA3C96 /* PresentationModel */ = {
+			isa = PBXGroup;
+			children = (
+				48088BF12CD617EF008DC165 /* ChannelList.swift */,
+			);
+			path = PresentationModel;
+			sourceTree = "<group>";
+		};
 		53B9EDC92CD6181F000BF728 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,8 +480,8 @@
 		53D0C8202CD213EB00034179 /* SUDATalk */ = {
 			isa = PBXGroup;
 			children = (
-				53450E5F2CDB58CE00227ADB /* Extension */,
 				53B9EDC92CD6181F000BF728 /* Utils */,
+				53450E5F2CDB58CE00227ADB /* Extension */,
 				48088BF32CD6255F008DC165 /* CustomViews */,
 				48088BC02CD504A5008DC165 /* DesignSystem */,
 				48088BB42CD4AEB8008DC165 /* View */,
