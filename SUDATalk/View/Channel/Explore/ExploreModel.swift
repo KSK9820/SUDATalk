@@ -10,9 +10,10 @@ import Foundation
 
 final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     var cancellables: Set<AnyCancellable> = []
-    let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
-    @Published var channelList: [ChannelList] = []
+    @Published var workspaceID: String = SampleTest.workspaceID
+    @Published var channelList: [ChannelListPresentationModel] = []
     @Published var showAlert: Bool = false
 }
 
@@ -41,7 +42,6 @@ extension ExploreModel: ExploreActionsProtocol {
                     }
                 })
                 .store(in: &cancellables)
-            
         } catch {
             print(error)
         }

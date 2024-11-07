@@ -21,37 +21,35 @@ struct ExploreView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                LazyVStack {
-                    ForEach(container.model.channelList, id: \.channelID) { item in
-                        if item.isMyChannel {
-                            NavigationLink {
-                                NavigationLazyView(ChannelChattingView.build())
-                            } label: {
-                                listRow(item)
-                            }
-                        } else {
+        ScrollView {
+            LazyVStack {
+                ForEach(container.model.channelList, id: \.channelID) { item in
+                    if item.isMyChannel {
+                        NavigationLink {
+                            NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
+                        } label: {
                             listRow(item)
-                                .onTapGesture {
-                                    container.intent.onTapList()
-                                }
-                                .alert("채널 참여", isPresented: binding(for: \.showAlert)) {
-                                    Button("확인", role: .cancel) { }
-                                }
                         }
+                    } else {
+                        listRow(item)
+                            .onTapGesture {
+                                container.intent.onTapList()
+                            }
+                            .alert("채널 참여", isPresented: binding(for: \.showAlert)) {
+                                Button("확인", role: .cancel) { }
+                            }
                     }
                 }
             }
-            .navigationTitle("채널탐색")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                container.intent.viewOnAppear()
-            }
+        }
+        .navigationTitle("채널탐색")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            container.intent.viewOnAppear(container.model.workspaceID)
         }
     }
     
-    private func listRow(_ item: ChannelList) -> some View {
+    private func listRow(_ item: ChannelListPresentationModel) -> some View {
         HStack(alignment: .top) {
             Images.tag
             

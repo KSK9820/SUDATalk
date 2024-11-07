@@ -14,8 +14,8 @@ final class ExploreIntent {
         self.model = model
     }
 
-    func viewOnAppear() {
-        model?.fetchChennelList("e048cdee-a6dc-40bf-8dd2-402b56e5587d")
+    func viewOnAppear(_ workspaceID: String) {
+        model?.fetchChennelList(workspaceID)
     }
     
     func onTapList() {

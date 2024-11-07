@@ -1,0 +1,40 @@
+//
+//  SendChatResponse.swift
+//  SUDATalk
+//
+//  Created by 박다현 on 11/4/24.
+//
+
+import Foundation
+
+struct SendChatResponse: Decodable {
+    let channelID, channelName, chatID, content: String
+    let createdAt: String
+    let files: [String]
+    let user: User
+
+    enum CodingKeys: String, CodingKey {
+        case channelID = "channel_id"
+        case channelName
+        case chatID = "chat_id"
+        case content, createdAt, files, user
+    }
+    
+    func convertToModel() -> ChattingPresentationModel {
+        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content, createdAt: createdAt, files: files, user: user.convertToModel(), images: [])
+    }
+}
+
+struct User: Decodable {
+    let userID, email, nickname: String
+    let profileImage: String?
+
+    enum CodingKeys: String, CodingKey {
+        case userID = "user_id"
+        case email, nickname, profileImage
+    }
+    
+    func convertToModel() -> ChatUserPresentationModel {
+        .init(userID: userID, email: email, nickname: nickname, profileImage: profileImage)
+    }
+}

@@ -30,19 +30,56 @@ struct ChannelChattingView: View {
     
     var body: some View {
         ScrollView {
-            ChatCellView(image: Image(systemName: "star"), userName: "닉네임", message: "메세지입니다.", images: [Image("testImage"), Image("testImage"), Image("testImage"), Image("testImage"), Image("testImage")], time: "2024.11.10")
-            ChatCellView(image: Image(systemName: "star"), userName: "닉네임", message: "메세지입니다.", images: [Image("testImage")], time: "2024.11.10")
-            ChatCellView(image: Image(systemName: "star"), userName: "닉네임", message: "메세지입니다.", images: [Image("testImage"), Image("testImage")], time: "2024.11.10")
+            LazyVStack {
+                ForEach(container.model.chatting.indices, id: \.self) { index in
+                    let item = container.model.chatting[index]
+    
+                    ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                        .task {
+                            if !item.files.isEmpty {
+                                container.intent.fetchImages(item.files, index: index)
+                            }
+                        }
+                }
+            }
         }
+        
         Spacer()
-        ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages))
+        
+        ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
+            
+            if let channel = container.model.channel {
+                container.intent.sendMessage(workspaceID: container.model.workspaceID,
+                                             channelID: channel.channelID,
+                                             content: container.model.messageText,
+                                             images: container.model.selectedImages)
+            }
+        })
+        .navigationTitle(container.model.channel?.name ?? "")
+        .onChange(of: container.model.uploadStatus) { _, newValue in
+            if newValue {
+                container.model.messageText = ""
+                container.model.selectedImages = []
+                container.model.uploadStatus = false
+            }
+        }
+        .onAppear {
+            if let channel = container.model.channel {
+                container.intent.viewOnAppear(workspaceID: container.model.workspaceID,
+                                              channelID: channel.channelID,
+                                              date: "2024-11-04T08:11:07.252Z")
+            }
+        }
     }
 }
 
 extension ChannelChattingView {
-    static func build() -> some View {
+    static func build(_ channel: ChannelListPresentationModel, workspaceID: String) -> some View {
         let model = ChannelChattingModel()
         let intent = ChannelChattingIntent(model: model)
+        
+        model.workspaceID = workspaceID
+        model.channel = channel
         
         let container = Container(
             intent: intent,
