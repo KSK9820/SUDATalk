@@ -9,5 +9,5 @@ import UIKit
 
 struct ChatQuery {
     let content: String
-    let files: [UIImage]
+    let files: [Data]
 }
