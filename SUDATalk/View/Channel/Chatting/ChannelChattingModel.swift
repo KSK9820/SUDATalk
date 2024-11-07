@@ -51,7 +51,8 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                         print("dd", failure)
                     }
                 }, receiveValue: { [weak self] value in
-                    print(value) // 데이터베이스에 저장
+                    print(value)
+                    self?.repositiory?.addChatting(value)
                     self?.uploadStatus = true
                 })
                 .store(in: &cancellables)
