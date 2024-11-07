@@ -34,7 +34,7 @@ struct ChannelChattingView: View {
                 ForEach(container.model.chatting.indices, id: \.self) { index in
                     let item = container.model.chatting[index]
     
-                    ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt)
+                    ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
                         .task {
                             if !item.files.isEmpty {
                                 container.intent.fetchImages(item.files, index: index)
@@ -47,12 +47,12 @@ struct ChannelChattingView: View {
         Spacer()
         
         ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
-            let query = ChatQuery(content: container.model.messageText, files: container.model.selectedImages)
             
             if let channel = container.model.channel {
                 container.intent.sendMessage(workspaceID: container.model.workspaceID,
                                              channelID: channel.channelID,
-                                             query: query)
+                                             content: container.model.messageText,
+                                             images: container.model.selectedImages)
             }
         })
         .navigationTitle(container.model.channel?.name ?? "")

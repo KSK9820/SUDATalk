@@ -32,7 +32,7 @@ extension ChannelRouter {
             ).asURLRequest()
         case .sendChat(let workspaceID, let channelID, let query):
             let boundary = "Boundary-\(UUID().uuidString)"
-            let body = createMultipartBody(content: query.content, images: query.files, boundary: boundary, maxSizeMB: 10)
+            let body = createMultipartBody(content: query.content, imageData: query.files, boundary: boundary)
 
             return try EndPoint(
                 method: .post,
@@ -58,38 +58,23 @@ extension ChannelRouter {
         }
     }
     
-    private func createMultipartBody(content: String, images: [UIImage], boundary: String, maxSizeMB: Double) -> Data {
+    private func createMultipartBody(content: String, imageData: [Data], boundary: String) -> Data {
         var body = Data()
         
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             body.append("Content-Disposition: form-data; name=\"content\"\r\n\r\n".data(using: .utf8)!)
             body.append("\(content)\r\n".data(using: .utf8)!)
-
-        for (index, image) in images.enumerated() {
-            var compressionQuality: CGFloat = 0.8
-            var imageData = image.jpegData(compressionQuality: compressionQuality)
-            
-            while let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB, compressionQuality > 0.1 {
-                compressionQuality -= 0.1
-                imageData = image.jpegData(compressionQuality: compressionQuality)
-            }
-
-            if let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB {
-                print("이미지[\(index)]가 용량을 초과합니다.")
-                continue
-            }
-
-            if let data = imageData {
-                let filename = "chatimage\(index).jpg"
-                let mimeType = "image/jpeg"
-                body.append("--\(boundary)\r\n".data(using: .utf8)!)
-                body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
-                body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
-                body.append(data)
-                body.append("\r\n".data(using: .utf8)!)
-            }
+        
+        imageData.forEach { data in
+            let filename = "chatimage\(index).jpg"
+            let mimeType = "image/jpeg"
+            body.append("--\(boundary)\r\n".data(using: .utf8)!)
+            body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+            body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+            body.append(data)
+            body.append("\r\n".data(using: .utf8)!)
         }
-
+        
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         return body
     }

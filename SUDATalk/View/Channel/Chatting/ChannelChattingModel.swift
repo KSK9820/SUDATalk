@@ -11,6 +11,7 @@ import SwiftUI
 final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
     var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    let repositiory = ChattingRepository()
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -24,7 +25,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func viewOnAppear(workspaceID: String, channelID: String, date: String) {
         do {
             let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
-
+            
             networkManager.fetchDecodedData(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
@@ -41,29 +42,33 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    func sendMessage(workspaceID: String, channelID: String, query: ChatQuery) {
+    func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
         do {
+            let imageData = ImageConverter.shared.convertToData(images: images)
+            let query = ChatQuery(content: content, files: imageData)
             let requestChannel = try ChannelRouter.sendChat(workspaceID: workspaceID, channelID: channelID, query: query).makeRequest()
-
+            
             networkManager.fetchDecodedData(requestChannel, model: SendChatResponse.self)
+                .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
-                        print("dd", failure)
+                        print(failure)
                     }
                 }, receiveValue: { [weak self] value in
-                    print(value) // 데이터베이스에 저장
+                    print(value)
+                    self?.repositiory?.addChatting(value)
                     self?.uploadStatus = true
                 })
                 .store(in: &cancellables)
         } catch {
-            print("ee", error)
+            print(error)
         }
     }
     
     func fetchImages(_ urls: [String], index: Int) {
         let dispatchGroup = DispatchGroup()
         var chatImages: [Data] = []
-
+        
         urls.forEach { url in
             do {
                 let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
@@ -90,5 +95,29 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         dispatchGroup.notify(queue: .main) { [weak self] in
             self?.chatting[index].images.append(contentsOf: chatImages)
         }
+    }
+    
+    func imageConvertToData(images: [UIImage], maxSizeMB: Double) -> [Data] {
+        var data: [Data] = []
+        for (index, image) in images.enumerated() {
+            var compressionQuality: CGFloat = 0.8
+            var imageData = image.jpegData(compressionQuality: compressionQuality)
+            
+            while let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB, compressionQuality > 0.1 {
+                compressionQuality -= 0.1
+                imageData = image.jpegData(compressionQuality: compressionQuality)
+            }
+            
+            if let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB {
+                print("이미지[\(index)]가 용량을 초과합니다.")
+                continue
+            }
+            
+            guard let imageData else { return [Data()] }
+            
+            data.append(imageData)
+        }
+        
+        return data
     }
 }
