@@ -29,17 +29,25 @@ struct ChannelChattingView: View {
     }
     
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(container.model.chatting.indices, id: \.self) { index in
-                    let item = container.model.chatting[index]
-    
-                    ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
-                        .task {
-                            if !item.files.isEmpty {
-                                container.intent.fetchImages(item.files, index: index)
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack {
+                    ForEach(container.model.chatting.indices, id: \.self) { index in
+                        let item = container.model.chatting[index]
+                        
+                        ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                            .id(index)
+                            .task {
+                                if !item.files.isEmpty {
+                                    container.intent.fetchImages(item.files, index: index)
+                                }
                             }
-                        }
+                    }
+                }
+                .onChange(of: container.model.chatting.count) { _ in
+                    withAnimation {
+                        proxy.scrollTo(container.model.chatting.count - 1, anchor: .bottom)
+                    }
                 }
             }
         }
