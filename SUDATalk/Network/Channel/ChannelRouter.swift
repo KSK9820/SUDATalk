@@ -65,8 +65,8 @@ extension ChannelRouter {
             body.append("Content-Disposition: form-data; name=\"content\"\r\n\r\n".data(using: .utf8)!)
             body.append("\(content)\r\n".data(using: .utf8)!)
         
-        imageData.forEach { data in
-            let filename = "chatimage\(index).jpg"
+        imageData.enumerated().forEach { index, data in
+            let filename = "chatImage_\(index).jpg"
             let mimeType = "image/jpeg"
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)

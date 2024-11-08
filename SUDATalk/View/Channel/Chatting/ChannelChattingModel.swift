@@ -81,11 +81,22 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         var chatImages: [Data] = []
 
         urls.forEach { url in
+            if let cachedImage = ImageCacheManager.shard.loadImageFromCache(forKey: url) {
+                chatImages.append(cachedImage)
+                return
+            }
+            
+            if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
+                chatImages.append(fileManagerImage)
+                ImageCacheManager.shard.saveImageToCache(imageData: fileManagerImage, forKey: url)
+                return
+            }
+            
+            dispatchGroup.enter()
+            
             do {
                 let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
-                
-                dispatchGroup.enter()
-                
+
                 networkManager.fetchData(requestChannel)
                     .sink { completion in
                         if case .failure(let failure) = completion {
@@ -93,6 +104,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                             dispatchGroup.leave()
                         }
                     } receiveValue: { value in
+                        ImageCacheManager.shard.saveImageToCache(imageData: value, forKey: url)
                         chatImages.append(value)
                         dispatchGroup.leave()
                     }
@@ -104,31 +116,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.chatting[index].images.append(contentsOf: chatImages)
+            self?.chatting[index].images = chatImages
         }
-    }
-    
-    func imageConvertToData(images: [UIImage], maxSizeMB: Double) -> [Data] {
-        var data: [Data] = []
-        for (index, image) in images.enumerated() {
-            var compressionQuality: CGFloat = 0.8
-            var imageData = image.jpegData(compressionQuality: compressionQuality)
-            
-            while let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB, compressionQuality > 0.1 {
-                compressionQuality -= 0.1
-                imageData = image.jpegData(compressionQuality: compressionQuality)
-            }
-            
-            if let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB {
-                print("이미지[\(index)]가 용량을 초과합니다.")
-                continue
-            }
-            
-            guard let imageData else { return [Data()] }
-            
-            data.append(imageData)
-        }
-        
-        return data
     }
 }
