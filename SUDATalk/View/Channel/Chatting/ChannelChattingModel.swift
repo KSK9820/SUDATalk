@@ -61,6 +61,12 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     }
                 }, receiveValue: { [weak self] value in
                     print(value)
+                    if !value.files.isEmpty {
+                        value.files.enumerated().forEach { (index, url) in
+                            ImageFileManager.shared.saveImageToDocument(image: images[index], fileUrl: url)
+                        }
+                    }
+                    
                     self?.repositiory?.addChatting(value)
                     self?.uploadStatus = true
                 })
