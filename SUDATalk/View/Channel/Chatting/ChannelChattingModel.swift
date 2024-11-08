@@ -9,9 +9,9 @@ import Combine
 import SwiftUI
 
 final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
-    var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
-    let repositiory = ChattingRepository()
+    private let repositiory = ChattingRepository()
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -22,9 +22,14 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 }
 
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
-    func viewOnAppear(workspaceID: String, channelID: String, date: String) {
-        do {
-            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
+    func viewOnAppear(workspaceID: String, channelID: String) {
+        guard let chatDatafromDB = repositiory?.fetchChatting(channelID) else { return }
+        chatting.append(contentsOf: chatDatafromDB)
+        
+        guard let lastChatDate = chatDatafromDB.last?.createdAt else { return }
+
+          do {
+            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: lastChatDate).makeRequest()
             
             networkManager.fetchDecodedData(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
@@ -68,7 +73,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func fetchImages(_ urls: [String], index: Int) {
         let dispatchGroup = DispatchGroup()
         var chatImages: [Data] = []
-        
+
         urls.forEach { url in
             do {
                 let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()

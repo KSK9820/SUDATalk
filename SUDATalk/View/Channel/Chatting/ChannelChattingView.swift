@@ -66,8 +66,7 @@ struct ChannelChattingView: View {
         .onAppear {
             if let channel = container.model.channel {
                 container.intent.viewOnAppear(workspaceID: container.model.workspaceID,
-                                              channelID: channel.channelID,
-                                              date: "2024-11-04T08:11:07.252Z")
+                                              channelID: channel.channelID)
             }
         }
     }

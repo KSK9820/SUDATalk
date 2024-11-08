@@ -41,4 +41,10 @@ final class ChattingRepository {
             print("addChatting: \(error)")
         }
     }
+    
+    func fetchChatting(_ channelID: String) -> [ChattingPresentationModel] {
+        let chatList = realm.objects(ChattingEntity.self).filter{ $0.channelID == channelID }
+        
+        return chatList.map { $0.convertToModel() }
+    }
 }

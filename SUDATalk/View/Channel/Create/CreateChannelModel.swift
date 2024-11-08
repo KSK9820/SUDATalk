@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 final class CreateChannelModel: ObservableObject, CreateChannelModelStateProtocol {
-    var cancellables: Set<AnyCancellable> = []
+    private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
     
     @Published var channelName: String = ""

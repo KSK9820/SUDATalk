@@ -11,7 +11,7 @@ struct SendChatResponse: Decodable {
     let channelID, channelName, chatID, content: String
     let createdAt: String
     let files: [String]
-    let user: User
+    let user: UserResponse
 
     enum CodingKeys: String, CodingKey {
         case channelID = "channel_id"
@@ -25,7 +25,7 @@ struct SendChatResponse: Decodable {
     }
 }
 
-struct User: Decodable {
+struct UserResponse: Decodable {
     let userID, email, nickname: String
     let profileImage: String?
 
