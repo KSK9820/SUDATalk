@@ -56,7 +56,7 @@ struct ChannelChattingView: View {
             }
         })
         .navigationTitle(container.model.channel?.name ?? "")
-        .onChange(of: container.model.uploadStatus) { _, newValue in
+        .onChange(of: container.model.uploadStatus) { newValue in
             if newValue {
                 container.model.messageText = ""
                 container.model.selectedImages = []
