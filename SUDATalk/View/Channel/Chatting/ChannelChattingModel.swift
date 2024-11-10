@@ -39,6 +39,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 }, receiveValue: { [weak self] value in
                     value.forEach { item in
                         self?.chatting.append(item.convertToModel())
+                        self?.repositiory?.addChatting(item)
                     }
                 })
                 .store(in: &cancellables)
@@ -106,6 +107,9 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     } receiveValue: { value in
                         ImageCacheManager.shard.saveImageToCache(imageData: value, forKey: url)
                         chatImages.append(value)
+                        if let image = UIImage(data: value) {
+                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+                        }
                         dispatchGroup.leave()
                     }
                     .store(in: &cancellables)
