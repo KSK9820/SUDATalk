@@ -12,29 +12,35 @@ final class MultipartFormDataBuilder {
     
     private init() {}
     
-    func createMultipartBody<T>(query: T, boundary: String) -> Data {
+    func createMultipartBody(query: ChatQuery, boundary: String) -> Data {
         var body = Data()
         
-        if let query = query as? ChatQuery {
-            appendField(&body, name: "content", value: query.content, boundary: boundary)
-            
-            query.files.forEach { data in
-                appendImageField(&body, name: "files", imageData: data, boundary: boundary)
-            }
-        } else if let query = query as? ChannelQuery {
-            appendField(&body, name: "name", value: query.name, boundary: boundary)
-            appendField(&body, name: "description", value: query.description, boundary: boundary)
+        appendField(&body, name: "content", value: query.content, boundary: boundary)
         
-            if let imageData = query.image {
-                appendImageField(&body, name: "image", imageData: imageData, boundary: boundary)
-            }
+        query.files.forEach { data in
+            appendImageField(&body, name: "files", imageData: data, boundary: boundary)
         }
-
+        
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
         return body
     }
     
-
+    func createMultipartBody(query: ChannelQuery, boundary: String) -> Data {
+        var body = Data()
+        
+        appendField(&body, name: "name", value: query.name, boundary: boundary)
+        appendField(&body, name: "description", value: query.description, boundary: boundary)
+        
+        if let imageData = query.image {
+            appendImageField(&body, name: "image", imageData: imageData, boundary: boundary)
+        }
+        
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        return body
+    }
+    
     private func appendField(_ body: inout Data, name: String, value: String?, boundary: String) {
         guard let value = value else { return }
         
