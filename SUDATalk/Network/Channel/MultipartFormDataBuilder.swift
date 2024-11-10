@@ -7,4 +7,50 @@
 
 import Foundation
 
-final Multipart
+final class MultipartFormDataBuilder {
+    static let shared = MultipartFormDataBuilder()
+    
+    private init() {}
+    
+    func createMultipartBody<T>(query: T, boundary: String) -> Data {
+        var body = Data()
+        
+        if let query = query as? ChatQuery {
+            appendField(&body, name: "content", value: query.content, boundary: boundary)
+            
+            query.files.forEach { data in
+                appendImageField(&body, name: "files", imageData: data, boundary: boundary)
+            }
+        } else if let query = query as? ChannelQuery {
+            appendField(&body, name: "name", value: query.name, boundary: boundary)
+            appendField(&body, name: "description", value: query.description, boundary: boundary)
+        
+            if let imageData = query.image {
+                appendImageField(&body, name: "image", imageData: imageData, boundary: boundary)
+            }
+        }
+
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        return body
+    }
+    
+
+    private func appendField(_ body: inout Data, name: String, value: String?, boundary: String) {
+        guard let value = value else { return }
+        
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(value)\r\n".data(using: .utf8)!)
+    }
+
+    private func appendImageField(_ body: inout Data, name: String, imageData: Data, boundary: String) {
+        let filename = "channelImage.jpg"
+        let mimeType = "image/jpeg"
+        
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+        body.append(imageData)
+        body.append("\r\n".data(using: .utf8)!)
+    }
+}
