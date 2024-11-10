@@ -14,5 +14,7 @@ final class CreateChannelIntent {
         self.model = model
     }
     
-    func createChannel(_ workspaceID: String) {}
+    func createChannel(_ workspaceID: String, input: ChannelInput) {
+        model?.createChannel(workspaceID, input: input)
+    }
 }

@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct ChannelQuery {
+    let name: String
+    let description: String?
+    let image: Data?
+}

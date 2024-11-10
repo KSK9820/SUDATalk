@@ -14,12 +14,16 @@ struct LoginView: View {
     @State var cancellables = Set<AnyCancellable>()
 
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
+        NavigationStack {
+            VStack {
+                Image(systemName: "globe")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                NavigationLink("이동") {
+                    CreateChannelView.build()
+                }
+            }
         }
-        .padding()
         .task {
             let query = SampleTest.user1
             

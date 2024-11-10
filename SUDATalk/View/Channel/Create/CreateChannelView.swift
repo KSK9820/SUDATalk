@@ -28,18 +28,55 @@ struct CreateChannelView: View {
         )
     }
     
-    var body: some View {
-        TextField("채널명을 입력하세요.", text: bindingName(for: \.channelName))
-        
-        TextField("채널을 설명하세요.", text: bindingName(for: \.description))
-        
-        Button(action: {
-            print("생성하기 버튼 클릭")
-        }, label: {
-            Text("생성")
-        })
+    private func bindingSubmitBtn(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, Bool>) -> Binding<Bool> {
+        Binding(
+            get: { container.model[keyPath: keyPath] },
+            set: { newValue in
+                container.model.activeSubmit = newValue
+            }
+        )
     }
+    
+    var body: some View {
+        VStack {
+            textfieldRow("채널 이름", description: "채널명을 입력하세요.", value: bindingName(for: \.channelName))
+            textfieldRow("채널 설명", description: "채널을 설명하세요.", value: bindingDesciption(for: \.description))
+            
+            Spacer()
+            
+            Text("생성")
+                .wrapToDefaultButton(active: bindingSubmitBtn(for: \.activeSubmit)) {
+                    let input = ChannelInput(name: bindingName(for: \.channelName).wrappedValue, description: bindingName(for: \.description).wrappedValue, image: nil)
+                    container.intent.createChannel(SampleTest.workspaceID, input: input)
+                }
 
+        }
+        .padding()
+        .navigationTitle("채널 생성")
+
+    }
+    
+    private func textfieldRow(_ title: String, description: String, value: Binding<String>) -> some View {
+        VStack {
+            Text(title)
+                .textStyle(.bodyBold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            TextField(description, text: value)
+                .textStyle(.body)
+                .padding(5)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.bottom, 10)
+                .onChange(of: value.wrappedValue) { _ in
+                    updateSubmitButtonState()
+                }
+        }
+    }
+    
+    private func updateSubmitButtonState() {
+        let value = !bindingName(for: \.channelName).wrappedValue.isEmpty && !bindingName(for: \.description).wrappedValue.isEmpty
+        bindingSubmitBtn(for: \.activeSubmit).wrappedValue = value
+    }
 }
 
 extension CreateChannelView {

@@ -48,6 +48,11 @@
 		484F52E52CDC5D73008F20D3 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52E42CDC5D73008F20D3 /* String+.swift */; };
 		484F52E92CDDD60F008F20D3 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52E82CDDD60F008F20D3 /* ImageCacheManager.swift */; };
 		484F52EB2CDDD7CE008F20D3 /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52EA2CDDD7CE008F20D3 /* ImageFileManager.swift */; };
+		484F52FA2CE0CFEE008F20D3 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52F92CE0CFEE008F20D3 /* DefaultButton.swift */; };
+		484F52FC2CE0DDDA008F20D3 /* ChannelQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52FB2CE0DDDA008F20D3 /* ChannelQuery.swift */; };
+		484F52FE2CE0E783008F20D3 /* MultipartFormDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */; };
+		484F53002CE0E90E008F20D3 /* ChannelResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52FF2CE0E90E008F20D3 /* ChannelResponse.swift */; };
+		484F53022CE10B86008F20D3 /* ChannelInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F53012CE10B85008F20D3 /* ChannelInput.swift */; };
 		488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3BFC2CD9011100B1E7F6 /* CreateChannelView.swift */; };
 		488E3BFF2CD901B300B1E7F6 /* CreateChannelIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3BFE2CD901B300B1E7F6 /* CreateChannelIntent.swift */; };
 		488E3C012CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C002CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift */; };
@@ -112,6 +117,11 @@
 		484F52E42CDC5D73008F20D3 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		484F52E82CDDD60F008F20D3 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		484F52EA2CDDD7CE008F20D3 /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
+		484F52F92CE0CFEE008F20D3 /* DefaultButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
+		484F52FB2CE0DDDA008F20D3 /* ChannelQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelQuery.swift; sourceTree = "<group>"; };
+		484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataBuilder.swift; sourceTree = "<group>"; };
+		484F52FF2CE0E90E008F20D3 /* ChannelResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponse.swift; sourceTree = "<group>"; };
+		484F53012CE10B85008F20D3 /* ChannelInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInput.swift; sourceTree = "<group>"; };
 		488E3BFC2CD9011100B1E7F6 /* CreateChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelView.swift; sourceTree = "<group>"; };
 		488E3BFE2CD901B300B1E7F6 /* CreateChannelIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelIntent.swift; sourceTree = "<group>"; };
 		488E3C002CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelModelStateProtocol.swift; sourceTree = "<group>"; };
@@ -215,6 +225,7 @@
 			children = (
 				48088BEB2CD60B50008DC165 /* DTO */,
 				48088BEC2CD60B76008DC165 /* ChannelRouter.swift */,
+				484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -233,6 +244,7 @@
 			children = (
 				48088BEF2CD60C62008DC165 /* ExploreResponse.swift */,
 				48088C102CD7C9D0008DC165 /* SendChatResponse.swift */,
+				484F52FF2CE0E90E008F20D3 /* ChannelResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -242,6 +254,7 @@
 			children = (
 				48088C0C2CD77667008DC165 /* Chatting */,
 				48088BF42CD62570008DC165 /* NavigationLazyView.swift */,
+				484F52F92CE0CFEE008F20D3 /* DefaultButton.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -269,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				48088C0E2CD79C1C008DC165 /* ChatQuery.swift */,
+				484F52FB2CE0DDDA008F20D3 /* ChannelQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -297,6 +311,7 @@
 			children = (
 				48088BF12CD617EF008DC165 /* ChannelListPresentationModel.swift */,
 				484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */,
+				484F53012CE10B85008F20D3 /* ChannelInput.swift */,
 			);
 			path = PresentationModel;
 			sourceTree = "<group>";
@@ -548,6 +563,7 @@
 				488E3C052CD9029C00B1E7F6 /* CreateChannelModel.swift in Sources */,
 				488E3C032CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift in Sources */,
 				53B9EDCD2CD61A98000BF728 /* KeyChainValue.swift in Sources */,
+				484F53002CE0E90E008F20D3 /* ChannelResponse.swift in Sources */,
 				48088BE72CD607F9008DC165 /* ExploreModel.swift in Sources */,
 				4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */,
 				48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */,
@@ -560,6 +576,7 @@
 				53C01D312CD24FFE00D35B95 /* EndPoint.swift in Sources */,
 				48088C012CD7336E008DC165 /* ChannelChattingIntent.swift in Sources */,
 				48088BF22CD617EF008DC165 /* ChannelListPresentationModel.swift in Sources */,
+				484F52FE2CE0E783008F20D3 /* MultipartFormDataBuilder.swift in Sources */,
 				48088BF72CD625EF008DC165 /* ChannelChattingView.swift in Sources */,
 				484F52DE2CDB5E3A008F20D3 /* ChattingEntity.swift in Sources */,
 				48088C052CD73402008DC165 /* ChannelChattingModelStateProtocol.swift in Sources */,
@@ -567,6 +584,7 @@
 				48088BF02CD60C62008DC165 /* ExploreResponse.swift in Sources */,
 				488E3BFF2CD901B300B1E7F6 /* CreateChannelIntent.swift in Sources */,
 				484F52E52CDC5D73008F20D3 /* String+.swift in Sources */,
+				484F52FC2CE0DDDA008F20D3 /* ChannelQuery.swift in Sources */,
 				53C01D2D2CD24A1E00D35B95 /* NetworkError.swift in Sources */,
 				53C01D2F2CD24C3900D35B95 /* EndPointConfigurable.swift in Sources */,
 				48088BDF2CD606A8008DC165 /* Container.swift in Sources */,
@@ -587,6 +605,7 @@
 				488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */,
 				48088BC42CD5052E008DC165 /* Colors.swift in Sources */,
 				4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */,
+				484F53022CE10B86008F20D3 /* ChannelInput.swift in Sources */,
 				48088C112CD7C9D0008DC165 /* SendChatResponse.swift in Sources */,
 				48088C032CD733E7008DC165 /* ChannelChattingModel.swift in Sources */,
 				48088BC22CD504B7008DC165 /* Images.swift in Sources */,
@@ -599,6 +618,7 @@
 				53B9EDCB2CD6182A000BF728 /* KeyChainManager.swift in Sources */,
 				4815F8D62CD37414009FC599 /* NetworkManager.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,
+				484F52FA2CE0CFEE008F20D3 /* DefaultButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
