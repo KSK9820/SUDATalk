@@ -11,6 +11,7 @@ enum NetworkError: Error {
     case unknown
     case notFoundBaseURL
     case notFoundAPIKey
+    case code(data: Data)
 }
 
 extension NetworkError: CustomStringConvertible {
@@ -22,6 +23,8 @@ extension NetworkError: CustomStringConvertible {
             return "BaseURL이 없습니다."
         case .notFoundAPIKey:
             return "APIKey가 없습니다."
+        default:
+            return ""
         }
     }
 }

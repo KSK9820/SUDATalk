@@ -10,6 +10,7 @@ import Foundation
 enum EndPointHeader {
     case authorization
     case nonAuthorization
+    case multipartform
     case multipartType(boundary: String)
 }
 
@@ -34,6 +35,15 @@ extension EndPointHeader {
             case .nonAuthorization:
                 return ["Content-Type": "application/json",
                         "SesacKey": apiKey]
+            case .multipartform:
+                if let accessToken = KeyChainManager.shared.read(key: .accessToken) {
+                    return ["Authorization": accessToken,
+                            "Content-Type": "multipart/form-data",
+                            "SesacKey": apiKey]
+                } else {
+                    return ["Content-Type": "multipart/form-data",  
+                            "SesacKey": apiKey]
+                }
             case .multipartType(let boundary):
                 if let accessToken = KeyChainManager.shared.read(key: .accessToken) {
                     return ["Authorization": accessToken,

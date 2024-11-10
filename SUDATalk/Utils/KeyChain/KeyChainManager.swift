@@ -13,6 +13,7 @@ final class KeyChainManager {
     
     private init() {}
     
+    @discardableResult
     func save(key: KeyChainValue, value: String) -> Bool {
         guard let data = value.data(using: .utf8) else {
             return false
