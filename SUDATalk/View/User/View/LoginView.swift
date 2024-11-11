@@ -36,8 +36,8 @@ struct LoginView: View {
                             print(failure)
                         }
                     }, receiveValue: { value in
-                        let _ = KeyChainManager.shared.save(key: .accessToken, value: value.token.accessToken)
-                        let _ = KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
+                        KeyChainManager.shared.save(key: .accessToken, value: value.token.accessToken)
+                        KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
                     })
                     .store(in: &cancellables)
                 
