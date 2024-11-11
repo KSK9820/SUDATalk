@@ -178,6 +178,7 @@
 			children = (
 				48088BDA2CD60565008DC165 /* Channel */,
 				48088BB52CD4AEC6008DC165 /* User */,
+				48088BF82CD63E0C008DC165 /* Container */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -215,7 +216,6 @@
 				484F52DA2CDB4082008F20D3 /* Create */,
 				484F52D92CDB26A8008F20D3 /* Chatting */,
 				484F52D82CD90CBC008F20D3 /* PresentationModel */,
-				48088BF82CD63E0C008DC165 /* Container */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -223,6 +223,7 @@
 		48088BEA2CD60B48008DC165 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				48088C0D2CD79C11008DC165 /* Query */,
 				48088BEB2CD60B50008DC165 /* DTO */,
 				48088BEC2CD60B76008DC165 /* ChannelRouter.swift */,
 				484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */,
@@ -233,7 +234,6 @@
 		48088BEB2CD60B50008DC165 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				48088C0D2CD79C11008DC165 /* Query */,
 				48088BEE2CD60C46008DC165 /* Response */,
 			);
 			path = DTO;
