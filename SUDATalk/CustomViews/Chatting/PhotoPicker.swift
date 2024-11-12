@@ -53,7 +53,7 @@ public struct PhotoPicker<Content: View>: View {
                 .disabled(disabled)
         }
         .disabled(disabled)
-        .onChange(of: selectedPhotos) { _, newValue in
+        .onChange(of: selectedPhotos) { newValue in
             handleSelectedPhotos(newValue)
         }
     }

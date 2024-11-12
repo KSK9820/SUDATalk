@@ -12,6 +12,7 @@ enum NetworkAPIError: String, Error {
     case E02
     case E03
     case E11
+    case E12
     case E13
     case E97
     case E98
@@ -33,6 +34,8 @@ extension NetworkAPIError: CustomStringConvertible {
             "액세스토큰 만료에 해당하는 응답값입니다."
         case .E11:
             "잘못된 요청입니다."
+        case .E12:
+            "중복된 데이터입니다."
         case .E13:
             "존재하지 않는 데이터입니다."
         case .E97:

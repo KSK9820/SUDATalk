@@ -14,8 +14,8 @@ final class ChannelChattingIntent {
         self.model = model
     }
     
-    func viewOnAppear(workspaceID: String, channelID: String, date: String) {
-        model?.viewOnAppear(workspaceID: workspaceID, channelID: channelID, date: date)
+    func viewOnAppear(workspaceID: String, channelID: String) {
+        model?.viewOnAppear(workspaceID: workspaceID, channelID: channelID)
     }
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {

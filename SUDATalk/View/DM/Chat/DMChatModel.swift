@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 
 final class DMChatModel: ObservableObject, ModelStateProtocol {
-    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager()
     private var cancellables = Set<AnyCancellable>()
     
     @Published var messageText: String = ""
@@ -22,7 +22,7 @@ extension DMChatModel: ModelActionProtocol {
         do {
             let request = try DMRouter.chats(workspaceID: SampleTest.workspaceId, roomID: SampleTest.roomID, body: query).makeRequest()
             
-            networkManager.fetchDecodedData(request, model: DMChatResponse.self)
+            networkManager.getDecodedDataTaskPublisher(request, model: DMChatResponse.self)
                 .sink { completion in
                     if case .failure(let failure) = completion {
                         print(failure)

@@ -14,7 +14,7 @@ final class ChattingRepository {
     init?() {
         do {
             self.realm = try Realm()
-            print(realm.configuration.fileURL)
+            print(realm.configuration.fileURL ?? "")
         } catch let error as NSError {
             print("Failed to initialize Realm with error: \(error.localizedDescription)")
             return nil
@@ -40,5 +40,11 @@ final class ChattingRepository {
         } catch {
             print("addChatting: \(error)")
         }
+    }
+    
+    func fetchChatting(_ channelID: String) -> [ChattingPresentationModel] {
+        let chatList = realm.objects(ChattingEntity.self).filter{ $0.channelID == channelID }
+        
+        return chatList.map { $0.convertToModel() }
     }
 }

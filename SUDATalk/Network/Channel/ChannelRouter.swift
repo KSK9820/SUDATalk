@@ -13,6 +13,7 @@ enum ChannelRouter {
     case sendChat(workspaceID: String, channelID: String, query: ChatQuery)
     case fetchChat(workspaceID: String, channelID: String, date: String)
     case fetchImage(url: String)
+    case createChannel(workspaceID: String, query: ChannelQuery)
 }
 
 extension ChannelRouter {
@@ -32,7 +33,7 @@ extension ChannelRouter {
             ).asURLRequest()
         case .sendChat(let workspaceID, let channelID, let query):
             let boundary = "Boundary-\(UUID().uuidString)"
-            let body = createMultipartBody(content: query.content, imageData: query.files, boundary: boundary)
+            let body = MultipartFormDataBuilder.createMultipartBody(query: query, boundary: boundary)
 
             return try EndPoint(
                 method: .post,
@@ -47,7 +48,7 @@ extension ChannelRouter {
                 header: EndPointHeader.authorization.header,
                 parameter: [URLQueryItem(name: "cursor_date", value: date)]
             ).asURLRequest()
-        case .fetchImage(url: let url):
+        case .fetchImage(let url):
             let arrUrl = url.split(separator: "/").map{ String($0) }
             
             return try EndPoint(
@@ -55,27 +56,16 @@ extension ChannelRouter {
                 path: arrUrl,
                 header: EndPointHeader.multipartType(boundary: "Boundary-\(UUID().uuidString)").header
             ).asURLRequest()
+        case .createChannel(let workspaceID, let query):
+            let boundary = "Boundary-\(UUID().uuidString)"
+            let body = MultipartFormDataBuilder.createMultipartBody(query: query, boundary: boundary)
+            
+            return try EndPoint(
+                method: .post,
+                path: ["workspaces", workspaceID, "channels"],
+                header: EndPointHeader.multipartType(boundary: boundary).header,
+                multipartBody: body
+            ).asURLRequest()
         }
-    }
-    
-    private func createMultipartBody(content: String, imageData: [Data], boundary: String) -> Data {
-        var body = Data()
-        
-            body.append("--\(boundary)\r\n".data(using: .utf8)!)
-            body.append("Content-Disposition: form-data; name=\"content\"\r\n\r\n".data(using: .utf8)!)
-            body.append("\(content)\r\n".data(using: .utf8)!)
-        
-        imageData.forEach { data in
-            let filename = "chatimage\(index).jpg"
-            let mimeType = "image/jpeg"
-            body.append("--\(boundary)\r\n".data(using: .utf8)!)
-            body.append("Content-Disposition: form-data; name=\"files\"; filename=\"\(filename)\"\r\n".data(using: .utf8)!)
-            body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
-            body.append(data)
-            body.append("\r\n".data(using: .utf8)!)
-        }
-        
-        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-        return body
     }
 }

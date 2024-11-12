@@ -29,17 +29,25 @@ struct ChannelChattingView: View {
     }
     
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(container.model.chatting.indices, id: \.self) { index in
-                    let item = container.model.chatting[index]
-    
-                    ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
-                        .task {
-                            if !item.files.isEmpty {
-                                container.intent.fetchImages(item.files, index: index)
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack {
+                    ForEach(container.model.chatting.indices, id: \.self) { index in
+                        let item = container.model.chatting[index]
+                        
+                        ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                            .id(index)
+                            .task {
+                                if !item.files.isEmpty {
+                                    container.intent.fetchImages(item.files, index: index)
+                                }
                             }
-                        }
+                    }
+                }
+                .onChange(of: container.model.chatting.count) { _ in
+                    withAnimation {
+                        proxy.scrollTo(container.model.chatting.count - 1, anchor: .bottom)
+                    }
                 }
             }
         }
@@ -56,7 +64,7 @@ struct ChannelChattingView: View {
             }
         })
         .navigationTitle(container.model.channel?.name ?? "")
-        .onChange(of: container.model.uploadStatus) { _, newValue in
+        .onChange(of: container.model.uploadStatus) { newValue in
             if newValue {
                 container.model.messageText = ""
                 container.model.selectedImages = []
@@ -66,8 +74,7 @@ struct ChannelChattingView: View {
         .onAppear {
             if let channel = container.model.channel {
                 container.intent.viewOnAppear(workspaceID: container.model.workspaceID,
-                                              channelID: channel.channelID,
-                                              date: "2024-11-04T08:11:07.252Z")
+                                              channelID: channel.channelID)
             }
         }
     }

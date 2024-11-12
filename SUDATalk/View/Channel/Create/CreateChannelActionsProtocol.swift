@@ -7,4 +7,6 @@
 
 import Foundation
 
-protocol CreateChannelActionsProtocol: AnyObject {}
+protocol CreateChannelActionsProtocol: AnyObject {
+    func createChannel(_ workspaceID: String, input: ChannelInput) 
+}

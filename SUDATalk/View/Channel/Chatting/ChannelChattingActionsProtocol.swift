@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ChannelChattingActionsProtocol: AnyObject {
-    func viewOnAppear(workspaceID: String, channelID: String, date: String)
+    func viewOnAppear(workspaceID: String, channelID: String)
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage])
     func fetchImages(_ urls: [String], index: Int)
 }

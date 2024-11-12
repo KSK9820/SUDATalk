@@ -9,9 +9,9 @@ import Combine
 import SwiftUI
 
 final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
-    var cancellables: Set<AnyCancellable> = []
-    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
-    let repositiory = ChattingRepository()
+    private var cancellables: Set<AnyCancellable> = []
+    private let networkManager = NetworkManager()
+    private let repositiory = ChattingRepository()
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -22,11 +22,16 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 }
 
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
-    func viewOnAppear(workspaceID: String, channelID: String, date: String) {
-        do {
-            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
+    func viewOnAppear(workspaceID: String, channelID: String) {
+        guard let chatDatafromDB = repositiory?.fetchChatting(channelID) else { return }
+        chatting.append(contentsOf: chatDatafromDB)
+        
+        guard let lastChatDate = chatDatafromDB.last?.createdAt else { return }
+
+          do {
+            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: lastChatDate).makeRequest()
             
-            networkManager.fetchDecodedData(requestChannel, model: [SendChatResponse].self)
+            networkManager.getDecodedDataTaskPublisher(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
                         print(failure)
@@ -34,6 +39,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 }, receiveValue: { [weak self] value in
                     value.forEach { item in
                         self?.chatting.append(item.convertToModel())
+                        self?.repositiory?.addChatting(item)
                     }
                 })
                 .store(in: &cancellables)
@@ -48,7 +54,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             let query = ChatQuery(content: content, files: imageData)
             let requestChannel = try ChannelRouter.sendChat(workspaceID: workspaceID, channelID: channelID, query: query).makeRequest()
             
-            networkManager.fetchDecodedData(requestChannel, model: SendChatResponse.self)
+            networkManager.getDecodedDataTaskPublisher(requestChannel, model: SendChatResponse.self)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
@@ -56,6 +62,12 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     }
                 }, receiveValue: { [weak self] value in
                     print(value)
+                    if !value.files.isEmpty {
+                        value.files.enumerated().forEach { (index, url) in
+                            ImageFileManager.shared.saveImageToDocument(image: images[index], fileUrl: url)
+                        }
+                    }
+                    
                     self?.repositiory?.addChatting(value)
                     self?.uploadStatus = true
                 })
@@ -68,21 +80,36 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func fetchImages(_ urls: [String], index: Int) {
         let dispatchGroup = DispatchGroup()
         var chatImages: [Data] = []
-        
+
         urls.forEach { url in
+            if let cachedImage = ImageCacheManager.shard.loadImageFromCache(forKey: url) {
+                chatImages.append(cachedImage)
+                return
+            }
+            
+            if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
+                chatImages.append(fileManagerImage)
+                ImageCacheManager.shard.saveImageToCache(imageData: fileManagerImage, forKey: url)
+                return
+            }
+            
+            dispatchGroup.enter()
+            
             do {
                 let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
-                
-                dispatchGroup.enter()
-                
-                networkManager.fetchData(requestChannel)
+
+                networkManager.getDataTaskPublisher(requestChannel)
                     .sink { completion in
                         if case .failure(let failure) = completion {
                             print(failure)
                             dispatchGroup.leave()
                         }
                     } receiveValue: { value in
+                        ImageCacheManager.shard.saveImageToCache(imageData: value, forKey: url)
                         chatImages.append(value)
+                        if let image = UIImage(data: value) {
+                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+                        }
                         dispatchGroup.leave()
                     }
                     .store(in: &cancellables)
@@ -93,31 +120,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
         
         dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.chatting[index].images.append(contentsOf: chatImages)
+            self?.chatting[index].images = chatImages
         }
-    }
-    
-    func imageConvertToData(images: [UIImage], maxSizeMB: Double) -> [Data] {
-        var data: [Data] = []
-        for (index, image) in images.enumerated() {
-            var compressionQuality: CGFloat = 0.8
-            var imageData = image.jpegData(compressionQuality: compressionQuality)
-            
-            while let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB, compressionQuality > 0.1 {
-                compressionQuality -= 0.1
-                imageData = image.jpegData(compressionQuality: compressionQuality)
-            }
-            
-            if let data = imageData, Double(data.count) / (1024 * 1024) > maxSizeMB {
-                print("이미지[\(index)]가 용량을 초과합니다.")
-                continue
-            }
-            
-            guard let imageData else { return [Data()] }
-            
-            data.append(imageData)
-        }
-        
-        return data
     }
 }

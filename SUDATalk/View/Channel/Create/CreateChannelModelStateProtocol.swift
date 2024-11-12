@@ -10,4 +10,5 @@ import Foundation
 protocol CreateChannelModelStateProtocol {
     var channelName: String { get set }
     var description: String { get set }
+    var activeSubmit: Bool { get set }
 }
