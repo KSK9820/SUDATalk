@@ -10,7 +10,7 @@ import SwiftUI
 
 final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
     private var cancellables: Set<AnyCancellable> = []
-    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager()
     private let repositiory = ChattingRepository()
     
     @Published var channel: ChannelListPresentationModel?
@@ -31,7 +31,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
           do {
             let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: lastChatDate).makeRequest()
             
-            networkManager.fetchDecodedData(requestChannel, model: [SendChatResponse].self)
+            networkManager.getDecodedDataTaskPublisher(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
                         print(failure)
@@ -54,7 +54,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             let query = ChatQuery(content: content, files: imageData)
             let requestChannel = try ChannelRouter.sendChat(workspaceID: workspaceID, channelID: channelID, query: query).makeRequest()
             
-            networkManager.fetchDecodedData(requestChannel, model: SendChatResponse.self)
+            networkManager.getDecodedDataTaskPublisher(requestChannel, model: SendChatResponse.self)
                 .receive(on: DispatchQueue.main)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
@@ -98,7 +98,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             do {
                 let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
 
-                networkManager.fetchData(requestChannel)
+                networkManager.getDataTaskPublisher(requestChannel)
                     .sink { completion in
                         if case .failure(let failure) = completion {
                             print(failure)

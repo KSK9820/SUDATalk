@@ -9,5 +9,5 @@ import Combine
 import Foundation
 
 protocol DecodedDataFetchable {
-    func getDecodedDataPublisher<D: Decodable>(response: AnyPublisher<Data, any Error>, model: D.Type) -> AnyPublisher<D, Error>
+    func getDecodedDataTaskPublisher<D: Decodable>(_ request: URLRequest, model: D.Type) -> AnyPublisher<D, Error> 
 }

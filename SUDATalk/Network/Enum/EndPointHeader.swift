@@ -12,6 +12,7 @@ enum EndPointHeader {
     case nonAuthorization
     case multipartform
     case multipartType(boundary: String)
+    case refreshToken
 }
 
 extension EndPointHeader {
@@ -51,6 +52,16 @@ extension EndPointHeader {
                             "SesacKey": apiKey]
                 } else {
                     return ["Content-Type": "multipart/form-data;boundary=\(boundary)",
+                            "SesacKey": apiKey]
+                }
+            case .refreshToken:
+                if let accessToken = KeyChainManager.shared.read(key: .accessToken),
+                   let refreshToken = KeyChainManager.shared.read(key: .refreshToken) {
+                    return ["RefreshToken": refreshToken,
+                            "Authorization": accessToken,
+                            "SesacKey": apiKey]
+                } else {
+                    return ["Content-Type": "application/json",
                             "SesacKey": apiKey]
                 }
             }

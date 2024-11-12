@@ -10,7 +10,7 @@ import Foundation
 
 final class CreateChannelModel: ObservableObject, CreateChannelModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
-    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager()
     
     @Published var channelName: String = ""
     @Published var description: String = ""
@@ -30,9 +30,19 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
             
             let request = try ChannelRouter.createChannel(workspaceID: workspaceID, query: query).makeRequest()
             
-            networkManager.fetchDecodedData(request, model: ChannelResponse.self)
-                .sink { error in
-                    print(error)
+            networkManager.getDecodedDataTaskPublisher(request, model: ChannelResponse.self)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        if let networkError = error as? NetworkAPIError {
+                            switch networkError {
+                            case .E12:
+                                print("에러")
+                            default:
+                                break
+                            }
+                        }
+                    }
+                    
                 } receiveValue: { value in
                     print(value)
                 }

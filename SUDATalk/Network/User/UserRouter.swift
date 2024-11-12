@@ -9,6 +9,7 @@ import Foundation
 
 enum UserRouter {
     case login(query: Encodable)
+    case refresh
 }
 
 extension UserRouter {
@@ -20,6 +21,12 @@ extension UserRouter {
                 path: ["users", "login"],
                 header: EndPointHeader.nonAuthorization.header,
                 body: login
+            ).asURLRequest()
+        case .refresh:
+            return try EndPoint(
+                method: .get,
+                path: ["auth", "refresh"],
+                header: EndPointHeader.refreshToken.header
             ).asURLRequest()
         }
     }
