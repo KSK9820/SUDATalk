@@ -8,11 +8,7 @@
 import Foundation
 
 final class MultipartFormDataBuilder {
-    static let shared = MultipartFormDataBuilder()
-    
-    private init() {}
-    
-    func createMultipartBody(query: ChatQuery, boundary: String) -> Data {
+    static func createMultipartBody(query: ChatQuery, boundary: String) -> Data {
         var body = Data()
         
         appendField(&body, name: "content", value: query.content, boundary: boundary)
@@ -26,7 +22,7 @@ final class MultipartFormDataBuilder {
         return body
     }
     
-    func createMultipartBody(query: ChannelQuery, boundary: String) -> Data {
+    static func createMultipartBody(query: ChannelQuery, boundary: String) -> Data {
         var body = Data()
         
         appendField(&body, name: "name", value: query.name, boundary: boundary)
@@ -41,7 +37,7 @@ final class MultipartFormDataBuilder {
         return body
     }
     
-    private func appendField(_ body: inout Data, name: String, value: String?, boundary: String) {
+    private static func appendField(_ body: inout Data, name: String, value: String?, boundary: String) {
         guard let value = value else { return }
         
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
@@ -49,7 +45,7 @@ final class MultipartFormDataBuilder {
         body.append("\(value)\r\n".data(using: .utf8)!)
     }
 
-    private func appendImageField(_ body: inout Data, name: String, imageData: Data, boundary: String) {
+    private static func appendImageField(_ body: inout Data, name: String, imageData: Data, boundary: String) {
         let filename = "channelImage.jpg"
         let mimeType = "image/jpeg"
         

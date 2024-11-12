@@ -33,7 +33,7 @@ extension ChannelRouter {
             ).asURLRequest()
         case .sendChat(let workspaceID, let channelID, let query):
             let boundary = "Boundary-\(UUID().uuidString)"
-            let body = MultipartFormDataBuilder.shared.createMultipartBody(query: query, boundary: boundary)
+            let body = MultipartFormDataBuilder.createMultipartBody(query: query, boundary: boundary)
 
             return try EndPoint(
                 method: .post,
@@ -58,7 +58,7 @@ extension ChannelRouter {
             ).asURLRequest()
         case .createChannel(let workspaceID, let query):
             let boundary = "Boundary-\(UUID().uuidString)"
-            let body = MultipartFormDataBuilder.shared.createMultipartBody(query: query, boundary: boundary)
+            let body = MultipartFormDataBuilder.createMultipartBody(query: query, boundary: boundary)
             
             return try EndPoint(
                 method: .post,
