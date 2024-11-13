@@ -44,12 +44,11 @@ struct ChannelChattingView: View {
                             }
                     }
                 }
-                .onChange(of: container.model.chatting.count) { _ in
-                    withAnimation {
-                        proxy.scrollTo(container.model.chatting.count - 1, anchor: .bottom)
-                    }
-                }
+                .rotationEffect(Angle(degrees: 180))
+                .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
+            .rotationEffect(Angle(degrees: 180))
+            .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         }
         
         Spacer()
@@ -64,6 +63,11 @@ struct ChannelChattingView: View {
             }
         })
         .navigationTitle(container.model.channel?.name ?? "")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Images.detail
+            }
+        }
         .onChange(of: container.model.uploadStatus) { newValue in
             if newValue {
                 container.model.messageText = ""

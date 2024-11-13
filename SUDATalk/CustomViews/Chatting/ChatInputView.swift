@@ -10,6 +10,7 @@ import SwiftUI
 struct ChatInputView: View {
     @Binding var messageText: String
     @Binding var selectedImages: [UIImage]
+    @State private var buttonColor: Color = .gray
     
     var onRemoveImage: ((Int) -> Void)?
     var sendButtonTap: (() -> Void)?
@@ -35,12 +36,28 @@ struct ChatInputView: View {
                 sendButtonTap?()
             }, label: {
                 Image("message")
+                    .foregroundColor(buttonColor)
             })
-            
+            .onChange(of: messageText) { _ in
+                updateButtonColor()
+            }
+            .onChange(of: selectedImages) { _ in
+                updateButtonColor()
+            }
+
         }
         .padding(.horizontal)
         .background(Colors.gray)
         .cornerRadius(15)
         .padding()
+    }
+    
+    
+    private func updateButtonColor() {
+        if !messageText.isEmpty || !selectedImages.isEmpty {
+            buttonColor = Colors.primary
+        } else {
+            buttonColor = Colors.inactive
+        }
     }
 }
