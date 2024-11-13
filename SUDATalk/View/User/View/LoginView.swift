@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 
 struct LoginView: View {
-    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
+    private let networkManager = NetworkManager()
     
     @State var cancellables = Set<AnyCancellable>()
 
@@ -20,7 +20,7 @@ struct LoginView: View {
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 NavigationLink("이동") {
-                    CreateChannelView.build()
+                    DMChatView<DMChatModel>.build()
                 }
             }
         }
@@ -30,7 +30,7 @@ struct LoginView: View {
             do {
                 let request = try UserRouter.login(query: query).makeRequest()
                 
-                networkManager.fetchDecodedData(request, model: LoginResponse.self)
+                networkManager.getDecodedDataTaskPublisher(request, model: LoginResponse.self)
                     .sink(receiveCompletion: { completion in
                         if case .failure(let failure) = completion {
                             print(failure)

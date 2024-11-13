@@ -9,11 +9,15 @@ import Foundation
 import UniformTypeIdentifiers
 
 extension Data {
-    func toMultiPartData() -> MultipartBodyData {
-        MultipartBodyData(name: "files", fileName: createFileName(), mimeType: getMimeType(for: self), data: self)
+    func createFileName() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
+        let dateString = dateFormatter.string(from: Date())
+        
+        return "file_\(dateString)"
     }
     
-    private func getMimeType(for data: Data) -> String {
+    func getMimeType(for data: Data) -> String {
         let bytes = [UInt8](data.prefix(1))
         
         switch bytes {
@@ -23,13 +27,5 @@ extension Data {
         case [0x49], [0x4D]: return "image/tiff"
         default: return "application/octet-stream"
         }
-    }
-    
-    private func createFileName() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd_HHmmss"
-        let dateString = dateFormatter.string(from: Date())
-        
-        return "file_\(dateString)"
     }
 }
