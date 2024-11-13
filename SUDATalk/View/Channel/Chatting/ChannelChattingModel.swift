@@ -123,4 +123,28 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             self?.chatting[index].images = chatImages
         }
     }
+    
+    func fetchProfileImages(_ url: String, index: Int) {
+        if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
+            chatting[index].user.profileImageData = cachedImage
+            return
+        }
+        
+        do {
+            let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
+            
+            networkManager.getDataTaskPublisher(requestChannel)
+                .sink { completion in
+                    if case .failure(let failure) = completion {
+                        print(failure)
+                    }
+                } receiveValue: { [weak self] value in
+                    ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+                    self?.chatting[index].user.profileImageData = value
+                }
+                .store(in: &cancellables)
+        } catch {
+            print("Error: \(error)")
+        }
+    }
 }

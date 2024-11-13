@@ -11,7 +11,7 @@ struct ChattingPresentationModel {
     let channelID, channelName, chatID, content: String
     let createdAt: String
     let files: [String]
-    let user: ChatUserPresentationModel
+    var user: ChatUserPresentationModel
     var images: [Data]
 
     enum CodingKeys: String, CodingKey {
@@ -22,9 +22,10 @@ struct ChattingPresentationModel {
     }
 }
 
-struct ChatUserPresentationModel: Decodable {
+struct ChatUserPresentationModel {
     let userID, email, nickname: String
-    let profileImage: String?
+    let profileImageUrl: String?
+    var profileImageData: Data
 
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"

@@ -29,7 +29,7 @@ final class ChattingEntity: Object, ObjectKeyIdentifiable {
     }
     
     func convertToModel() -> ChattingPresentationModel {
-        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content, createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImage: nil), images: [])
+        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content, createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImageUrl: nil, profileImageData: Data()), images: [])
     }
 }
 
@@ -49,6 +49,6 @@ final class UserEntity: Object, ObjectKeyIdentifiable {
     }
     
     func convertToModel() -> ChatUserPresentationModel {
-        .init(userID: userID, email: email, nickname: nickname, profileImage: profileImage)
+        .init(userID: userID, email: email, nickname: nickname, profileImageUrl: profileImage, profileImageData: Data())
     }
 }
