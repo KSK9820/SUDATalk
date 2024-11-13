@@ -82,14 +82,14 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         var chatImages: [Data] = []
 
         urls.forEach { url in
-            if let cachedImage = ImageCacheManager.shard.loadImageFromCache(forKey: url) {
+            if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
                 chatImages.append(cachedImage)
                 return
             }
             
             if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
                 chatImages.append(fileManagerImage)
-                ImageCacheManager.shard.saveImageToCache(imageData: fileManagerImage, forKey: url)
+                ImageCacheManager.shared.saveImageToCache(imageData: fileManagerImage, forKey: url)
                 return
             }
             
@@ -105,7 +105,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                             dispatchGroup.leave()
                         }
                     } receiveValue: { value in
-                        ImageCacheManager.shard.saveImageToCache(imageData: value, forKey: url)
+                        ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
                         chatImages.append(value)
                         if let image = UIImage(data: value) {
                             ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
