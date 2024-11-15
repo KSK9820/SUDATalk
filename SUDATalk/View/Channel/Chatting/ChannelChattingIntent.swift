@@ -25,4 +25,16 @@ final class ChannelChattingIntent {
     func fetchImages(_ urls: [String], index: Int) {
         model?.fetchImages(urls, index: index)
     }
+    
+    func fetchProfileImages(_ url: String, index: Int) {
+        model?.fetchProfileImages(url, index: index)
+    }
+    
+    func appActive() {
+        model?.appActive()
+    }
+    
+    func appInactive() {
+        model?.appInactive()
+    }
 }

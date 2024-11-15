@@ -25,4 +25,5 @@ enum Images {
     static let profile = Image("profile")
     static let setting = Image("setting")
     static let home = Image("home")
+    static let detail = Image("detail")
 }

@@ -35,6 +35,6 @@ struct UserResponse: Decodable {
     }
     
     func convertToModel() -> ChatUserPresentationModel {
-        .init(userID: userID, email: email, nickname: nickname, profileImage: profileImage)
+        .init(userID: userID, email: email, nickname: nickname, profileImageUrl: profileImage, profileImageData: Data())
     }
 }

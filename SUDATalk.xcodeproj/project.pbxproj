@@ -40,6 +40,8 @@
 		4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D52CD37414009FC599 /* UserRouter.swift */; };
 		4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D82CD37F0D009FC599 /* LoginQuery.swift */; };
 		4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8DC2CD38063009FC599 /* LoginResponse.swift */; };
+		48486B3B2CE6E382006C668E /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 48486B3A2CE6E382006C668E /* SocketIO */; };
+		48486B3D2CE6E3BA006C668E /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B3C2CE6E3BA006C668E /* WebSocketManager.swift */; };
 		484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */; };
 		484F52DE2CDB5E3A008F20D3 /* ChattingEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */; };
 		484F52E02CDB61F0008F20D3 /* ChattingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */; };
@@ -126,6 +128,7 @@
 		4815F8D52CD37414009FC599 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		4815F8D82CD37F0D009FC599 /* LoginQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginQuery.swift; sourceTree = "<group>"; };
 		4815F8DC2CD38063009FC599 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		48486B3C2CE6E3BA006C668E /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 		484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPresentationModel.swift; sourceTree = "<group>"; };
 		484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingEntity.swift; sourceTree = "<group>"; };
 		484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRepository.swift; sourceTree = "<group>"; };
@@ -185,6 +188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				53C01D252CD246FE00D35B95 /* RealmSwift in Frameworks */,
+				48486B3B2CE6E382006C668E /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +266,7 @@
 				48088BEB2CD60B50008DC165 /* DTO */,
 				48088BEC2CD60B76008DC165 /* ChannelRouter.swift */,
 				484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */,
+				48486B3C2CE6E3BA006C668E /* WebSocketManager.swift */,
 			);
 			path = Channel;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 			name = SUDATalk;
 			packageProductDependencies = (
 				53C01D242CD246FE00D35B95 /* RealmSwift */,
+				48486B3A2CE6E382006C668E /* SocketIO */,
 			);
 			productName = SUDATalk;
 			productReference = 53D0C81E2CD213EB00034179 /* SUDATalk.app */;
@@ -644,6 +650,7 @@
 			packageReferences = (
 				535077302CD2440C00213CBC /* XCRemoteSwiftPackageReference "SwiftLint" */,
 				53C01D232CD246FE00D35B95 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				48486B392CE6E382006C668E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 53D0C81F2CD213EB00034179 /* Products */;
 			projectDirPath = "";
@@ -732,6 +739,7 @@
 				53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */,
 				48088C0B2CD76F1E008DC165 /* TextFieldAttachedImageView.swift in Sources */,
 				484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */,
+				48486B3D2CE6E3BA006C668E /* WebSocketManager.swift in Sources */,
 				488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */,
 				48088BC42CD5052E008DC165 /* Colors.swift in Sources */,
 				5357ADCE2CD929F600FB391A /* DMChatResponse.swift in Sources */,
@@ -972,6 +980,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		48486B392CE6E382006C668E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 16.1.1;
+			};
+		};
 		535077302CD2440C00213CBC /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint.git";
@@ -991,6 +1007,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		48486B3A2CE6E382006C668E /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 48486B392CE6E382006C668E /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
+		};
 		535077332CD244E100213CBC /* SwiftLintBuildToolPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 535077302CD2440C00213CBC /* XCRemoteSwiftPackageReference "SwiftLint" */;

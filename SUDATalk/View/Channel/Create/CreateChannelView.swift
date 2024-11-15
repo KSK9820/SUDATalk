@@ -28,7 +28,7 @@ struct CreateChannelView: View {
         )
     }
     
-    private func bindingSubmitBtn(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, Bool>) -> Binding<Bool> {
+    private func bindingSubmitButton(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, Bool>) -> Binding<Bool> {
         Binding(
             get: { container.model[keyPath: keyPath] },
             set: { newValue in
@@ -45,7 +45,7 @@ struct CreateChannelView: View {
             Spacer()
             
             Text("생성")
-                .wrapToDefaultButton(active: bindingSubmitBtn(for: \.activeSubmit)) {
+                .wrapToDefaultButton(active: bindingSubmitButton(for: \.activeSubmit)) {
                     let input = ChannelInput(name: bindingName(for: \.channelName).wrappedValue, description: bindingName(for: \.description).wrappedValue, image: nil)
                     container.intent.createChannel(SampleTest.workspaceID, input: input)
                 }
@@ -75,7 +75,7 @@ struct CreateChannelView: View {
     
     private func updateSubmitButtonState() {
         let value = !bindingName(for: \.channelName).wrappedValue.isEmpty && !bindingName(for: \.description).wrappedValue.isEmpty
-        bindingSubmitBtn(for: \.activeSubmit).wrappedValue = value
+        bindingSubmitButton(for: \.activeSubmit).wrappedValue = value
     }
 }
 

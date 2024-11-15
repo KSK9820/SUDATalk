@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChannelChattingView: View {
     @StateObject private var container: Container<ChannelChattingIntent, ChannelChattingModelStateProtocol>
+    @Environment(\.scenePhase) private var scenePhase
     
     private func binding(for keyPath: WritableKeyPath<ChannelChattingModelStateProtocol, String>) -> Binding<String> {
         Binding(
@@ -34,22 +35,28 @@ struct ChannelChattingView: View {
                 LazyVStack {
                     ForEach(container.model.chatting.indices, id: \.self) { index in
                         let item = container.model.chatting[index]
+                        let profileImage = UIImage(data: item.user.profileImageData)
+                            .map { Image(uiImage: $0) }
+                            ?? Image(systemName: "person.circle")
                         
-                        ChatCellView(image: Image(systemName: "star"), userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                        ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
                             .id(index)
                             .task {
+                                if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
+                                    container.intent.fetchProfileImages(profileUrl, index: index)
+                                }
+                                
                                 if !item.files.isEmpty {
                                     container.intent.fetchImages(item.files, index: index)
                                 }
                             }
                     }
                 }
-                .onChange(of: container.model.chatting.count) { _ in
-                    withAnimation {
-                        proxy.scrollTo(container.model.chatting.count - 1, anchor: .bottom)
-                    }
-                }
+                .rotationEffect(Angle(degrees: 180))
+                .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
+            .rotationEffect(Angle(degrees: 180))
+            .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         }
         
         Spacer()
@@ -64,6 +71,11 @@ struct ChannelChattingView: View {
             }
         })
         .navigationTitle(container.model.channel?.name ?? "")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Images.detail
+            }
+        }
         .onChange(of: container.model.uploadStatus) { newValue in
             if newValue {
                 container.model.messageText = ""
@@ -71,10 +83,22 @@ struct ChannelChattingView: View {
                 container.model.uploadStatus = false
             }
         }
-        .onAppear {
+        .task {
             if let channel = container.model.channel {
                 container.intent.viewOnAppear(workspaceID: container.model.workspaceID,
                                               channelID: channel.channelID)
+            }
+        }
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .background:
+                container.intent.appInactive()
+            case .inactive:
+                container.intent.appInactive()
+            case .active:
+                container.intent.appActive()
+            @unknown default:
+                print("unknown default")
             }
         }
     }
@@ -82,7 +106,7 @@ struct ChannelChattingView: View {
 
 extension ChannelChattingView {
     static func build(_ channel: ChannelListPresentationModel, workspaceID: String) -> some View {
-        let model = ChannelChattingModel()
+        let model = ChannelChattingModel(socketManager: WebSocketManager(channelID: channel.channelID))
         let intent = ChannelChattingIntent(model: model)
         
         model.workspaceID = workspaceID
