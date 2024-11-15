@@ -40,6 +40,11 @@
 		4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D52CD37414009FC599 /* UserRouter.swift */; };
 		4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8D82CD37F0D009FC599 /* LoginQuery.swift */; };
 		4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4815F8DC2CD38063009FC599 /* LoginResponse.swift */; };
+		48486B402CE6FCB0006C668E /* ChannelSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B3F2CE6FCB0006C668E /* ChannelSettingView.swift */; };
+		48486B422CE6FD02006C668E /* ChannelSettingIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B412CE6FD02006C668E /* ChannelSettingIntent.swift */; };
+		48486B442CE6FD15006C668E /* ChannelSettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B432CE6FD15006C668E /* ChannelSettingModel.swift */; };
+		48486B462CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B452CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift */; };
+		48486B482CE6FDCC006C668E /* ChannelSettingActionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B472CE6FDCC006C668E /* ChannelSettingActionProtocol.swift */; };
 		484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */; };
 		484F52DE2CDB5E3A008F20D3 /* ChattingEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */; };
 		484F52E02CDB61F0008F20D3 /* ChattingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */; };
@@ -126,6 +131,11 @@
 		4815F8D52CD37414009FC599 /* UserRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		4815F8D82CD37F0D009FC599 /* LoginQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginQuery.swift; sourceTree = "<group>"; };
 		4815F8DC2CD38063009FC599 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
+		48486B3F2CE6FCB0006C668E /* ChannelSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingView.swift; sourceTree = "<group>"; };
+		48486B412CE6FD02006C668E /* ChannelSettingIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingIntent.swift; sourceTree = "<group>"; };
+		48486B432CE6FD15006C668E /* ChannelSettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingModel.swift; sourceTree = "<group>"; };
+		48486B452CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingModelStateProtocol.swift; sourceTree = "<group>"; };
+		48486B472CE6FDCC006C668E /* ChannelSettingActionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingActionProtocol.swift; sourceTree = "<group>"; };
 		484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPresentationModel.swift; sourceTree = "<group>"; };
 		484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingEntity.swift; sourceTree = "<group>"; };
 		484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRepository.swift; sourceTree = "<group>"; };
@@ -247,6 +257,7 @@
 		48088BDA2CD60565008DC165 /* Channel */ = {
 			isa = PBXGroup;
 			children = (
+				48486B3E2CE6FC96006C668E /* Setting */,
 				484F52DB2CDB40BC008F20D3 /* Explore */,
 				484F52DA2CDB4082008F20D3 /* Create */,
 				484F52D92CDB26A8008F20D3 /* Chatting */,
@@ -339,6 +350,18 @@
 				48088BB22CD4AE5C008DC165 /* Response */,
 			);
 			path = DTO;
+			sourceTree = "<group>";
+		};
+		48486B3E2CE6FC96006C668E /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				48486B3F2CE6FCB0006C668E /* ChannelSettingView.swift */,
+				48486B412CE6FD02006C668E /* ChannelSettingIntent.swift */,
+				48486B432CE6FD15006C668E /* ChannelSettingModel.swift */,
+				48486B452CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift */,
+				48486B472CE6FDCC006C668E /* ChannelSettingActionProtocol.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		484F52D82CD90CBC008F20D3 /* PresentationModel */ = {
@@ -700,6 +723,7 @@
 				48088BF22CD617EF008DC165 /* ChannelListPresentationModel.swift in Sources */,
 				484F52FE2CE0E783008F20D3 /* MultipartFormDataBuilder.swift in Sources */,
 				48088BF72CD625EF008DC165 /* ChannelChattingView.swift in Sources */,
+				48486B462CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift in Sources */,
 				484F52DE2CDB5E3A008F20D3 /* ChattingEntity.swift in Sources */,
 				48088C052CD73402008DC165 /* ChannelChattingModelStateProtocol.swift in Sources */,
 				48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */,
@@ -726,6 +750,7 @@
 				484F52E22CDC5854008F20D3 /* ImageConverter.swift in Sources */,
 				53D0C8222CD213EB00034179 /* SUDATalkApp.swift in Sources */,
 				53A95C6E2CD7B9CD00A49267 /* LoginView.swift in Sources */,
+				48486B422CE6FD02006C668E /* ChannelSettingIntent.swift in Sources */,
 				5357ADE62CD92DEE00FB391A /* IntentProtocol.swift in Sources */,
 				48088BED2CD60B76008DC165 /* ChannelRouter.swift in Sources */,
 				5357ADEF2CD93CFF00FB391A /* ModelActionProtocol.swift in Sources */,
@@ -733,6 +758,7 @@
 				48088C0B2CD76F1E008DC165 /* TextFieldAttachedImageView.swift in Sources */,
 				484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */,
 				488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */,
+				48486B402CE6FCB0006C668E /* ChannelSettingView.swift in Sources */,
 				48088BC42CD5052E008DC165 /* Colors.swift in Sources */,
 				5357ADCE2CD929F600FB391A /* DMChatResponse.swift in Sources */,
 				4815F8DD2CD38063009FC599 /* LoginResponse.swift in Sources */,
@@ -747,7 +773,9 @@
 				48088BC62CD507F5008DC165 /* TextStyle.swift in Sources */,
 				48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */,
 				53B9EDCB2CD6182A000BF728 /* KeyChainManager.swift in Sources */,
+				48486B482CE6FDCC006C668E /* ChannelSettingActionProtocol.swift in Sources */,
 				5357ADD42CD92B2000FB391A /* DMChatQuery.swift in Sources */,
+				48486B442CE6FD15006C668E /* ChannelSettingModel.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,
 				484F52FA2CE0CFEE008F20D3 /* DefaultButton.swift in Sources */,
 				5357ADD02CD92B0E00FB391A /* DMUserResponse.swift in Sources */,
