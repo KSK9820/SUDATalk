@@ -12,6 +12,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
     private let repositiory = ChattingRepository()
+    private let socketManager:WebSocketManager
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -19,6 +20,15 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     @Published var selectedImages: [UIImage] = []
     @Published var uploadStatus: Bool = false
     @Published var chatting: [ChattingPresentationModel] = []
+    @AppStorage("userID") var userID: String?
+    
+    init(socketManager: WebSocketManager) {
+        self.socketManager = socketManager
+    }
+    
+    deinit {
+        socketManager.closeConnect()
+    }
 }
 
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
@@ -38,14 +48,17 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     }
                 }, receiveValue: { [weak self] value in
                     value.forEach { item in
-                        self?.chatting.append(item.convertToModel())
-                        self?.repositiory?.addChatting(item)
+                        DispatchQueue.main.async {
+                            self?.chatting.append(item.convertToModel())
+                            self?.repositiory?.addChatting(item)
+                        }
                     }
                 })
                 .store(in: &cancellables)
         } catch {
             print(error)
         }
+
     }
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
@@ -69,12 +82,15 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     }
                     
                     self?.repositiory?.addChatting(value)
+                    self?.chatting.append(value.convertToModel())
                     self?.uploadStatus = true
                 })
                 .store(in: &cancellables)
         } catch {
             print(error)
         }
+        
+        appActive()
     }
     
     func fetchImages(_ urls: [String], index: Int) {
@@ -146,5 +162,24 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         } catch {
             print("Error: \(error)")
         }
+    }
+    
+    func appActive() {
+        socketManager.establishConnect()
+        socketManager.chatData
+            .sink {  completion in
+                if case .failure(let failure) = completion {
+                    print(failure)
+                }
+            } receiveValue: { [weak self] value in
+                guard let userID = self?.userID, userID != value.user.userID else { return }
+                self?.chatting.append(value.convertToModel())
+                self?.repositiory?.addChatting(value)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func appInactive() {
+        socketManager.closeConnect()
     }
 }
