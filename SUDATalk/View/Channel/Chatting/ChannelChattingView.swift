@@ -73,7 +73,12 @@ struct ChannelChattingView: View {
         .navigationTitle(container.model.channel?.name ?? "")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Images.detail
+                NavigationLink {
+                    ChannelSettingView.build(container.model.workspaceID,
+                                             channelID: container.model.channel?.channelID ?? "")
+                } label: {
+                    Images.detail
+                }
             }
         }
         .onChange(of: container.model.uploadStatus) { newValue in

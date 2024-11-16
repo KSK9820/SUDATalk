@@ -30,7 +30,7 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
             
             let request = try ChannelRouter.createChannel(workspaceID: workspaceID, query: query).makeRequest()
             
-            networkManager.getDecodedDataTaskPublisher(request, model: ChannelResponse.self)
+            networkManager.getDecodedDataTaskPublisher(request, model: ChannelListResponse.self)
                 .sink { completion in
                     if case .failure(let error) = completion {
                         if let networkError = error as? NetworkAPIError {
