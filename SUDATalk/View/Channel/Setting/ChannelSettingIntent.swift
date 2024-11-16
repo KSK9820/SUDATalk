@@ -13,12 +13,32 @@ final class ChannelSettingIntent {
     init(model: ChannelSettingActionProtocol) {
         self.model = model
     }
-    
-    func viewOnAppear() {
-        model?.getChannelInfo()
+}
+
+extension ChannelSettingIntent {
+    enum Action {
+        case viewOnAppear
+        case fetchProfileImages(url: String, index: Int)
+        case exitChannel
+        case editChannel
+        case changeAdmin
+        case deleteChannel
     }
     
-    func fetchProfileImages(_ url: String, index: Int) {
-        model?.fetchProfileImages(url, index: index)
+    func action(_ action: Action) {
+        switch action {
+        case .viewOnAppear:
+            model?.getChannelInfo()
+        case .fetchProfileImages(let url, let index):
+            model?.fetchProfileImages(url, index: index)
+        case .exitChannel:
+            model?.exitChannel()
+        case .editChannel:
+            model?.editChannel()
+        case .changeAdmin:
+            model?.changeAdmin()
+        case .deleteChannel:
+            model?.deleteChannel()
+        }
     }
 }

@@ -49,6 +49,7 @@
 		48486B4E2CE7899B006C668E /* ChannelPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B4D2CE7899B006C668E /* ChannelPresentationModel.swift */; };
 		48486B502CE79402006C668E /* BorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B4F2CE79402006C668E /* BorderButton.swift */; };
 		48486B532CE8460C006C668E /* ChannelSettingButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B522CE8460C006C668E /* ChannelSettingButtonsView.swift */; };
+		48486B552CE874B7006C668E /* ChannelSettingAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B542CE874B7006C668E /* ChannelSettingAlertType.swift */; };
 		484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */; };
 		484F52DE2CDB5E3A008F20D3 /* ChattingEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */; };
 		484F52E02CDB61F0008F20D3 /* ChattingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */; };
@@ -144,6 +145,7 @@
 		48486B4D2CE7899B006C668E /* ChannelPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPresentationModel.swift; sourceTree = "<group>"; };
 		48486B4F2CE79402006C668E /* BorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderButton.swift; sourceTree = "<group>"; };
 		48486B522CE8460C006C668E /* ChannelSettingButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingButtonsView.swift; sourceTree = "<group>"; };
+		48486B542CE874B7006C668E /* ChannelSettingAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingAlertType.swift; sourceTree = "<group>"; };
 		484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPresentationModel.swift; sourceTree = "<group>"; };
 		484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingEntity.swift; sourceTree = "<group>"; };
 		484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRepository.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				48486B452CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift */,
 				48486B472CE6FDCC006C668E /* ChannelSettingActionProtocol.swift */,
 				48486B522CE8460C006C668E /* ChannelSettingButtonsView.swift */,
+				48486B542CE874B7006C668E /* ChannelSettingAlertType.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -801,6 +804,7 @@
 				5357ADD42CD92B2000FB391A /* DMChatQuery.swift in Sources */,
 				48486B442CE6FD15006C668E /* ChannelSettingModel.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,
+				48486B552CE874B7006C668E /* ChannelSettingAlertType.swift in Sources */,
 				484F52FA2CE0CFEE008F20D3 /* DefaultButton.swift in Sources */,
 				5357ADD02CD92B0E00FB391A /* DMUserResponse.swift in Sources */,
 			);

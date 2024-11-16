@@ -18,6 +18,22 @@ final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProto
 }
 
 extension ChannelSettingModel: ChannelSettingActionProtocol {
+    func exitChannel() {
+        print("exitChannel")
+    }
+    
+    func editChannel() {
+        print("editChannel")
+    }
+    
+    func changeAdmin() {
+        print("changeAdmin")
+    }
+    
+    func deleteChannel() {
+        print("deleteChannel")
+    }
+    
     func getChannelInfo() {
         do {
             let request = try ChannelRouter.channel(workspaceID: workspaceID, channelID: channelID).makeRequest()

@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ChannelSettingView: View {
     @StateObject private var container: Container<ChannelSettingIntent, ChannelSettingModelStateProtocol>
-    @State private var isExpanded = false
     @AppStorage("userID") var userID: String?
+    @State private var isExpanded = false
+    @State private var alertType: ChannelSettingAlertType?
     
     var body: some View {
         ScrollView {
@@ -19,7 +20,19 @@ struct ChannelSettingView: View {
                 
                 membersSection(container.model.channel.channelMembers, isExpanded: $isExpanded)
                 
-                ChannelSettingButtonsView(isOwner: userID ?? "" == container.model.channel.ownerID)
+                ChannelSettingButtonsView(
+                    isOwner: userID ?? "" == container.model.channel.ownerID,
+                    alertTypeHandler: { alertType = $0 }
+                )
+                .alert(item: $alertType) { type in
+                    let details = type.alertDetails
+                    return Alert(
+                        title: Text(details.title),
+                        message: Text(details.message),
+                        primaryButton: .destructive(Text("확인"), action: type.primaryAction(container: container)),
+                        secondaryButton: .cancel()
+                    )
+                }
                 
                 Spacer()
             }
@@ -27,7 +40,7 @@ struct ChannelSettingView: View {
         }
         .navigationTitle("채널 설정")
         .onAppear{
-            container.intent.viewOnAppear()
+            container.intent.action(.viewOnAppear)
         }
     }
     
@@ -71,7 +84,7 @@ struct ChannelSettingView: View {
                         memberRow(memeber)
                             .task {
                                 if let profileUrl = memeber.profileImage {
-                                    container.intent.fetchProfileImages(profileUrl, index: index)
+                                    container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
                                 }
                             }
                     }
