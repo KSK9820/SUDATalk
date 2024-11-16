@@ -9,9 +9,9 @@ import Combine
 import SwiftUI
 
 struct LoginView: View {
-    private let networkManager = NetworkManager(dataTaskServices: DataTaskServices(), decodedServices: DecodedServices())
-    
+    private let networkManager = NetworkManager()
     @State var cancellables = Set<AnyCancellable>()
+    @AppStorage("userID") var userID: String = ""
 
     var body: some View {
         NavigationStack {
@@ -30,12 +30,13 @@ struct LoginView: View {
             do {
                 let request = try UserRouter.login(query: query).makeRequest()
                 
-                networkManager.fetchDecodedData(request, model: LoginResponse.self)
+                networkManager.getDecodedDataTaskPublisher(request, model: LoginResponse.self)
                     .sink(receiveCompletion: { completion in
                         if case .failure(let failure) = completion {
                             print(failure)
                         }
                     }, receiveValue: { value in
+                        userID = value.user_id
                         KeyChainManager.shared.save(key: .accessToken, value: value.token.accessToken)
                         KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
                     })

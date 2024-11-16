@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChannelChattingView: View {
     @StateObject private var container: Container<ChannelChattingIntent, ChannelChattingModelStateProtocol>
+    @Environment(\.scenePhase) private var scenePhase
     
     private func binding(for keyPath: WritableKeyPath<ChannelChattingModelStateProtocol, String>) -> Binding<String> {
         Binding(
@@ -87,10 +88,22 @@ struct ChannelChattingView: View {
                 container.model.uploadStatus = false
             }
         }
-        .onAppear {
+        .task {
             if let channel = container.model.channel {
                 container.intent.viewOnAppear(workspaceID: container.model.workspaceID,
                                               channelID: channel.channelID)
+            }
+        }
+        .onChange(of: scenePhase) { phase in
+            switch phase {
+            case .background:
+                container.intent.appInactive()
+            case .inactive:
+                container.intent.appInactive()
+            case .active:
+                container.intent.appActive()
+            @unknown default:
+                print("unknown default")
             }
         }
     }
@@ -98,7 +111,7 @@ struct ChannelChattingView: View {
 
 extension ChannelChattingView {
     static func build(_ channel: ChannelListPresentationModel, workspaceID: String) -> some View {
-        let model = ChannelChattingModel()
+        let model = ChannelChattingModel(socketManager: WebSocketManager(channelID: channel.channelID))
         let intent = ChannelChattingIntent(model: model)
         
         model.workspaceID = workspaceID
