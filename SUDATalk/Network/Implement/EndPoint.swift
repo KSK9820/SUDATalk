@@ -23,7 +23,6 @@ struct EndPoint: EndPointConfigurable {
     var header: [String: String]
     var parameter: [URLQueryItem]?
     var body: Encodable?
-    var multipartFormData: MultipartFormData?
     var multipartBody: Data?
     var version: String? = "v1"
     var port: Int? = 39093
