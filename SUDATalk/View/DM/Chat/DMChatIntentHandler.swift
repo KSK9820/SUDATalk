@@ -19,10 +19,16 @@ final class DMChatIntentHandler: IntentProtocol {
         switch intent {
         case .sendMessage(let query):
             model.sendMessage(query: query)
+        case .connectSocket:
+            model.connectSocket()
+        case .disconnectSocket:
+            model.disconnectSocket()
         }
     }
 }
 
 enum DMChatIntent: IntentType {
     case sendMessage(query: DMChatQuery)
+    case connectSocket
+    case disconnectSocket
 }

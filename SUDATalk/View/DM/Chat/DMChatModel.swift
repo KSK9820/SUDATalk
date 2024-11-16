@@ -11,6 +11,7 @@ import UIKit
 
 final class DMChatModel: ObservableObject, ModelStateProtocol {
     private let networkManager = NetworkManager()
+    private let socketManager = SocketIOManager(event: DMSocketEvent(roomID: SampleTest.roomID))
     private var cancellables = Set<AnyCancellable>()
     
     @Published var messageText: String = ""
@@ -34,5 +35,13 @@ extension DMChatModel: ModelActionProtocol {
         } catch {
             print(error)
         }
+    }
+    
+    func connectSocket() {
+        socketManager.connect()
+    }
+    
+    func disconnectSocket() {
+        socketManager.disconnect()
     }
 }

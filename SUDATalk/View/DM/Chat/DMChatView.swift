@@ -11,8 +11,17 @@ struct DMChatView<Model: ModelStateProtocol & ModelActionProtocol>: View {
     @StateObject private var container: InterfaceContainer<DMChatIntentHandler, Model>
     
     var body: some View {
-        Button("메세지 보내기") {
-            container.intent.handle(intent: .sendMessage(query: DMChatQuery(content: "hi")))
+        VStack {
+            Button("메세지 보내기") {
+                container.intent.handle(intent: .sendMessage(query: DMChatQuery(content: "hi")))
+            }
+            .padding()
+        }
+        .onAppear {
+            container.intent.handle(intent: .connectSocket)
+        }
+        .onDisappear {
+            container.intent.handle(intent: .disconnectSocket)
         }
     }
 }
