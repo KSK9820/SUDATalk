@@ -25,5 +25,10 @@ struct EndPoint: EndPointConfigurable {
     var body: Encodable?
     var multipartBody: Data?
     var version: String? = "v1"
-    var port: Int? = 39093
+    var port: Int? {
+        guard let portNum = Bundle.main.infoDictionary?["PortNum"] as? Int else {
+            return nil
+        }
+        return portNum
+    }
 }
