@@ -7,4 +7,7 @@
 
 import Foundation
 
-protocol ChannelSettingActionProtocol: AnyObject {}
+protocol ChannelSettingActionProtocol: AnyObject {
+    func getChannelInfo()
+    func fetchProfileImages(_ url: String, index: Int)
+}

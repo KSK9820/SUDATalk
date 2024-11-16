@@ -13,4 +13,12 @@ final class ChannelSettingIntent {
     init(model: ChannelSettingActionProtocol) {
         self.model = model
     }
+    
+    func viewOnAppear() {
+        model?.getChannelInfo()
+    }
+    
+    func fetchProfileImages(_ url: String, index: Int) {
+        model?.fetchProfileImages(url, index: index)
+    }
 }

@@ -14,6 +14,7 @@ enum ChannelRouter {
     case fetchChat(workspaceID: String, channelID: String, date: String)
     case fetchImage(url: String)
     case createChannel(workspaceID: String, query: ChannelQuery)
+    case channel(workspaceID: String, channelID: String)
 }
 
 extension ChannelRouter {
@@ -65,6 +66,12 @@ extension ChannelRouter {
                 path: ["workspaces", workspaceID, "channels"],
                 header: EndPointHeader.multipartType(boundary: boundary).header,
                 multipartBody: body
+            ).asURLRequest()
+        case .channel(let workspaceID, let channelID):
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces", workspaceID, "channels", channelID],
+                header: EndPointHeader.authorization.header
             ).asURLRequest()
         }
     }
