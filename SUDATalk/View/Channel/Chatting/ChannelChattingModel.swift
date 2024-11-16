@@ -32,9 +32,9 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 }
 
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
-    func viewOnAppear(workspaceID: String, channelID: String) {
+    func setChattingData(workspaceID: String, channelID: String) {
         guard let chatDatafromDB = repositiory?.fetchChatting(channelID) else { return }
-        chatting.append(contentsOf: chatDatafromDB)
+        chatting = chatDatafromDB
         
         guard let lastChatDate = chatDatafromDB.last?.createdAt else { return }
 
@@ -58,7 +58,8 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         } catch {
             print(error)
         }
-
+        
+        connectSocket()
     }
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
@@ -89,8 +90,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         } catch {
             print(error)
         }
-        
-        appActive()
     }
     
     func fetchImages(_ urls: [String], index: Int) {
@@ -164,7 +163,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    func appActive() {
+    func connectSocket() {
         socketManager.establishConnect()
         socketManager.chatData
             .sink {  completion in
@@ -179,7 +178,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             .store(in: &cancellables)
     }
     
-    func appInactive() {
+    func disconnectSocket() {
         socketManager.closeConnect()
     }
 }

@@ -43,11 +43,11 @@ struct ChannelChattingView: View {
                             .id(index)
                             .task {
                                 if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                    container.intent.fetchProfileImages(profileUrl, index: index)
+                                    container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
                                 }
                                 
                                 if !item.files.isEmpty {
-                                    container.intent.fetchImages(item.files, index: index)
+                                    container.intent.action(.fetchImages(urls: item.files, index: index))
                                 }
                             }
                     }
@@ -64,10 +64,11 @@ struct ChannelChattingView: View {
         ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
             
             if let channel = container.model.channel {
-                container.intent.sendMessage(workspaceID: container.model.workspaceID,
-                                             channelID: channel.channelID,
-                                             content: container.model.messageText,
-                                             images: container.model.selectedImages)
+                container.intent.action(.sendMessage(workspaceID: container.model.workspaceID,
+                                                     channelID: channel.channelID,
+                                                     content: container.model.messageText,
+                                                     images: container.model.selectedImages))
+                
             }
         })
         .navigationTitle(container.model.channel?.name ?? "")
@@ -83,10 +84,10 @@ struct ChannelChattingView: View {
                 container.model.uploadStatus = false
             }
         }
-        .task {
+        .onAppear {
             if let channel = container.model.channel {
-                container.intent.viewOnAppear(workspaceID: container.model.workspaceID,
-                                              channelID: channel.channelID)
+                container.intent.action(.viewOnAppear(workspaceID: container.model.workspaceID,
+                                                      channelID: channel.channelID))
             }
         }
         .onChange(of: scenePhase) { phase in
