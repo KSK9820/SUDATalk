@@ -20,8 +20,8 @@ final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
 extension ExploreModel: ExploreActionsProtocol {
     func fetchChennelList(_ workspaceID: String) {
         do {
-            let requestChannel = try ChannelRouter.channel(param: workspaceID).makeRequest()
-            let requestMyChannel = try ChannelRouter.myChannel(param: workspaceID).makeRequest()
+            let requestChannel = try ChannelRouter.channelList(param: workspaceID).makeRequest()
+            let requestMyChannel = try ChannelRouter.myChannelList(param: workspaceID).makeRequest()
             
             let requestChannelPublisher = networkManager.getDecodedDataTaskPublisher(requestChannel, model: [ExploreResponse].self)
             let requestMyChannelPublisher = networkManager.getDecodedDataTaskPublisher(requestMyChannel, model: [ExploreResponse].self)

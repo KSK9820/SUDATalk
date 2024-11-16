@@ -8,8 +8,8 @@
 import UIKit
 
 enum ChannelRouter {
-    case channel(param: String)
-    case myChannel(param: String)
+    case channelList(param: String)
+    case myChannelList(param: String)
     case sendChat(workspaceID: String, channelID: String, query: ChatQuery)
     case fetchChat(workspaceID: String, channelID: String, date: String)
     case fetchImage(url: String)
@@ -19,13 +19,13 @@ enum ChannelRouter {
 extension ChannelRouter {
     func makeRequest() throws -> URLRequest {
         switch self {
-        case .channel(let param):
+        case .channelList(let param):
             return try EndPoint(
                 method: .get,
                 path: ["workspaces", param, "channels"],
                 header: EndPointHeader.authorization.header
             ).asURLRequest()
-        case .myChannel(let param):
+        case .myChannelList(let param):
             return try EndPoint(
                 method: .get,
                 path: ["workspaces", param, "my-channels"],
