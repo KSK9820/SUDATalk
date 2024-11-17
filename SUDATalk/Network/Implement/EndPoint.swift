@@ -26,9 +26,9 @@ struct EndPoint: EndPointConfigurable {
     var multipartBody: Data?
     var version: String? = "v1"
     var port: Int? {
-        guard let portNum = Bundle.main.infoDictionary?["PortNum"] as? Int else {
+        guard let portNum = Bundle.main.infoDictionary?["PortNum"] as? String else {
             return nil
         }
-        return portNum
+        return Int(portNum)
     }
 }
