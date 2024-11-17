@@ -14,4 +14,5 @@ protocol ChannelChattingActionsProtocol: AnyObject {
     func fetchProfileImages(_ url: String, index: Int)
     func connectSocket()
     func disconnectSocket()
+    func dismissKeyboard()
 }

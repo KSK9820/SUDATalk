@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ChannelChattingIntent {
+final class ChannelChattingIntent: ChannelIntentProtocol {
     private weak var model: ChannelChattingActionsProtocol?
 
     init(model: ChannelChattingActionsProtocol) {
@@ -23,6 +23,7 @@ extension ChannelChattingIntent {
         case fetchProfileImages(url: String, index: Int)
         case appActive
         case appInactive
+        case onTapGesture
     }
     
     func action(_ action: Action) {
@@ -39,6 +40,8 @@ extension ChannelChattingIntent {
             model?.connectSocket()
         case .appInactive:
             model?.disconnectSocket()
+        case .onTapGesture:
+            model?.dismissKeyboard()
         }
     }
 }

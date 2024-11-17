@@ -30,33 +30,33 @@ struct ChannelChattingView: View {
     }
     
     var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack {
-                    ForEach(container.model.chatting.indices, id: \.self) { index in
-                        let item = container.model.chatting[index]
-                        let profileImage = UIImage(data: item.user.profileImageData)
-                            .map { Image(uiImage: $0) }
-                            ?? Image(systemName: "person.circle")
-                        
-                        ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
-                            .id(index)
-                            .task {
-                                if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                    container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
-                                }
-                                
-                                if !item.files.isEmpty {
-                                    container.intent.action(.fetchImages(urls: item.files, index: index))
-                                }
+        ScrollView {
+            LazyVStack {
+                ForEach(container.model.chatting.indices, id: \.self) { index in
+                    let item = container.model.chatting[index]
+                    let profileImage = UIImage(data: item.user.profileImageData)
+                        .map { Image(uiImage: $0) }
+                    ?? Images.userDefaultImage
+                    
+                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                        .task {
+                            if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
+                                container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
                             }
-                    }
+                            
+                            if !item.files.isEmpty {
+                                container.intent.action(.fetchImages(urls: item.files, index: index))
+                            }
+                        }
                 }
-                .rotationEffect(Angle(degrees: 180))
-                .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
             }
             .rotationEffect(Angle(degrees: 180))
             .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        }
+        .rotationEffect(Angle(degrees: 180))
+        .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        .onTapGesture {
+            container.intent.action(.onTapGesture)
         }
         
         Spacer()
@@ -97,12 +97,10 @@ struct ChannelChattingView: View {
         }
         .onChange(of: scenePhase) { phase in
             switch phase {
-            case .background:
-                container.intent.appInactive()
-            case .inactive:
-                container.intent.appInactive()
+            case .background, .inactive:
+                container.intent.action(.appInactive)
             case .active:
-                container.intent.appActive()
+                container.intent.action(.appActive)
             @unknown default:
                 print("unknown default")
             }
@@ -112,7 +110,7 @@ struct ChannelChattingView: View {
 
 extension ChannelChattingView {
     static func build(_ channel: ChannelListPresentationModel, workspaceID: String) -> some View {
-        let model = ChannelChattingModel(socketManager: WebSocketManager(channelID: channel.channelID))
+        let model = ChannelChattingModel(socketManager: SocketIOManager(event: ChannelSocketEvent(roomID: channel.channelID)))
         let intent = ChannelChattingIntent(model: model)
         
         model.workspaceID = workspaceID

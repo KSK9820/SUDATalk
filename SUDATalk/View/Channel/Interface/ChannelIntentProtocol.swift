@@ -1,5 +1,5 @@
 //
-//  IntentProtocol.swift
+//  ChannelIntentProtocol.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/17/24.
