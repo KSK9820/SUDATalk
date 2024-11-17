@@ -12,7 +12,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
     private let repositiory = ChattingRepository()
-    private let socketManager:WebSocketManager
+    private let socketManager:SocketIOManager
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -22,12 +22,12 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     @Published var chatting: [ChattingPresentationModel] = []
     @AppStorage("userID") var userID: String?
     
-    init(socketManager: WebSocketManager) {
+    init(socketManager: SocketIOManager) {
         self.socketManager = socketManager
     }
     
     deinit {
-        socketManager.closeConnect()
+        socketManager.disconnect()
     }
 }
 
@@ -164,8 +164,9 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     }
     
     func connectSocket() {
-        socketManager.establishConnect()
-        socketManager.chatData
+        socketManager.connect()
+
+        socketManager.getChatSubject()
             .sink {  completion in
                 if case .failure(let failure) = completion {
                     print(failure)
@@ -179,6 +180,10 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     }
     
     func disconnectSocket() {
-        socketManager.closeConnect()
+        socketManager.connect()
+    }
+    
+    func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
