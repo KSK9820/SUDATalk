@@ -7,13 +7,7 @@
 
 import Foundation
 
-struct DMChatQuery: Encodable {
+struct DMChatQuery: Encodable, MultiPartFormDatable {
     let content: String?
     var files: [Data] = []
-}
-
-extension DMChatQuery {
-    func converTo() -> MultipartFormData {
-        .init(content: self.content, data: self.files.map { $0.toMultiPartData() })
-    }
 }

@@ -8,6 +8,20 @@
 import Foundation
 
 final class MultipartFormDataBuilder {
+    static func createMultipartBody(query: MultiPartFormDatable, boundary: String) -> Data {
+        var body = Data()
+        
+        appendField(&body, name: "content", value: query.content, boundary: boundary)
+        
+        query.files.forEach { data in
+            appendImageField(&body, name: "files", imageData: data, boundary: boundary)
+        }
+        
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        return body
+    }
+    
     static func createMultipartBody(query: ChatQuery, boundary: String) -> Data {
         var body = Data()
         
@@ -46,7 +60,7 @@ final class MultipartFormDataBuilder {
     }
 
     private static func appendImageField(_ body: inout Data, name: String, imageData: Data, boundary: String) {
-        let filename = "channelImage.jpg"
+        let filename = body.createFileName()
         let mimeType = "image/jpeg"
         
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
