@@ -11,6 +11,7 @@ import UIKit
 
 final class DMChatModel: ObservableObject, ModelStateProtocol {
     private let networkManager = NetworkManager()
+    private let socketManager = SocketIOManager(event: DMSocketEvent(roomID: SampleTest.roomID))
     private var cancellables = Set<AnyCancellable>()
     
     @Published var messageText: String = ""
@@ -20,7 +21,7 @@ final class DMChatModel: ObservableObject, ModelStateProtocol {
 extension DMChatModel: ModelActionProtocol {
     func sendMessage(query: DMChatQuery) {
         do {
-            let request = try DMRouter.chats(workspaceID: SampleTest.workspaceId, roomID: SampleTest.roomID, body: query).makeRequest()
+            let request = try DMRouter.chats(workspaceID: SampleTest.workspaceID, roomID: SampleTest.roomID, body: query).makeRequest()
             
             networkManager.getDecodedDataTaskPublisher(request, model: DMChatResponse.self)
                 .sink { completion in
@@ -34,5 +35,13 @@ extension DMChatModel: ModelActionProtocol {
         } catch {
             print(error)
         }
+    }
+    
+    func connectSocket() {
+        socketManager.connect()
+    }
+    
+    func disconnectSocket() {
+        socketManager.disconnect()
     }
 }

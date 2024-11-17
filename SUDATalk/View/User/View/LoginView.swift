@@ -10,6 +10,7 @@ import SwiftUI
 
 struct LoginView: View {
     private let networkManager = NetworkManager()
+    
     @State var cancellables = Set<AnyCancellable>()
     @AppStorage("userID") var userID: String = ""
 
@@ -20,7 +21,7 @@ struct LoginView: View {
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 NavigationLink("이동") {
-                    CreateChannelView.build()
+                    DMChatView<DMChatModel>.build()
                 }
             }
         }
