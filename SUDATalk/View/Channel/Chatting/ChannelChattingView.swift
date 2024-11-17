@@ -30,47 +30,19 @@ struct ChannelChattingView: View {
     }
     
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(container.model.chatting.indices, id: \.self) { index in
-                    let item = container.model.chatting[index]
-                    let profileImage = UIImage(data: item.user.profileImageData)
-                        .map { Image(uiImage: $0) }
-                    ?? Images.userDefaultImage
-                    
-                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
-                        .task {
-                            if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
-                            }
-                            
-                            if !item.files.isEmpty {
-                                container.intent.action(.fetchImages(urls: item.files, index: index))
-                            }
-                        }
-                }
-            }
-            .rotationEffect(Angle(degrees: 180))
-            .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-        }
-        .rotationEffect(Angle(degrees: 180))
-        .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
-        .onTapGesture {
-            container.intent.action(.onTapGesture)
-        }
+        chattingListSection()
         
         Spacer()
         
         ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
-            
             if let channel = container.model.channel {
                 container.intent.action(.sendMessage(workspaceID: container.model.workspaceID,
                                                      channelID: channel.channelID,
                                                      content: container.model.messageText,
                                                      images: container.model.selectedImages))
-                
             }
         })
+        
         .navigationTitle(container.model.channel?.name ?? "")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -104,6 +76,37 @@ struct ChannelChattingView: View {
             @unknown default:
                 print("unknown default")
             }
+        }
+    }
+    
+    func chattingListSection() -> some View {
+        ScrollView {
+            LazyVStack {
+                ForEach(container.model.chatting.indices, id: \.self) { index in
+                    let item = container.model.chatting[index]
+                    let profileImage = UIImage(data: item.user.profileImageData)
+                        .map { Image(uiImage: $0) }
+                    ?? Images.userDefaultImage
+                    
+                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                        .task {
+                            if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
+                                container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
+                            }
+                            
+                            if !item.files.isEmpty {
+                                container.intent.action(.fetchImages(urls: item.files, index: index))
+                            }
+                        }
+                }
+            }
+            .rotationEffect(Angle(degrees: 180))
+            .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        }
+        .rotationEffect(Angle(degrees: 180))
+        .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+        .onTapGesture {
+            container.intent.action(.onTapGesture)
         }
     }
 }
