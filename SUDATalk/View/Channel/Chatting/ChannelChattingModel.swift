@@ -33,13 +33,19 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func viewOnAppear(workspaceID: String, channelID: String) {
-        guard let chatDatafromDB = repositiory?.fetchChatting(channelID) else { return }
-        chatting.append(contentsOf: chatDatafromDB)
-        
-        guard let lastChatDate = chatDatafromDB.last?.createdAt else { return }
-
-          do {
-            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: lastChatDate).makeRequest()
+        if let chatDatafromDB = repositiory?.fetchChatting(channelID) {
+            let lastChatDate = chatDatafromDB.last?.createdAt ?? Date().formatted()
+            print(Date().formatted())
+            chatting = chatDatafromDB
+            fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate)
+        } else {
+            fetchChatFromNetwork(workspaceID, channelID: channelID, date: Date().formatted())
+        }
+    }
+    
+    func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String) {
+        do {
+            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
             
             networkManager.getDecodedDataTaskPublisher(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
@@ -58,7 +64,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         } catch {
             print(error)
         }
-
     }
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
