@@ -15,7 +15,11 @@ struct ChannelSettingButtonsView: View {
         VStack {
             Text("채널에서 나가기")
                 .wrapToBorderButton(Colors.textPrimary) {
-                    alertTypeHandler(.exitChannel)
+                    if isOwner {
+                        alertTypeHandler(.ownerExitChannel)
+                    } else {
+                        alertTypeHandler(.exitChannel)
+                    }
                 }
             
             if isOwner {

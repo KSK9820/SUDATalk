@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChannelSettingView: View {
     @StateObject private var container: Container<ChannelSettingIntent, ChannelSettingModelStateProtocol>
+    @Environment(\.dismiss) private var dismiss
     @AppStorage("userID") var userID: String?
     @State private var isExpanded = false
     @State private var alertType: ChannelSettingAlertType?
@@ -26,12 +27,21 @@ struct ChannelSettingView: View {
                 )
                 .alert(item: $alertType) { type in
                     let details = type.alertDetails
-                    return Alert(
-                        title: Text(details.title),
-                        message: Text(details.message),
-                        primaryButton: .destructive(Text("확인"), action: type.primaryAction(container: container)),
-                        secondaryButton: .cancel()
-                    )
+                    
+                    if details.cancelButton {
+                        return Alert(
+                            title: Text(details.title),
+                            message: Text(details.message),
+                            primaryButton: .destructive(Text("확인"), action: type.primaryAction(container: container)),
+                            secondaryButton: .cancel()
+                        )
+                    } else {
+                        return Alert(
+                            title: Text(details.title),
+                            message: Text(details.message),
+                            dismissButton: .destructive(Text("확인"), action: type.primaryAction(container: container))
+                        )
+                    }
                 }
                 
                 Spacer()
@@ -41,6 +51,11 @@ struct ChannelSettingView: View {
         .navigationTitle("채널 설정")
         .onAppear{
             container.intent.action(.viewOnAppear)
+        }
+        .onChange(of: container.model.goToList) { newValue in
+            if newValue {
+                   //home Default로 화면 전환
+               }
         }
     }
     
