@@ -7,34 +7,41 @@
 
 import UIKit
 
-final class ChannelChattingIntent {
+final class ChannelChattingIntent: ChannelIntentProtocol {
     private weak var model: ChannelChattingActionsProtocol?
 
     init(model: ChannelChattingActionsProtocol) {
         self.model = model
     }
-    
-    func viewOnAppear(workspaceID: String, channelID: String) {
-        model?.viewOnAppear(workspaceID: workspaceID, channelID: channelID)
+}
+
+extension ChannelChattingIntent {
+    enum Action {
+        case viewOnAppear(workspaceID: String, channelID: String)
+        case sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage])
+        case fetchImages(urls: [String], index: Int)
+        case fetchProfileImages(url: String, index: Int)
+        case appActive
+        case appInactive
+        case onTapGesture
     }
     
-    func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
-        model?.sendMessage(workspaceID: workspaceID, channelID: channelID, content: content, images: images)
-    }
-    
-    func fetchImages(_ urls: [String], index: Int) {
-        model?.fetchImages(urls, index: index)
-    }
-    
-    func fetchProfileImages(_ url: String, index: Int) {
-        model?.fetchProfileImages(url, index: index)
-    }
-    
-    func appActive() {
-        model?.appActive()
-    }
-    
-    func appInactive() {
-        model?.appInactive()
+    func action(_ action: Action) {
+        switch action {
+        case .viewOnAppear(let workspaceID, let channelID):
+            model?.setChattingData(workspaceID: workspaceID, channelID: channelID)
+        case .sendMessage(let workspaceID, let channelID, let content, let images):
+            model?.sendMessage(workspaceID: workspaceID, channelID: channelID, content: content, images: images)
+        case .fetchImages(let urls, let index):
+            model?.fetchImages(urls, index: index)
+        case .fetchProfileImages(let url, let index):
+            model?.fetchProfileImages(url, index: index)
+        case .appActive:
+            model?.connectSocket()
+        case .appInactive:
+            model?.disconnectSocket()
+        case .onTapGesture:
+            model?.dismissKeyboard()
+        }
     }
 }
