@@ -33,13 +33,13 @@ extension ExploreModel: ExploreActionsProtocol {
                         print(failure)
                     }
                 }, receiveValue: { [weak self] returnedChannelItems, returnedMyChannelItems in
-                    returnedChannelItems.forEach { item in
-                        var newItem = item.convertToModel()
-                        if returnedMyChannelItems.contains(where: { $0.channelID == item.channelID }) {
-                            newItem.isMyChannel = true
-                        }
-                        self?.channelList.append(newItem)
-                    }
+                    self?.channelList = returnedChannelItems.map { item in
+                         var newItem = item.convertToModel()
+                         if returnedMyChannelItems.contains(where: { $0.channelID == item.channelID }) {
+                             newItem.isMyChannel = true
+                         }
+                         return newItem
+                     }
                 })
                 .store(in: &cancellables)
         } catch {
