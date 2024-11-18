@@ -15,7 +15,7 @@ final class ChannelSettingIntent {
     }
 }
 
-extension ChannelSettingIntent {
+extension ChannelSettingIntent: ChannelIntentProtocol {
     enum Action {
         case viewOnAppear
         case fetchProfileImages(url: String, index: Int)

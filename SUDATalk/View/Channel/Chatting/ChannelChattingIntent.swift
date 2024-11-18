@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ChannelChattingIntent: ChannelIntentProtocol {
+final class ChannelChattingIntent {
     private weak var model: ChannelChattingActionsProtocol?
 
     init(model: ChannelChattingActionsProtocol) {
@@ -15,7 +15,7 @@ final class ChannelChattingIntent: ChannelIntentProtocol {
     }
 }
 
-extension ChannelChattingIntent {
+extension ChannelChattingIntent: ChannelIntentProtocol {
     enum Action {
         case viewOnAppear(workspaceID: String, channelID: String)
         case sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage])
