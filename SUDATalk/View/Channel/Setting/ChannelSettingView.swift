@@ -124,7 +124,7 @@ struct ChannelSettingView: View {
         VStack {
             let profileImage = UIImage(data: member.profileImageData ?? Data())
                 .map { Image(uiImage: $0) }
-                ?? Image(systemName: "person.circle")
+                ?? Images.userDefaultImage
             
             profileImage
                     .resizable()

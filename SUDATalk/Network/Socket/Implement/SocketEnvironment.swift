@@ -1,14 +1,24 @@
 //
-//  EndPoint.swift
+//  SocketEnvironment.swift
 //  SUDATalk
 //
-//  Created by 김수경 on 10/30/24.
+//  Created by 김수경 on 11/16/24.
 //
 
 import Foundation
 
-struct EndPoint: EndPointConfigurable {
-    var scheme: String = "http"
+enum SocketEnvironment {
+    case message
+}
+
+extension SocketEnvironment: SocketEnvironmentConfigurable {
+    var scheme: String {
+        switch self {
+        case .message:
+            return "http"
+        }
+    }
+    
     var baseURL: String {
         get throws {
             guard let baseURL = Bundle.main.infoDictionary?["BaseURL"] as? String
@@ -18,13 +28,7 @@ struct EndPoint: EndPointConfigurable {
             return baseURL
         }
     }
-    var method: HTTPMethod
-    var path: [String]
-    var header: [String: String]
-    var parameter: [URLQueryItem]?
-    var body: Encodable?
-    var multipartBody: Data?
-    var version: String? = "v1"
+    
     var port: Int? {
         guard let portNum = Bundle.main.infoDictionary?["PortNum"] as? String else {
             return nil

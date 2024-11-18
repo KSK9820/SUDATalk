@@ -14,13 +14,15 @@ enum DMRouter {
 extension DMRouter {
     func makeRequest() throws -> URLRequest {
         switch self {
-        case .chats(let workspaceID, let roomID, let body):
+        case .chats(let workspaceID, let roomID, let query):
+            let boundary = "Boundary-\(UUID().uuidString)"
+            let body = MultipartFormDataBuilder.createMultipartBody(query: query, boundary: boundary)
+            
             return try EndPoint(
                 method: .post,
                 path: ["workspaces", workspaceID, "dms", roomID, "chats"],
-                header: EndPointHeader.multipartform.header,
-                body: body,
-                multipartFormData: body.converTo()
+                header: EndPointHeader.multipartType(boundary: boundary).header,
+                multipartBody: body
             ).asURLRequest()
         }
     }
