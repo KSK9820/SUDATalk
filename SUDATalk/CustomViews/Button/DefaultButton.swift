@@ -27,6 +27,7 @@ private struct DefaultButton: ViewModifier {
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
         .frame(maxWidth: .infinity)
+        .disabled(!active)
     }
 }
 
