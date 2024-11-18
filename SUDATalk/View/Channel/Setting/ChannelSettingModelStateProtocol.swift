@@ -11,4 +11,5 @@ protocol ChannelSettingModelStateProtocol {
     var workspaceID: String { get }
     var channelID: String { get }
     var channel: ChannelPresentationModel { get }
+    var goToList: Bool { get }
 }

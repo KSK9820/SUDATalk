@@ -15,25 +15,10 @@ final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProto
     @Published var channelID: String = ""
     @Published var workspaceID: String = ""
     @Published var channel = ChannelPresentationModel()
+    @Published var goToList = false
 }
 
 extension ChannelSettingModel: ChannelSettingActionProtocol {
-    func exitChannel() {
-        print("exitChannel")
-    }
-    
-    func editChannel() {
-        print("editChannel")
-    }
-    
-    func changeAdmin() {
-        print("changeAdmin")
-    }
-    
-    func deleteChannel() {
-        print("deleteChannel")
-    }
-    
     func getChannelInfo() {
         do {
             let request = try ChannelRouter.channel(workspaceID: workspaceID, channelID: channelID).makeRequest()
@@ -74,5 +59,36 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
         } catch {
             print("Error: \(error)")
         }
+    }
+    
+    func exitChannel() {
+        do {
+            let request = try ChannelRouter.exitChannel(workspaceID: workspaceID, channelID: channelID).makeRequest()
+            
+            networkManager.getDecodedDataTaskPublisher(request, model: [ChannelListResponse].self)
+                .sink(receiveCompletion: { completion in
+                    if case .failure(let failure) = completion {
+                        print(failure)
+                    }
+                }, receiveValue: { [weak self] value in
+                    print(value)
+                    self?.goToList = true
+                })
+                .store(in: &cancellables)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func editChannel() {
+        print("editChannel")
+    }
+    
+    func changeAdmin() {
+        print("changeAdmin")
+    }
+    
+    func deleteChannel() {
+        print("deleteChannel")
     }
 }
