@@ -62,10 +62,9 @@ enum ChannelSettingAlertType: String, Identifiable {
         case .deleteChannel:
             return (
                 title: "채널 삭제",
-                message: "채널을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+                message: "채널을 삭제하시겠습니까? 삭제시 모든 정보가 삭제되며 복구 할 수 없습니다.",
                 cancelButton: true
             )
         }
     }
-    
 }

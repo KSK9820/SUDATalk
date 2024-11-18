@@ -17,6 +17,7 @@ final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProto
     @Published var workspaceID: String = ""
     @Published var channel = ChannelPresentationModel()
     @Published var goToList = false
+    @Published var selectedSheet: ChannelEditAction? = nil
 }
 
 extension ChannelSettingModel: ChannelSettingActionProtocol {
@@ -71,8 +72,7 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
                     if case .failure(let failure) = completion {
                         print(failure)
                     }
-                }, receiveValue: { [weak self] value in
-                    print(value)
+                }, receiveValue: { [weak self] _ in
                     DispatchQueue.main.async {
                         self?.repositiory?.deleteChatting(self?.channelID ?? "")
                         self?.goToList = true
@@ -85,14 +85,31 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
     }
     
     func editChannel() {
-        print("editChannel")
+        selectedSheet = .editChannel
     }
     
     func changeAdmin() {
-        print("changeAdmin")
+        selectedSheet = .changeAdmin
     }
     
     func deleteChannel() {
-        print("deleteChannel")
+        do {
+            let request = try ChannelRouter.deleteChannel(workspaceID: workspaceID, channelID: channelID).makeRequest()
+            
+            networkManager.getDataTaskPublisher(request)
+                .sink(receiveCompletion: { completion in
+                    if case .failure(let failure) = completion {
+                        print(failure)
+                    }
+                }, receiveValue: { [weak self] _ in
+                    DispatchQueue.main.async {
+                        self?.repositiory?.deleteChatting(self?.channelID ?? "")
+                        self?.goToList = true
+                    }
+                })
+                .store(in: &cancellables)
+        } catch {
+            print(error)
+        }
     }
 }

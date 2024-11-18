@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ChannelSettingView: View {
     @StateObject private var container: Container<ChannelSettingIntent, ChannelSettingModelStateProtocol>
-    @Environment(\.dismiss) private var dismiss
     @AppStorage("userID") var userID: String?
     @State private var isExpanded = false
     @State private var alertType: ChannelSettingAlertType?
+    @State private var isSheetPresented = false
     
     var body: some View {
         ScrollView {
@@ -52,10 +52,22 @@ struct ChannelSettingView: View {
         .onAppear{
             container.intent.action(.viewOnAppear)
         }
+        .sheet(isPresented: $isSheetPresented) {
+            if container.model.selectedSheet == .editChannel {
+                CreateChannelView.build(container.model.channel.name, description: container.model.channel.description)
+            } else if container.model.selectedSheet == .changeAdmin {
+                //채널 관리자 변경 뷰
+            }
+        }
         .onChange(of: container.model.goToList) { newValue in
             if newValue {
                 setRootView(what: LoginView())
                }
+        }
+        .onChange(of: container.model.selectedSheet) { newValue in
+            if newValue != nil {
+                isSheetPresented = true
+            }
         }
     }
     

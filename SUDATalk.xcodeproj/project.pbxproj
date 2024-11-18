@@ -53,6 +53,7 @@
 		48486B532CE8460C006C668E /* ChannelSettingButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B522CE8460C006C668E /* ChannelSettingButtonsView.swift */; };
 		48486B552CE874B7006C668E /* ChannelSettingAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B542CE874B7006C668E /* ChannelSettingAlertType.swift */; };
 		48486B602CEB1D68006C668E /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B5F2CEB1D68006C668E /* View+.swift */; };
+		48486B622CEB2D3D006C668E /* ChannelEditAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48486B612CEB2D3D006C668E /* ChannelEditAction.swift */; };
 		484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */; };
 		484F52DE2CDB5E3A008F20D3 /* ChattingEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */; };
 		484F52E02CDB61F0008F20D3 /* ChattingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */; };
@@ -151,6 +152,7 @@
 		48486B522CE8460C006C668E /* ChannelSettingButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingButtonsView.swift; sourceTree = "<group>"; };
 		48486B542CE874B7006C668E /* ChannelSettingAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingAlertType.swift; sourceTree = "<group>"; };
 		48486B5F2CEB1D68006C668E /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		48486B612CEB2D3D006C668E /* ChannelEditAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditAction.swift; sourceTree = "<group>"; };
 		484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingPresentationModel.swift; sourceTree = "<group>"; };
 		484F52DD2CDB5E3A008F20D3 /* ChattingEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingEntity.swift; sourceTree = "<group>"; };
 		484F52DF2CDB61F0008F20D3 /* ChattingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingRepository.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 				48486B472CE6FDCC006C668E /* ChannelSettingActionProtocol.swift */,
 				48486B522CE8460C006C668E /* ChannelSettingButtonsView.swift */,
 				48486B542CE874B7006C668E /* ChannelSettingAlertType.swift */,
+				48486B612CEB2D3D006C668E /* ChannelEditAction.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -785,6 +788,7 @@
 				48088BE32CD6073C008DC165 /* ExploreModelStateProtocol.swift in Sources */,
 				5357ADE42CD92DC900FB391A /* ModelStateProtocol.swift in Sources */,
 				484F52E22CDC5854008F20D3 /* ImageConverter.swift in Sources */,
+				48486B622CEB2D3D006C668E /* ChannelEditAction.swift in Sources */,
 				53D0C8222CD213EB00034179 /* SUDATalkApp.swift in Sources */,
 				53A95C6E2CD7B9CD00A49267 /* LoginView.swift in Sources */,
 				48486B422CE6FD02006C668E /* ChannelSettingIntent.swift in Sources */,
