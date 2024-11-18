@@ -80,9 +80,14 @@ struct CreateChannelView: View {
 }
 
 extension CreateChannelView {
-    static func build() -> some View {
+    static func build(_ name: String? = nil, description: String? = nil) -> some View {
         let model = CreateChannelModel()
         let intent = CreateChannelIntent(model: model)
+        
+        if let name, let description {
+            model.channelName = name
+            model.description = description
+        }
         
         let container = Container(
             intent: intent,

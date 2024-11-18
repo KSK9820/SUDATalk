@@ -12,6 +12,7 @@ struct ChannelSettingView: View {
     @AppStorage("userID") var userID: String?
     @State private var isExpanded = false
     @State private var alertType: ChannelSettingAlertType?
+    @State private var isSheetPresented = false
     
     var body: some View {
         ScrollView {
@@ -26,12 +27,21 @@ struct ChannelSettingView: View {
                 )
                 .alert(item: $alertType) { type in
                     let details = type.alertDetails
-                    return Alert(
-                        title: Text(details.title),
-                        message: Text(details.message),
-                        primaryButton: .destructive(Text("확인"), action: type.primaryAction(container: container)),
-                        secondaryButton: .cancel()
-                    )
+                    
+                    if details.cancelButton {
+                        return Alert(
+                            title: Text(details.title),
+                            message: Text(details.message),
+                            primaryButton: .destructive(Text("확인"), action: type.primaryAction(container: container)),
+                            secondaryButton: .cancel()
+                        )
+                    } else {
+                        return Alert(
+                            title: Text(details.title),
+                            message: Text(details.message),
+                            dismissButton: .destructive(Text("확인"), action: type.primaryAction(container: container))
+                        )
+                    }
                 }
                 
                 Spacer()
@@ -41,6 +51,23 @@ struct ChannelSettingView: View {
         .navigationTitle("채널 설정")
         .onAppear{
             container.intent.action(.viewOnAppear)
+        }
+        .sheet(isPresented: $isSheetPresented) {
+            if container.model.selectedSheet == .editChannel {
+                CreateChannelView.build(container.model.channel.name, description: container.model.channel.description)
+            } else if container.model.selectedSheet == .changeAdmin {
+                //채널 관리자 변경 뷰
+            }
+        }
+        .onChange(of: container.model.goToList) { newValue in
+            if newValue {
+                setRootView(what: LoginView())
+               }
+        }
+        .onChange(of: container.model.selectedSheet) { newValue in
+            if newValue != nil {
+                isSheetPresented = true
+            }
         }
     }
     

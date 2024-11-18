@@ -15,6 +15,8 @@ enum ChannelRouter {
     case fetchImage(url: String)
     case createChannel(workspaceID: String, query: ChannelQuery)
     case channel(workspaceID: String, channelID: String)
+    case exitChannel(workspaceID: String, channelID: String)
+    case deleteChannel(workspaceID: String, channelID: String)
 }
 
 extension ChannelRouter {
@@ -70,6 +72,18 @@ extension ChannelRouter {
         case .channel(let workspaceID, let channelID):
             return try EndPoint(
                 method: .get,
+                path: ["workspaces", workspaceID, "channels", channelID],
+                header: EndPointHeader.authorization.header
+            ).asURLRequest()
+        case .exitChannel(let workspaceID, let channelID):
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces", workspaceID, "channels", channelID, "exit"],
+                header: EndPointHeader.authorization.header
+            ).asURLRequest()
+        case .deleteChannel(let workspaceID, let channelID):
+            return try EndPoint(
+                method: .del,
                 path: ["workspaces", workspaceID, "channels", channelID],
                 header: EndPointHeader.authorization.header
             ).asURLRequest()
