@@ -54,7 +54,7 @@ struct ChannelSettingView: View {
         }
         .onChange(of: container.model.goToList) { newValue in
             if newValue {
-                   //home Default로 화면 전환
+                setRootView(what: LoginView())
                }
         }
     }

@@ -11,6 +11,7 @@ import Foundation
 final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private var networkManager = NetworkManager()
+    private let repositiory = ChattingRepository()
     
     @Published var channelID: String = ""
     @Published var workspaceID: String = ""
@@ -72,7 +73,10 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
                     }
                 }, receiveValue: { [weak self] value in
                     print(value)
-                    self?.goToList = true
+                    DispatchQueue.main.async {
+                        self?.repositiory?.deleteChatting(self?.channelID ?? "")
+                        self?.goToList = true
+                    }
                 })
                 .store(in: &cancellables)
         } catch {
