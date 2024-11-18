@@ -14,4 +14,8 @@ struct ChannelListResponse: Decodable {
     let coverImage: String?
     let owner_id: String
     let createdAt: String
+    
+    func convertToModel() -> ChannelListPresentationModel {
+        .init(channelID: channel_id, name: name, description: description, coverImage: coverImage, ownerID: owner_id, createdAt: createdAt)
+    }
 }

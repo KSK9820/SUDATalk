@@ -23,6 +23,7 @@ extension ChannelSettingIntent: ChannelIntentProtocol {
         case editChannel
         case changeAdmin
         case deleteChannel
+        case edittedChannel(_ channel: ChannelListPresentationModel)
     }
     
     func action(_ action: Action) {
@@ -39,6 +40,8 @@ extension ChannelSettingIntent: ChannelIntentProtocol {
             model?.changeAdmin()
         case .deleteChannel:
             model?.deleteChannel()
+        case .edittedChannel(let channel):
+            model?.updateChannel(channel)
         }
     }
 }

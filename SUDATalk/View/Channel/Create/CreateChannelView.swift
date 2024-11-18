@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CreateChannelView: View {
     @StateObject private var container: Container<CreateChannelIntent, CreateChannelModelStateProtocol>
+    @Environment(\.dismiss) var dismiss
+
+    var isModifiedData: ((ChannelListPresentationModel) -> Void)?
 
     private func bindingName(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, String>) -> Binding<String> {
         Binding(
@@ -44,16 +47,24 @@ struct CreateChannelView: View {
             
             Spacer()
             
-            Text("생성")
+            Text(container.model.isEditMode ? "편집하기" : "생성하기")
                 .wrapToDefaultButton(active: bindingSubmitButton(for: \.activeSubmit)) {
                     let input = ChannelInput(name: bindingName(for: \.channelName).wrappedValue, description: bindingName(for: \.description).wrappedValue, image: nil)
-                    container.intent.createChannel(SampleTest.workspaceID, input: input)
+                    if container.model.isEditMode {
+                        container.intent.action(.editChannel(SampleTest.workspaceID, input: input))
+                    } else {
+                        container.intent.action(.createChannel(SampleTest.workspaceID, input: input))
+                    }
                 }
-
         }
         .padding()
         .navigationTitle("채널 생성")
-
+        .onChange(of: container.model.modifiedChannel) { newValue in
+            if let newValue {
+                isModifiedData?(newValue)
+                dismiss()
+            }
+        }
     }
     
     private func textfieldRow(_ title: String, description: String, value: Binding<String>) -> some View {
@@ -80,12 +91,17 @@ struct CreateChannelView: View {
 }
 
 extension CreateChannelView {
-    static func build(_ name: String? = nil, description: String? = nil) -> some View {
+    static func build(_ channelID: String? = nil, name: String? = nil, description: String? = nil, modified:@escaping (ChannelListPresentationModel) -> Void) -> some View {
         let model = CreateChannelModel()
         let intent = CreateChannelIntent(model: model)
         
-        if let name, let description {
+        if let name {
             model.channelName = name
+            model.channelID = channelID
+            model.isEditMode = true
+        }
+        
+        if let description {
             model.description = description
         }
         
@@ -94,6 +110,6 @@ extension CreateChannelView {
             model: model as CreateChannelModelStateProtocol,
             modelChangePublisher: model.objectWillChange)
         
-        return CreateChannelView(container: container)
+        return CreateChannelView(container: container, isModifiedData: modified)
     }
 }

@@ -17,6 +17,7 @@ enum ChannelRouter {
     case channel(workspaceID: String, channelID: String)
     case exitChannel(workspaceID: String, channelID: String)
     case deleteChannel(workspaceID: String, channelID: String)
+    case editChannel(workspaceID: String, channelID: String, query: ChannelQuery)
 }
 
 extension ChannelRouter {
@@ -86,6 +87,16 @@ extension ChannelRouter {
                 method: .del,
                 path: ["workspaces", workspaceID, "channels", channelID],
                 header: EndPointHeader.authorization.header
+            ).asURLRequest()
+        case .editChannel(let workspaceID, let channelID, let query):
+            let boundary = "Boundary-\(UUID().uuidString)"
+            let body = MultipartFormDataBuilder.createMultipartBody(query: query, boundary: boundary)
+            
+            return try EndPoint(
+                method: .put,
+                path: ["workspaces", workspaceID, "channels", channelID],
+                header: EndPointHeader.multipartType(boundary: boundary).header,
+                multipartBody: body
             ).asURLRequest()
         }
     }
