@@ -21,18 +21,24 @@ extension SocketEnvironment: SocketEnvironmentConfigurable {
     
     var baseURL: String {
         get throws {
-            guard let baseURL = Bundle.main.infoDictionary?["BaseURL"] as? String
-            else {
-                throw NetworkError.notFoundBaseURL
+            switch self {
+            case .message:
+                guard let baseURL = Bundle.main.infoDictionary?["BaseURL"] as? String
+                else {
+                    throw NetworkError.notFoundBaseURL
+                }
+                return baseURL
             }
-            return baseURL
         }
     }
     
     var port: Int? {
-        guard let portNum = Bundle.main.infoDictionary?["PortNum"] as? String else {
-            return nil
+        switch self {
+        case .message:
+            guard let portNum = Bundle.main.infoDictionary?["PortNum"] as? String else {
+                return nil
+            }
+            return Int(portNum)
         }
-        return Int(portNum)
     }
 }

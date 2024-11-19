@@ -11,4 +11,5 @@ protocol ModelActionProtocol: AnyObject {
     func sendMessage(query: DMChatQuery)
     func connectSocket()
     func disconnectSocket()
+    func getRealtimeMessage()
 }

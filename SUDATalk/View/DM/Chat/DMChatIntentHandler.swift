@@ -23,6 +23,8 @@ final class DMChatIntentHandler: IntentProtocol {
             model.connectSocket()
         case .disconnectSocket:
             model.disconnectSocket()
+        case .getRealtimeMessage:
+            model.getRealtimeMessage()
         }
     }
 }
@@ -31,4 +33,5 @@ enum DMChatIntent: IntentType {
     case sendMessage(query: DMChatQuery)
     case connectSocket
     case disconnectSocket
+    case getRealtimeMessage
 }

@@ -19,6 +19,7 @@ struct DMChatView<Model: ModelStateProtocol & ModelActionProtocol>: View {
         }
         .onAppear {
             container.intent.handle(intent: .connectSocket)
+            container.intent.handle(intent: .getRealtimeMessage)
         }
         .onDisappear {
             container.intent.handle(intent: .disconnectSocket)

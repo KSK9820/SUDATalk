@@ -8,10 +8,10 @@
 import Foundation
 
 struct DMSocketEvent: SocketEventProtocol {
-    
     init(roomID: String) {
         self.nameSpace = .dm(roomID: roomID)
     }
+    
     var url: URL {
         get throws {
             return try SocketEnvironment.message.asURL()

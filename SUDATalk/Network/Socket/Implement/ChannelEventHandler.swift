@@ -10,21 +10,12 @@ import Foundation
 struct ChannelEventHandler: SocketEventHandler {
     private let decoder = JSONDecoder()
     
-    func handler(event: SocketEvent, data: Data) {
+    func handler(event: SocketEvent, data: Data) -> (any Decodable)? {
         switch event {
         case .channel:
-            receiveChannelMessage(message: data)
+            return decode(SendChatResponse.self, from: data)
         default:
-            break
-        }
-    }
-    
-    private func receiveChannelMessage(message data: Data) {
-        do {
-            let decodedData = try decoder.decode(SendChatResponse.self, from: data)
-            print(decodedData)
-        } catch {
-            print(error)
+            return nil
         }
     }
 }

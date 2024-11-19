@@ -8,20 +8,15 @@
 import Foundation
 
 final class SocketEventRouter {
-    private var handlers: [SocketEvent: [SocketEventHandler]] = [:]
+    private var handlers: [SocketEvent: SocketEventHandler] = [:]
     
     func register(handler: SocketEventHandler, for events: [SocketEvent]) {
         for event in events {
-            if handlers[event] == nil {
-                handlers[event] = []
-            }
-            handlers[event]?.append(handler)
+            handlers[event] = handler
         }
     }
     
-    func handleEvent(_ event: SocketEvent, data: Data) {
-        handlers[event]?.forEach {
-            $0.handler(event: event, data: data)
-        }
+    func handleEvent(_ event: SocketEvent, data: Data) -> Decodable? {
+        return handlers[event]?.handler(event: event, data: data)
     }
 }

@@ -5,6 +5,7 @@
 //  Created by 김수경 on 11/17/24.
 //
 
+import Combine
 import Foundation
 import SocketIO
 
@@ -13,6 +14,11 @@ final class SocketIOManager {
     private var socket: SocketIOClient?
     private let config: SocketEventProtocol
     private let eventRouter = SocketEventRouter()
+    private var messagePublisher = PassthroughSubject<Decodable, Error>()
+    
+    var publisher: AnyPublisher<Decodable, Error> {
+        messagePublisher.eraseToAnyPublisher()
+    }
     
     init(event: SocketEventProtocol) {
         self.config = event
@@ -56,11 +62,15 @@ final class SocketIOManager {
                 guard let self else { return }
                 guard let rawData = data.first as? [String: Any],
                       let jsonData = try? JSONSerialization.data(withJSONObject: rawData) else {
-                    // MARK: - Error 처리 필요함
-                    print("Failed to convert data to JSON")
-                    return
+                    
+                    return messagePublisher.send(completion: .failure(NetworkError.encoding))
                 }
-                eventRouter.handleEvent(event, data: jsonData)
+                
+                if let decodedData = eventRouter.handleEvent(event, data: jsonData) {
+                    messagePublisher.send(decodedData)
+                } else {
+                    messagePublisher.send(completion: .failure(NetworkError.decoding))
+                }
             })
         }
     }
