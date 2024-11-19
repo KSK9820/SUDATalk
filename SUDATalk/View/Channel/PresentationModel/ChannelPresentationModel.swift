@@ -8,8 +8,9 @@
 import Foundation
 
 struct ChannelPresentationModel {
-    let channelID, name: String
-    let description, coverImage: String?
+    let channelID: String
+    var name: String
+    var description, coverImage: String?
     let ownerID, createdAt: String
     var channelMembers: [ChannelMemberPresentationModel]
 

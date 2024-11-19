@@ -35,7 +35,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func setChattingData(workspaceID: String, channelID: String) {
         if let chatDatafromDB = repositiory?.fetchChatting(channelID) {
             let lastChatDate = chatDatafromDB.last?.createdAt ?? Date().formatted()
-            print(Date().formatted())
+
             chatting = chatDatafromDB
             fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate)
         } else {
@@ -171,18 +171,18 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     
     func connectSocket() {
         socketManager.connect()
-
-        socketManager.getChatSubject()
-            .sink {  completion in
-                if case .failure(let failure) = completion {
-                    print(failure)
-                }
-            } receiveValue: { [weak self] value in
-                guard let userID = self?.userID, userID != value.user.userID else { return }
-                self?.chatting.append(value.convertToModel())
-                self?.repositiory?.addChatting(value)
-            }
-            .store(in: &cancellables)
+// MARK: - 소켓 데이터 연결 코드
+//        socketManager.getChatSubject()
+//            .sink {  completion in
+//                if case .failure(let failure) = completion {
+//                    print(failure)
+//                }
+//            } receiveValue: { [weak self] value in
+//                guard let userID = self?.userID, userID != value.user.userID else { return }
+//                self?.chatting.append(value.convertToModel())
+//                self?.repositiory?.addChatting(value)
+//            }
+//            .store(in: &cancellables)
     }
     
     func disconnectSocket() {

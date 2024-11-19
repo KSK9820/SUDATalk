@@ -9,4 +9,5 @@ import Foundation
 
 protocol CreateChannelActionsProtocol: AnyObject {
     func createChannel(_ workspaceID: String, input: ChannelInput) 
+    func editChannel(_ workspaceID: String, input: ChannelInput) 
 }

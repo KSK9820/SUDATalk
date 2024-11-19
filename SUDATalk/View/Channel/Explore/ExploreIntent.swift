@@ -13,12 +13,20 @@ final class ExploreIntent {
     init(model: ExploreActionsProtocol) {
         self.model = model
     }
+}
 
-    func viewOnAppear(_ workspaceID: String) {
-        model?.fetchChennelList(workspaceID)
+extension ExploreIntent: ChannelIntentProtocol {
+    enum Action {
+        case viewOnAppear(_ workspaceID: String)
+        case onTapList
     }
     
-    func onTapList() {
-        model?.toggleAlert()
+    func action(_ action: Action) {
+        switch action {
+        case .viewOnAppear(let workspaceID):
+            model?.fetchChennelList(workspaceID)
+        case .onTapList:
+            model?.toggleAlert()
+        }
     }
 }

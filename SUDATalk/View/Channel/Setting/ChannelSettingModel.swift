@@ -112,4 +112,9 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
             print(error)
         }
     }
+    
+    func updateChannel(_ newChannel: ChannelListPresentationModel) {
+        channel.name = newChannel.name
+        channel.description = newChannel.description
+    }
 }

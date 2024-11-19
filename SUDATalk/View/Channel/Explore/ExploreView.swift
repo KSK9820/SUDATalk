@@ -33,10 +33,14 @@ struct ExploreView: View {
                     } else {
                         listRow(item)
                             .onTapGesture {
-                                container.intent.onTapList()
+                                container.intent.action(.onTapList)
                             }
                             .alert("채널 참여", isPresented: binding(for: \.showAlert)) {
-                                Button("확인", role: .cancel) { }
+                                NavigationLink {
+                                    NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
+                                } label: {
+                                    Text("확인")
+                                }
                             }
                     }
                 }
@@ -45,7 +49,7 @@ struct ExploreView: View {
         .navigationTitle("채널탐색")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-            container.intent.viewOnAppear(container.model.workspaceID)
+            container.intent.action(.viewOnAppear(container.model.workspaceID))    
         }
     }
     

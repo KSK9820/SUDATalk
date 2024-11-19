@@ -14,4 +14,5 @@ protocol ChannelSettingActionProtocol: AnyObject {
     func editChannel()
     func changeAdmin()
     func deleteChannel()
+    func updateChannel(_ channel: ChannelListPresentationModel)
 }

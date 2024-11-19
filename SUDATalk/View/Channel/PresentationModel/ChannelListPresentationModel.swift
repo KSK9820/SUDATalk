@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChannelListPresentationModel {
+struct ChannelListPresentationModel: Equatable {
     let channelID, name: String
     let description, coverImage: String?
     let ownerID, createdAt: String

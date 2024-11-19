@@ -13,6 +13,7 @@ struct ChannelSettingView: View {
     @State private var isExpanded = false
     @State private var alertType: ChannelSettingAlertType?
     @State private var isSheetPresented = false
+    @State private var isEditted = false
     
     var body: some View {
         ScrollView {
@@ -54,7 +55,10 @@ struct ChannelSettingView: View {
         }
         .sheet(isPresented: $isSheetPresented) {
             if container.model.selectedSheet == .editChannel {
-                CreateChannelView.build(container.model.channel.name, description: container.model.channel.description)
+                CreateChannelView.build(container.model.channelID, name: container.model.channel.name,
+                                        description: container.model.channel.description) { value in
+                    container.intent.action(.edittedChannel(value))
+                }
             } else if container.model.selectedSheet == .changeAdmin {
                 //채널 관리자 변경 뷰
             }
@@ -68,6 +72,9 @@ struct ChannelSettingView: View {
             if newValue != nil {
                 isSheetPresented = true
             }
+        }
+        .onChange(of: isEditted) { newValue in
+            container.intent.action(.viewOnAppear)
         }
     }
     
