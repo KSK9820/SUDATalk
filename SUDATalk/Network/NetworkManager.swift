@@ -72,7 +72,7 @@ final class NetworkManager: RawDataFetchable, DecodedDataFetchable {
         .eraseToAnyPublisher()
     }
     
-    func getDecodedDataTaskPublisher<D: Decodable>(_ request: URLRequest, model: D.Type) -> AnyPublisher<D, Error>  {
+    func getDecodedDataTaskPublisher<D: Decodable>(_ request: URLRequest, model: D.Type) -> AnyPublisher<D, Error> {
         decoder.getDecodedDataPublisher(response: getDataTaskPublisher(request), model: model)
     }
 }

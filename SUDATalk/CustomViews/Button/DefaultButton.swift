@@ -32,7 +32,7 @@ private struct DefaultButton: ViewModifier {
 }
 
 extension View {
-    func wrapToDefaultButton(active: Binding<Bool>, action: @escaping ()-> Void) -> some View {
+    func wrapToDefaultButton(active: Binding<Bool>, action: @escaping () -> Void) -> some View {
         modifier(DefaultButton(action: action, active: active))
     }
 }

@@ -12,7 +12,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
     private let repositiory = ChattingRepository()
-    private let socketManager:SocketIOManager
+    private let socketManager: SocketIOManager
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""

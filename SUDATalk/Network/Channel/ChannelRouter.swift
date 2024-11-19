@@ -53,7 +53,7 @@ extension ChannelRouter {
                 parameter: [URLQueryItem(name: "cursor_date", value: date)]
             ).asURLRequest()
         case .fetchImage(let url):
-            let arrUrl = url.split(separator: "/").map{ String($0) }
+            let arrUrl = url.split(separator: "/").map { String($0) }
             
             return try EndPoint(
                 method: .get,

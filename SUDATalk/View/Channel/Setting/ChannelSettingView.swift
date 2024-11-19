@@ -50,7 +50,7 @@ struct ChannelSettingView: View {
             .padding()
         }
         .navigationTitle("채널 설정")
-        .onAppear{
+        .onAppear {
             container.intent.action(.viewOnAppear)
         }
         .sheet(isPresented: $isSheetPresented) {
@@ -73,7 +73,7 @@ struct ChannelSettingView: View {
                 isSheetPresented = true
             }
         }
-        .onChange(of: isEditted) { newValue in
+        .onChange(of: isEditted) { _ in
             container.intent.action(.viewOnAppear)
         }
     }
@@ -98,7 +98,7 @@ struct ChannelSettingView: View {
                 withAnimation {
                     isExpanded.wrappedValue.toggle()
                 }
-            }) {
+            }, label: {
                 HStack {
                     Text("맴버(\(memebers.count))")
                         .textStyle(.title2)
@@ -108,7 +108,7 @@ struct ChannelSettingView: View {
                     
                     (isExpanded.wrappedValue ? Images.chevronUp : Images.chevronDown)
                 }
-            }
+            })
             
             if isExpanded.wrappedValue {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 5), spacing: 20) {

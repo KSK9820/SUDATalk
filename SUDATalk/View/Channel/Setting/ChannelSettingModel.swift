@@ -17,7 +17,7 @@ final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProto
     @Published var workspaceID: String = ""
     @Published var channel = ChannelPresentationModel()
     @Published var goToList = false
-    @Published var selectedSheet: ChannelEditAction? = nil
+    @Published var selectedSheet: ChannelEditAction?
 }
 
 extension ChannelSettingModel: ChannelSettingActionProtocol {

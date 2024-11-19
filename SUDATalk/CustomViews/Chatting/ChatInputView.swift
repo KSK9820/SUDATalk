@@ -52,7 +52,6 @@ struct ChatInputView: View {
         .padding()
     }
     
-    
     private func updateButtonColor() {
         if !messageText.isEmpty || !selectedImages.isEmpty {
             buttonColor = Colors.primary

@@ -13,7 +13,6 @@ final class DecodedService {
     private let authInterceptor = AuthInterceptor()
     private var cancellables: Set<AnyCancellable> = []
     
-    
     func getErrorDecodingPublisher(response: Error) -> NetworkAPIError {
         guard let networkError = response as? NetworkError else {
             return NetworkAPIError.unknown

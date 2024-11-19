@@ -11,11 +11,11 @@ import Foundation
 import SocketIO
 
 final class WebSocketManager {
-    private var manager:SocketManager
-    private var socket:SocketIOClient
+    private var manager: SocketManager
+    private var socket: SocketIOClient
     var chatData = PassthroughSubject<SendChatResponse, Never>()
 
-    init(channelID: String){
+    init(channelID: String) {
         let baseURL = Bundle.main.infoDictionary?["BaseURL"] as? String ?? ""
         let url = URL(string: "http://\(baseURL):39093")!
         

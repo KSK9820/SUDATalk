@@ -43,14 +43,14 @@ final class ChattingRepository {
     }
     
     func fetchChatting(_ channelID: String) -> [ChattingPresentationModel] {
-        let chatList = realm.objects(ChattingEntity.self).filter{ $0.channelID == channelID }
+        let chatList = realm.objects(ChattingEntity.self).filter { $0.channelID == channelID }
         
         return chatList.map { $0.convertToModel() }
     }
     
     func deleteChatting(_ channelID: String) {
         do {
-            let chatList = realm.objects(ChattingEntity.self).filter{ $0.channelID == channelID }
+            let chatList = realm.objects(ChattingEntity.self).filter { $0.channelID == channelID }
             
             try realm.write {
                 chatList.forEach {

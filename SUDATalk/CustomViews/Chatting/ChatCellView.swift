@@ -40,7 +40,7 @@ struct ChatCellView: View {
                         
                         VStack(spacing: 3) {
                             let imageCount = images.count
-                            let imageSpacing:CGFloat = 3
+                            let imageSpacing = 3.0
                             let columnsInRow = 3
                             let firstLineImageWidth = getImageWidth(imageCount: imageCount, spacing: imageSpacing, columns: columnsInRow)
                             let secondLineImageWidth = getImageWidth(imageCount: imageCount - columnsInRow, spacing: imageSpacing, columns: columnsInRow)

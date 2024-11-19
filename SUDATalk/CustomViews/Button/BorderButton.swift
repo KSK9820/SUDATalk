@@ -35,7 +35,7 @@ private struct BorderButton: ViewModifier {
 }
 
 extension View {
-    func wrapToBorderButton(_ color: Color, action: @escaping ()-> Void) -> some View {
+    func wrapToBorderButton(_ color: Color, action: @escaping () -> Void) -> some View {
         modifier(BorderButton(color: color, action: action))
     }
 }

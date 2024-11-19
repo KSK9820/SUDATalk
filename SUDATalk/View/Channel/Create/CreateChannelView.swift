@@ -91,7 +91,7 @@ struct CreateChannelView: View {
 }
 
 extension CreateChannelView {
-    static func build(_ channelID: String? = nil, name: String? = nil, description: String? = nil, modified:@escaping (ChannelListPresentationModel) -> Void) -> some View {
+    static func build(_ channelID: String? = nil, name: String? = nil, description: String? = nil, modified: @escaping (ChannelListPresentationModel) -> Void) -> some View {
         let model = CreateChannelModel()
         let intent = CreateChannelIntent(model: model)
         

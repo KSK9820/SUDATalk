@@ -60,4 +60,3 @@ final class ImageConverter {
         return imageData
     }
 }
-

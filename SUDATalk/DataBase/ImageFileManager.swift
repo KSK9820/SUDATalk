@@ -90,13 +90,11 @@ final class ImageFileManager {
             do {
                 let fileURLs = try FileManager.default.contentsOfDirectory(at: documentDirectory, includingPropertiesForKeys: nil)
                 
-                for fileURL in fileURLs {
-                    if fileURL.pathExtension == "jpg" {
-                        do {
-                            try FileManager.default.removeItem(at: fileURL)
-                        } catch {
-                            print("Failed to delete file: \(fileURL.lastPathComponent), error: \(error)")
-                        }
+                for fileURL in fileURLs where fileURL.pathExtension == "jpg" {
+                    do {
+                        try FileManager.default.removeItem(at: fileURL)
+                    } catch {
+                        print("Failed to delete file: \(fileURL.lastPathComponent), error: \(error)")
                     }
                 }
             } catch {
