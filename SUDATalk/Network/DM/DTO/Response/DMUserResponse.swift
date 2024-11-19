@@ -16,3 +16,12 @@ struct DMUserResponse: Decodable {
         case email, nickname, profileImage
     }
 }
+
+extension DMUserResponse {
+    func toModel() -> DMUserPresentationModel {
+        .init(userID: self.userID,
+              email: self.email,
+              nickname: self.nickname,
+              profileImage: self.profileImage)
+    }
+}

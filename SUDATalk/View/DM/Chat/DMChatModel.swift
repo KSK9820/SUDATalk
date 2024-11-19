@@ -16,6 +16,7 @@ final class DMChatModel: ObservableObject, ModelStateProtocol {
     
     @Published var messageText: String = ""
     @Published var selectedImages: [Data] = []
+    @Published var realtimeMessage = DMChatPresentationModel()
 }
 
 extension DMChatModel: ModelActionProtocol {
@@ -43,5 +44,19 @@ extension DMChatModel: ModelActionProtocol {
     
     func disconnectSocket() {
         socketManager.disconnect()
+    }
+    
+    func getRealtimeMessage() {
+        socketManager.publisher
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                }
+            } receiveValue: { [self] data in
+                if let decodedData = data as? DMChatResponse {
+                    self.realtimeMessage = decodedData.toModel()
+                }
+            }
+            .store(in: &cancellables)
     }
 }

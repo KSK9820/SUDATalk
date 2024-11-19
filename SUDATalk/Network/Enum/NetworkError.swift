@@ -13,6 +13,8 @@ enum NetworkError: Error {
     case notFoundAPIKey
     case notFoundPortNum
     case code(data: Data)
+    case encoding
+    case decoding
 }
 
 extension NetworkError: CustomStringConvertible {
@@ -26,6 +28,10 @@ extension NetworkError: CustomStringConvertible {
             return "APIKey가 없습니다."
         case .notFoundPortNum:
             return "PortNum가 없습니다."
+        case .encoding:
+            return "Encoidng에 실패하였습니다."
+        case .decoding:
+            return "Decoding에 실패하였습니다."
         default:
             return ""
         }

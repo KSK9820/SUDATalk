@@ -10,21 +10,12 @@ import Foundation
 struct DMEventHandler: SocketEventHandler {
     private let decoder = JSONDecoder()
     
-    func handler(event: SocketEvent, data: Data) {
+    func handler(event: SocketEvent, data: Data) -> Decodable? {
         switch event {
         case .dm:
-            receiveDMMessage(message: data)
+            return decode(DMChatResponse.self, from: data)
         default:
-            break
-        }
-    }
-    
-    private func receiveDMMessage(message data: Data) {
-        do {
-            let decodedData = try decoder.decode(DMChatResponse.self, from: data)
-            print(decodedData)
-        } catch {
-            print(error)
+            return nil 
         }
     }
 }
