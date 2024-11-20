@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SocketEventHandler {
-    func handler(event: SocketEvent, data: Data) -> Decodable?
+    func onEvent(event: SocketEvent, data: Data) -> Decodable?
     func decode<T: Decodable>(_ type: T.Type, from data: Data) -> T?
 }
 

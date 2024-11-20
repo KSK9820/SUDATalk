@@ -10,7 +10,7 @@ import Foundation
 struct ChannelEventHandler: SocketEventHandler {
     private let decoder = JSONDecoder()
     
-    func handler(event: SocketEvent, data: Data) -> (any Decodable)? {
+    func onEvent(event: SocketEvent, data: Data) -> Decodable? {
         switch event {
         case .channel:
             return decode(SendChatResponse.self, from: data)

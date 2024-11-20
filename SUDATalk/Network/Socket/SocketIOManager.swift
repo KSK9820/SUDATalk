@@ -13,7 +13,6 @@ final class SocketIOManager {
     private var manager: SocketManager?
     private var socket: SocketIOClient?
     private let config: SocketEventProtocol
-    private let eventRouter = SocketEventRouter()
     private var messagePublisher = PassthroughSubject<Decodable, Error>()
     
     var publisher: AnyPublisher<Decodable, Error> {
@@ -42,7 +41,6 @@ final class SocketIOManager {
             socket = manager?.socket(forNamespace: config.nameSpace.description)
 
             setupSocketEvent()
-            registerHandler()
         } catch {
             print(error)
         }
@@ -66,16 +64,12 @@ final class SocketIOManager {
                     return messagePublisher.send(completion: .failure(NetworkError.encoding))
                 }
                 
-                if let decodedData = eventRouter.handleEvent(event, data: jsonData) {
+                if let decodedData = config.handler.onEvent(event: event, data: jsonData) {
                     messagePublisher.send(decodedData)
                 } else {
                     messagePublisher.send(completion: .failure(NetworkError.decoding))
                 }
             })
         }
-    }
-    
-    private func registerHandler() {
-        eventRouter.register(handler: config.handler, for: config.events)
     }
 }
