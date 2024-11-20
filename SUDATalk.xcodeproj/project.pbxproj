@@ -75,7 +75,9 @@
 		488E3C052CD9029C00B1E7F6 /* CreateChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C042CD9029C00B1E7F6 /* CreateChannelModel.swift */; };
 		532756762CE4987A00376E09 /* MultiPartFormDatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532756752CE4987A00376E09 /* MultiPartFormDatable.swift */; };
 		5327567B2CE4A68700376E09 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5327567A2CE4A68700376E09 /* SocketIO */; };
-		53450E612CDB58D800227ADB /* Data++Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53450E602CDB58D800227ADB /* Data++Extension.swift */; };
+		53276B4D2CECAAA3002AD8E2 /* StringDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53276B4C2CECAAA3002AD8E2 /* StringDateFormat.swift */; };
+		53276B4F2CECAAB6002AD8E2 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53276B4E2CECAAB6002AD8E2 /* Date+.swift */; };
+		53450E612CDB58D800227ADB /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53450E602CDB58D800227ADB /* Data+.swift */; };
 		535077292CD2311500213CBC /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 535077282CD2311500213CBC /* .swiftlint.yml */; };
 		5357ADCB2CD9286000FB391A /* DMRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5357ADCA2CD9286000FB391A /* DMRouter.swift */; };
 		5357ADCE2CD929F600FB391A /* DMChatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5357ADCD2CD929F600FB391A /* DMChatResponse.swift */; };
@@ -97,7 +99,6 @@
 		535F47222CE8F7ED00BDB773 /* SocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47212CE8F7ED00BDB773 /* SocketEvent.swift */; };
 		535F47242CE8F80500BDB773 /* SocketNameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47232CE8F80500BDB773 /* SocketNameSpace.swift */; };
 		535F47262CE8F86600BDB773 /* SocketEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47252CE8F86600BDB773 /* SocketEventHandler.swift */; };
-		535F47282CE8FDA000BDB773 /* SocketEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47272CE8FDA000BDB773 /* SocketEventRouter.swift */; };
 		535F472A2CE8FDB500BDB773 /* DMEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47292CE8FDB500BDB773 /* DMEventHandler.swift */; };
 		535F472C2CE8FDCC00BDB773 /* ChannelEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F472B2CE8FDCC00BDB773 /* ChannelEventHandler.swift */; };
 		535F472E2CE8FDED00BDB773 /* DMSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */; };
@@ -187,7 +188,9 @@
 		488E3C022CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelActionsProtocol.swift; sourceTree = "<group>"; };
 		488E3C042CD9029C00B1E7F6 /* CreateChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelModel.swift; sourceTree = "<group>"; };
 		532756752CE4987A00376E09 /* MultiPartFormDatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPartFormDatable.swift; sourceTree = "<group>"; };
-		53450E602CDB58D800227ADB /* Data++Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data++Extension.swift"; sourceTree = "<group>"; };
+		53276B4C2CECAAA3002AD8E2 /* StringDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDateFormat.swift; sourceTree = "<group>"; };
+		53276B4E2CECAAB6002AD8E2 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		53450E602CDB58D800227ADB /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		535077282CD2311500213CBC /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		5357ADCA2CD9286000FB391A /* DMRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRouter.swift; sourceTree = "<group>"; };
 		5357ADCD2CD929F600FB391A /* DMChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatResponse.swift; sourceTree = "<group>"; };
@@ -209,7 +212,6 @@
 		535F47212CE8F7ED00BDB773 /* SocketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketEvent.swift; sourceTree = "<group>"; };
 		535F47232CE8F80500BDB773 /* SocketNameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketNameSpace.swift; sourceTree = "<group>"; };
 		535F47252CE8F86600BDB773 /* SocketEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketEventHandler.swift; sourceTree = "<group>"; };
-		535F47272CE8FDA000BDB773 /* SocketEventRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketEventRouter.swift; sourceTree = "<group>"; };
 		535F47292CE8FDB500BDB773 /* DMEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMEventHandler.swift; sourceTree = "<group>"; };
 		535F472B2CE8FDCC00BDB773 /* ChannelEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEventHandler.swift; sourceTree = "<group>"; };
 		535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSocketEvent.swift; sourceTree = "<group>"; };
@@ -492,8 +494,9 @@
 			isa = PBXGroup;
 			children = (
 				484F52E42CDC5D73008F20D3 /* String+.swift */,
-				53450E602CDB58D800227ADB /* Data++Extension.swift */,
+				53450E602CDB58D800227ADB /* Data+.swift */,
 				48486B5F2CEB1D68006C668E /* View+.swift */,
+				53276B4E2CECAAB6002AD8E2 /* Date+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -504,6 +507,15 @@
 				532756752CE4987A00376E09 /* MultiPartFormDatable.swift */,
 			);
 			path = MultipartFormData;
+			sourceTree = "<group>";
+		};
+		53276B4B2CECAA7B002AD8E2 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				484F52E12CDC5854008F20D3 /* ImageConverter.swift */,
+				484F52E82CDDD60F008F20D3 /* ImageCacheManager.swift */,
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 		5357ADC92CD9285200FB391A /* DM */ = {
@@ -596,7 +608,6 @@
 			isa = PBXGroup;
 			children = (
 				535F47182CE8954400BDB773 /* SocketEnvironment.swift */,
-				535F47272CE8FDA000BDB773 /* SocketEventRouter.swift */,
 				535F47292CE8FDB500BDB773 /* DMEventHandler.swift */,
 				535F472B2CE8FDCC00BDB773 /* ChannelEventHandler.swift */,
 				535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */,
@@ -619,8 +630,8 @@
 			children = (
 				53B9EDCE2CD61A9A000BF728 /* KeyChain */,
 				532756742CE4986400376E09 /* MultipartFormData */,
-				484F52E12CDC5854008F20D3 /* ImageConverter.swift */,
-				484F52E82CDDD60F008F20D3 /* ImageCacheManager.swift */,
+				53276B4B2CECAA7B002AD8E2 /* Image */,
+				53276B4C2CECAAA3002AD8E2 /* StringDateFormat.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -835,7 +846,7 @@
 				48088BE72CD607F9008DC165 /* ExploreModel.swift in Sources */,
 				5357ADCB2CD9286000FB391A /* DMRouter.swift in Sources */,
 				4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */,
-				535F47282CE8FDA000BDB773 /* SocketEventRouter.swift in Sources */,
+				53276B4D2CECAAA3002AD8E2 /* StringDateFormat.swift in Sources */,
 				48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */,
 				48088BE12CD606FC008DC165 /* ExploreIntent.swift in Sources */,
 				53C01D332CD25BBE00D35B95 /* URLRequestConvertible.swift in Sources */,
@@ -861,6 +872,7 @@
 				5357ADEB2CD92F7F00FB391A /* DMChatIntentHandler.swift in Sources */,
 				48088BF02CD60C62008DC165 /* ExploreResponse.swift in Sources */,
 				488E3BFF2CD901B300B1E7F6 /* CreateChannelIntent.swift in Sources */,
+				53276B4F2CECAAB6002AD8E2 /* Date+.swift in Sources */,
 				484F52E52CDC5D73008F20D3 /* String+.swift in Sources */,
 				484F52FC2CE0DDDA008F20D3 /* ChannelQuery.swift in Sources */,
 				48486B532CE8460C006C668E /* ChannelSettingButtonsView.swift in Sources */,
@@ -875,7 +887,7 @@
 				53585AA82CDB8E1E00252D74 /* NetworkAPIError.swift in Sources */,
 				53B9EDC82CD61724000BF728 /* SampleTest.swift in Sources */,
 				48088BFD2CD658E8008DC165 /* ChatCellView.swift in Sources */,
-				53450E612CDB58D800227ADB /* Data++Extension.swift in Sources */,
+				53450E612CDB58D800227ADB /* Data+.swift in Sources */,
 				5357ADE92CD92E2500FB391A /* DMChatModel.swift in Sources */,
 				4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */,
 				488E3C012CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift in Sources */,
