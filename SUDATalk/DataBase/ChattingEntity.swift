@@ -32,23 +32,3 @@ final class ChattingEntity: Object, ObjectKeyIdentifiable {
         .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content, createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImageUrl: nil, profileImageData: Data()), images: [])
     }
 }
-
-final class UserEntity: Object, ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var userID: String
-    @Persisted var email: String
-    @Persisted var nickname: String
-    @Persisted var profileImage: String?
-    
-    convenience init(userID: String, email: String, nickname: String, profileImage: String? = nil) {
-        self.init()
-        self.userID = userID
-        self.email = email
-        self.nickname = nickname
-        self.profileImage = profileImage
-    }
-    
-    func convertToModel() -> ChatUserPresentationModel {
-        .init(userID: userID, email: email, nickname: nickname, profileImageUrl: profileImage, profileImageData: Data())
-    }
-}
