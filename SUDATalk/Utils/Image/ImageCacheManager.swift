@@ -20,4 +20,8 @@ final class ImageCacheManager {
     func loadImageFromCache(forKey key: String) -> Data? {
         return imageCache.object(forKey: key as NSString) as Data?
     }
+    
+    func removeImageFromCache(forKey key: String) {
+        imageCache.removeObject(forKey: key as NSString)
+    }
 }
