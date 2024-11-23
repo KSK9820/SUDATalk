@@ -30,6 +30,7 @@ final class SocketIOManager {
     }
     
     func disconnect() {
+        socket?.removeAllHandlers()
         socket?.disconnect()
     }
     
