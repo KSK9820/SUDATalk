@@ -6,22 +6,35 @@
 //
 
 import Foundation
+import UIKit
 
 struct DMUserPresentationModel {
     let userID, email, nickname: String
-    let profileImage: String?
+    var profileImage: String?
+    var profileImageData: UIImage?
     
     init() {
         self.userID = ""
         self.email = ""
         self.nickname = ""
         self.profileImage = nil
+        self.profileImageData = nil
     }
     
-    init(userID: String, email: String, nickname: String, profileImage: String?) {
+    init(userID: String, email: String, nickname: String, profileImage: String?, profileImageData: UIImage?) {
         self.userID = userID
         self.email = email
         self.nickname = nickname
         self.profileImage = profileImage
+        self.profileImageData = nil
+    }
+}
+
+extension DMUserPresentationModel {
+    func toEntity() -> UserEntity {
+        .init(userID: self.userID,
+              email: self.email,
+              nickname: self.nickname,
+              profileImage: self.profileImage)
     }
 }

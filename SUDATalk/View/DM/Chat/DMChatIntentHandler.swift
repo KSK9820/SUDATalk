@@ -8,30 +8,30 @@
 import Foundation
 
 final class DMChatIntentHandler: IntentProtocol {
-    private var model: ModelActionProtocol
+    private var model: DMModelActionProtocol
     typealias Intent = DMChatIntent
     
-    init(model: ModelActionProtocol) {
+    init(model: DMModelActionProtocol) {
         self.model = model
     }
     
     func handle(intent: DMChatIntent) {
         switch intent {
+        case .setDMChat:
+            model.setDMChatView()
         case .sendMessage(let query):
             model.sendMessage(query: query)
-        case .connectSocket:
-            model.connectSocket()
+        case .fetchImages(let urls, let index):
+            model.fetchImages(urls: urls, index: index)
         case .disconnectSocket:
             model.disconnectSocket()
-        case .getRealtimeMessage:
-            model.getRealtimeMessage()
         }
     }
 }
 
 enum DMChatIntent: IntentType {
-    case sendMessage(query: DMChatQuery)
-    case connectSocket
+    case setDMChat
+    case sendMessage(query: DMChatSendPresentationModel)
+    case fetchImages(urls: [String], index: Int)
     case disconnectSocket
-    case getRealtimeMessage
 }
