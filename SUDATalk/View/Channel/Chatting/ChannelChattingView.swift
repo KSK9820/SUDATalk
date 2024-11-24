@@ -85,10 +85,9 @@ struct ChannelChattingView: View {
                 ForEach(container.model.chatting.indices, id: \.self) { index in
                     let item = container.model.chatting[index]
                     let profileImage = UIImage(data: item.user.profileImageData)
-                        .map { Image(uiImage: $0) }
-                    ?? Images.userDefaultImage
+                        .map { Image(uiImage: $0) } ?? Images.userDefaultImage
                     
-                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.formatDate())
+                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt)
                         .task {
                             if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
                                 container.intent.action(.fetchProfileImages(url: profileUrl, index: index))

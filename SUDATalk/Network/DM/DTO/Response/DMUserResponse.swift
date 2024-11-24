@@ -22,6 +22,7 @@ extension DMUserResponse {
         .init(userID: self.userID,
               email: self.email,
               nickname: self.nickname,
-              profileImage: self.profileImage)
+              profileImage: self.profileImage, 
+              profileImageData: nil)
     }
 }

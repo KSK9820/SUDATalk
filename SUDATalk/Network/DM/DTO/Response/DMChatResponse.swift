@@ -9,8 +9,8 @@ import Foundation
 
 struct DMChatResponse: Decodable {
     let dmID, roomID, createdAt: String
-    let content: String?
-    let files: [String]?
+    var content: String?
+    let files: [String]
     let user: DMUserResponse
     
     enum CodingKeys: String, CodingKey {
@@ -25,7 +25,7 @@ extension DMChatResponse {
         .init(dmID: self.dmID,
               roomID: self.roomID,
               content: self.content,
-              createdAt: Date(),
+              createdAt: self.createdAt.convertToDate(),
               files: self.files,
               user: self.user.toModel())
     }

@@ -6,9 +6,9 @@
 //
 
 import Combine
-import Foundation
+import SwiftUI
 
-final class InterfaceContainer<Intent, Model: ModelStateProtocol>: ObservableObject {
+final class InterfaceContainer<Intent, Model: DMModelStateProtocol>: ObservableObject {
     let intent: Intent
     var model: Model
 
@@ -22,5 +22,14 @@ final class InterfaceContainer<Intent, Model: ModelStateProtocol>: ObservableObj
             .receive(on: RunLoop.main)
             .sink(receiveValue: objectWillChange.send)
             .store(in: &cancellable)
+    }
+ 
+    func binding<Value>(
+        for keyPath: WritableKeyPath<Model, Value>
+    ) -> Binding<Value> {
+        Binding(
+            get: { self.model[keyPath: keyPath] },
+            set: { self.model[keyPath: keyPath] = $0 }
+        )
     }
 }

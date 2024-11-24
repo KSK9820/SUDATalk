@@ -20,36 +20,41 @@ struct ChatInputView: View {
             PhotoPicker(selectedImages: $selectedImages) {
                 Image("plus")
             }
-            
-            VStack {
-                TextField("메시지를 입력하세요", text: $messageText, axis: .vertical)
-                    .frame(minHeight: 35)
-                    .padding(5)
-                
-                TextFieldAttachedImageView(images: selectedImages, onRemoveImage: { index in
-                    selectedImages.remove(at: index)
-                })
-                .padding(.bottom, 5)
-            }
-            
-            Button(action: {
-                sendButtonTap?()
-            }, label: {
-                Image("message")
-                    .foregroundColor(buttonColor)
-            })
-            .onChange(of: messageText) { _ in
-                updateButtonColor()
-            }
-            .onChange(of: selectedImages) { _ in
-                updateButtonColor()
-            }
-
+            inputTextSection()
+            sendButton()
         }
         .padding(.horizontal)
         .background(Colors.gray)
         .cornerRadius(15)
         .padding()
+    }
+    
+    private func inputTextSection() -> some View {
+        VStack {
+            TextField("메시지를 입력하세요", text: $messageText, axis: .vertical)
+                .frame(minHeight: 35)
+                .padding(5)
+            
+            TextFieldAttachedImageView(images: selectedImages, onRemoveImage: { index in
+                selectedImages.remove(at: index)
+            })
+            .padding(.bottom, 5)
+        }
+    }
+    
+    private func sendButton() -> some View {
+        Button(action: {
+            sendButtonTap?()
+        }, label: {
+            Image("message")
+                .foregroundColor(buttonColor)
+        })
+        .onChange(of: messageText) { _ in
+            updateButtonColor()
+        }
+        .onChange(of: selectedImages) { _ in
+            updateButtonColor()
+        }
     }
     
     private func updateButtonColor() {
