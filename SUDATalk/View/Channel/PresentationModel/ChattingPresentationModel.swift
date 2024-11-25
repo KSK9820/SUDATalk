@@ -9,7 +9,7 @@ import Foundation
 
 struct ChattingPresentationModel {
     let channelID, channelName, chatID, content: String
-    let createdAt: String
+    let createdAt: Date
     let files: [String]
     var user: ChatUserPresentationModel
     var images: [Data]

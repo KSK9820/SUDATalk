@@ -34,17 +34,17 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func setChattingData(workspaceID: String, channelID: String) {
         if let chatDatafromDB = repositiory?.fetchChatting(channelID) {
-            let lastChatDate = chatDatafromDB.last?.createdAt ?? Date().formatted()
-
-            chatting = chatDatafromDB
-            fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate)
-        } else {
-            fetchChatFromNetwork(workspaceID, channelID: channelID, date: Date().formatted())
+            if let lastChatDate = chatDatafromDB.last?.createdAt {
+                fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate.toString(style: .iso))
+            } else {
+                fetchChatFromNetwork(workspaceID, channelID: channelID, date: Date().toString(style: .iso))
+            }
         }
     }
     
-    func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String) {
+    func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String?) {
         do {
+            guard let date else { return }
             let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
             
             networkManager.getDecodedDataTaskPublisher(requestChannel, model: [SendChatResponse].self)

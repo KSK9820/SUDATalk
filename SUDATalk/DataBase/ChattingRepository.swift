@@ -28,7 +28,7 @@ final class ChattingRepository {
                 channelName: chat.channelName,
                 chatID: chat.chatID,
                 content: chat.content,
-                createdAt: chat.createdAt,
+                createdAt: chat.createdAt.convertToDate(),
                 user: UserEntity(userID: chat.user.userID, email: chat.user.email, nickname: chat.user.nickname, profileImage: chat.user.profileImage)
             )
             

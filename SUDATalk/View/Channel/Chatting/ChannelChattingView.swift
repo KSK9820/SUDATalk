@@ -87,7 +87,7 @@ struct ChannelChattingView: View {
                     let profileImage = UIImage(data: item.user.profileImageData)
                         .map { Image(uiImage: $0) } ?? Images.userDefaultImage
                     
-                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt)
+                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
                         .task {
                             if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
                                 container.intent.action(.fetchProfileImages(url: profileUrl, index: index))

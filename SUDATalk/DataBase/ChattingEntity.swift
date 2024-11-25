@@ -13,11 +13,11 @@ final class ChattingEntity: Object, ObjectKeyIdentifiable {
     @Persisted var channelID: String
     @Persisted var channelName: String
     @Persisted var content: String
-    @Persisted var createdAt: String
+    @Persisted var createdAt: Date
     @Persisted var files: List<String>
     @Persisted var user: UserEntity?
     
-    convenience init(channelID: String, channelName: String, chatID: String, content: String, createdAt: String, files: List<String> = List<String>(), user: UserEntity) {
+    convenience init(channelID: String, channelName: String, chatID: String, content: String, createdAt: Date, files: List<String> = List<String>(), user: UserEntity) {
         self.init()
         self.channelID = channelID
         self.channelName = channelName
