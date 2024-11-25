@@ -90,7 +90,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     
                     self?.ongoingRequests.remove(requestKey)
                 }, receiveValue: { [weak self] value in
-                    print(value)
                     if !value.files.isEmpty {
                         value.files.enumerated().forEach { (index, url) in
                             ImageFileManager.shared.saveImageToDocument(image: images[index], fileUrl: url)
@@ -182,18 +181,25 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     
     func connectSocket() {
         socketManager.connect()
-// MARK: - 소켓 데이터 연결 코드
-//        socketManager.getChatSubject()
-//            .sink {  completion in
-//                if case .failure(let failure) = completion {
-//                    print(failure)
-//                }
-//            } receiveValue: { [weak self] value in
-//                guard let userID = self?.userID, userID != value.user.userID else { return }
-//                self?.chatting.append(value.convertToModel())
-//                self?.repositiory?.addChatting(value)
-//            }
-//            .store(in: &cancellables)
+        getRealtimeMessage()
+    }
+    
+    private func getRealtimeMessage() {
+        socketManager.publisher
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error)
+                }
+            } receiveValue: { [weak self] data in
+                guard let self else { return }
+                
+                if let decodedData = data as? SendChatResponse {
+                    guard let userID = self.userID, userID != decodedData.user.userID else { return }
+                    self.chatting.append(decodedData.convertToModel())
+                    self.repositiory?.addChatting(decodedData)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     func disconnectSocket() {
