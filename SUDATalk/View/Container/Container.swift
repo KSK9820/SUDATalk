@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import SwiftUI
 
 final class Container<Intent, Model>: ObservableObject {
     let intent: Intent
@@ -22,5 +22,12 @@ final class Container<Intent, Model>: ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveValue: objectWillChange.send)
             .store(in: &cancellable)
+    }
+    
+    func binding<Value>(for keyPath: WritableKeyPath<Model, Value>) -> Binding<Value> {
+        Binding(
+            get: { self.model[keyPath: keyPath] },
+            set: { self.model[keyPath: keyPath] = $0 }
+        )
     }
 }

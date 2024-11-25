@@ -14,7 +14,7 @@ final class ChattingRepository {
     init?() {
         do {
             self.realm = try Realm()
-            //print(realm.configuration.fileURL ?? "")
+            print(realm.configuration.fileURL ?? "")
         } catch let error as NSError {
             print("Failed to initialize Realm with error: \(error.localizedDescription)")
             return nil
@@ -35,7 +35,7 @@ final class ChattingRepository {
             chatEntity.files.append(objectsIn: chat.files)
             
             try realm.write {
-                realm.add(chatEntity)
+                realm.add(chatEntity, update: .modified)
             }
         } catch {
             print("addChatting: \(error)")

@@ -11,30 +11,12 @@ struct ChannelChattingView: View {
     @StateObject private var container: Container<ChannelChattingIntent, ChannelChattingModelStateProtocol>
     @Environment(\.scenePhase) private var scenePhase
     
-    private func binding(for keyPath: WritableKeyPath<ChannelChattingModelStateProtocol, String>) -> Binding<String> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.messageText = newValue
-            }
-        )
-    }
-    
-    private func binding(for keyPath: WritableKeyPath<ChannelChattingModelStateProtocol, [UIImage]>) -> Binding<[UIImage]> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.selectedImages = newValue
-            }
-        )
-    }
-    
     var body: some View {
         chattingListSection()
         
         Spacer()
         
-        ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
+        ChatInputView(messageText: container.binding(for: \.messageText), selectedImages: container.binding(for: \.selectedImages), sendButtonTap: {
             if let channel = container.model.channel {
                 container.intent.action(.sendMessage(workspaceID: container.model.workspaceID,
                                                      channelID: channel.channelID,

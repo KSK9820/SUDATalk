@@ -34,6 +34,8 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
 extension ChannelChattingModel: ChannelChattingActionsProtocol {
     func setChattingData(workspaceID: String, channelID: String) {
         if let chatDatafromDB = repositiory?.fetchChatting(channelID) {
+            chatting = chatDatafromDB
+            
             if let lastChatDate = chatDatafromDB.last?.createdAt {
                 fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate.toString(style: .iso))
             } else {

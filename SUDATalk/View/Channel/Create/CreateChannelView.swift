@@ -13,43 +13,16 @@ struct CreateChannelView: View {
 
     var isModifiedData: ((ChannelListPresentationModel) -> Void)?
 
-    private func bindingName(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, String>) -> Binding<String> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.channelName = newValue
-            }
-        )
-    }
-    
-    private func bindingDesciption(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, String>) -> Binding<String> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.description = newValue
-            }
-        )
-    }
-    
-    private func bindingSubmitButton(for keyPath: WritableKeyPath<CreateChannelModelStateProtocol, Bool>) -> Binding<Bool> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.activeSubmit = newValue
-            }
-        )
-    }
-    
     var body: some View {
         VStack {
-            textfieldRow("채널 이름", description: "채널명을 입력하세요.", value: bindingName(for: \.channelName))
-            textfieldRow("채널 설명", description: "채널을 설명하세요.", value: bindingDesciption(for: \.description))
+            textfieldRow("채널 이름", description: "채널명을 입력하세요.", value: container.binding(for: \.channelName))
+            textfieldRow("채널 설명", description: "채널을 설명하세요.", value: container.binding(for: \.description))
             
             Spacer()
             
             Text(container.model.isEditMode ? "편집하기" : "생성하기")
-                .wrapToDefaultButton(active: bindingSubmitButton(for: \.activeSubmit)) {
-                    let input = ChannelInput(name: bindingName(for: \.channelName).wrappedValue, description: bindingName(for: \.description).wrappedValue, image: nil)
+                .wrapToDefaultButton(active: container.binding(for: \.activeSubmit)) {
+                    let input = ChannelInput(name: container.binding(for: \.channelName).wrappedValue, description: container.binding(for: \.description).wrappedValue, image: nil)
                     if container.model.isEditMode {
                         container.intent.action(.editChannel(SampleTest.workspaceID, input: input))
                     } else {
@@ -85,8 +58,8 @@ struct CreateChannelView: View {
     }
     
     private func updateSubmitButtonState() {
-        let value = !bindingName(for: \.channelName).wrappedValue.isEmpty && !bindingName(for: \.description).wrappedValue.isEmpty
-        bindingSubmitButton(for: \.activeSubmit).wrappedValue = value
+        let value = !container.binding(for: \.channelName).wrappedValue.isEmpty && !container.binding(for: \.description).wrappedValue.isEmpty
+        container.binding(for: \.activeSubmit).wrappedValue = value
     }
 }
 

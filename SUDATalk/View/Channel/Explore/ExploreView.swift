@@ -11,15 +11,6 @@ struct ExploreView: View {
     @StateObject private var container: Container<ExploreIntent, ExploreModelStateProtocol>
     @State private var showAlert = false
     
-    private func binding(for keyPath: WritableKeyPath<ExploreModelStateProtocol, Bool>) -> Binding<Bool> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.showAlert = newValue
-            }
-        )
-    }
-    
     var body: some View {
         ScrollView {
             LazyVStack {
@@ -35,7 +26,7 @@ struct ExploreView: View {
                             .onTapGesture {
                                 container.intent.action(.onTapList)
                             }
-                            .alert("채널 참여", isPresented: binding(for: \.showAlert)) {
+                            .alert("채널 참여", isPresented: container.binding(for: \.showAlert)) {
                                 NavigationLink {
                                     NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
                                 } label: {
