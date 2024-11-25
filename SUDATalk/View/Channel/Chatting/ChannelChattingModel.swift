@@ -19,7 +19,6 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     @Published var workspaceID: String = ""
     @Published var messageText: String = ""
     @Published var selectedImages: [UIImage] = []
-    @Published var uploadStatus: Bool = false
     @Published var chatting: [ChattingPresentationModel] = []
     @AppStorage("userID") var userID: String?
     
@@ -110,74 +109,74 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    func fetchImages(_ urls: [String], index: Int) {
-        let dispatchGroup = DispatchGroup()
-        var chatImages: [Data] = []
+    private func generateRequestKey(for query: ChatQuery) -> String {
+            let content = query.content
+            let files = query.files.map { $0.base64EncodedString() }.joined(separator: ",")
+            return "\(content)-\(files)"
+        }
 
-        urls.forEach { url in
+    func fetchImages(_ urls: [String], index: Int) async {
+        var chatImages: [Data?] = []
+
+        for url in urls {
             if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
                 chatImages.append(cachedImage)
-                return
+                continue
             }
             
             if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
                 chatImages.append(fileManagerImage)
                 ImageCacheManager.shared.saveImageToCache(imageData: fileManagerImage, forKey: url)
-                return
+                continue
             }
-            
-            dispatchGroup.enter()
             
             do {
-                let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
+                let value = try await fetchImageFromNetwork(url: url)
+                ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+                chatImages.append(value)
 
-                networkManager.getDataTaskPublisher(requestChannel)
-                    .sink { completion in
-                        if case .failure(let failure) = completion {
-                            print(failure)
-                            dispatchGroup.leave()
-                        }
-                    } receiveValue: { value in
-                        ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
-                        chatImages.append(value)
-                        if let image = UIImage(data: value) {
-                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
-                        }
-                        dispatchGroup.leave()
-                    }
-                    .store(in: &cancellables)
+                if let image = UIImage(data: value) {
+                    ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+                }
             } catch {
-                print("Error: \(error)")
-                dispatchGroup.leave()
+                print("Error fetching image from network: \(error)")
+                chatImages.append(nil)
+                continue
             }
         }
+
+        self.chatting[index].images = chatImages
+    }
+
+    private func fetchImageFromNetwork(url: String) async throws -> Data {
+        let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
         
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.chatting[index].images = chatImages
+        return try await withCheckedThrowingContinuation { continuation in
+            networkManager.getDataTaskPublisher(requestChannel)
+                .sink { completion in
+                    if case .failure(let failure) = completion {
+                        continuation.resume(throwing: failure)
+                    }
+                } receiveValue: { value in
+                    continuation.resume(returning: value)
+                }
+                .store(in: &cancellables)
         }
     }
     
-    func fetchProfileImages(_ url: String, index: Int) {
+    func fetchProfileImages(_ url: String, index: Int) async {
         if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
             chatting[index].user.profileImageData = cachedImage
             return
         }
-        
+
         do {
-            let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
-            
-            networkManager.getDataTaskPublisher(requestChannel)
-                .sink { completion in
-                    if case .failure(let failure) = completion {
-                        print(failure)
-                    }
-                } receiveValue: { [weak self] value in
-                    ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
-                    self?.chatting[index].user.profileImageData = value
-                }
-                .store(in: &cancellables)
+            let value = try await fetchImageFromNetwork(url: url)
+            ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+            chatting[index].user.profileImageData = value
+
         } catch {
-            print("Error: \(error)")
+            print("Error fetching image from network: \(error)")
         }
     }
     

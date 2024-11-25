@@ -73,6 +73,7 @@
 		488E3C012CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C002CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift */; };
 		488E3C032CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C022CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift */; };
 		488E3C052CD9029C00B1E7F6 /* CreateChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C042CD9029C00B1E7F6 /* CreateChannelModel.swift */; };
+		48D0EE392CF45C490015C4F1 /* ChannelMemberPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0EE382CF45C490015C4F1 /* ChannelMemberPresentationModel.swift */; };
 		532756762CE4987A00376E09 /* MultiPartFormDatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532756752CE4987A00376E09 /* MultiPartFormDatable.swift */; };
 		5327567B2CE4A68700376E09 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5327567A2CE4A68700376E09 /* SocketIO */; };
 		53276B4D2CECAAA3002AD8E2 /* StringDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53276B4C2CECAAA3002AD8E2 /* StringDateFormat.swift */; };
@@ -196,6 +197,7 @@
 		488E3C002CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelModelStateProtocol.swift; sourceTree = "<group>"; };
 		488E3C022CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelActionsProtocol.swift; sourceTree = "<group>"; };
 		488E3C042CD9029C00B1E7F6 /* CreateChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelModel.swift; sourceTree = "<group>"; };
+		48D0EE382CF45C490015C4F1 /* ChannelMemberPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMemberPresentationModel.swift; sourceTree = "<group>"; };
 		532756752CE4987A00376E09 /* MultiPartFormDatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPartFormDatable.swift; sourceTree = "<group>"; };
 		53276B4C2CECAAA3002AD8E2 /* StringDateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDateFormat.swift; sourceTree = "<group>"; };
 		53276B4E2CECAAB6002AD8E2 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				484F52D62CD9097A008F20D3 /* ChattingPresentationModel.swift */,
 				484F53012CE10B85008F20D3 /* ChannelInput.swift */,
 				48486B4D2CE7899B006C668E /* ChannelPresentationModel.swift */,
+				48D0EE382CF45C490015C4F1 /* ChannelMemberPresentationModel.swift */,
 			);
 			path = PresentationModel;
 			sourceTree = "<group>";
@@ -965,6 +968,7 @@
 				48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */,
 				53B9EDCB2CD6182A000BF728 /* KeyChainManager.swift in Sources */,
 				48486B482CE6FDCC006C668E /* ChannelSettingActionProtocol.swift in Sources */,
+				48D0EE392CF45C490015C4F1 /* ChannelMemberPresentationModel.swift in Sources */,
 				5357ADD42CD92B2000FB391A /* DMChatQuery.swift in Sources */,
 				48486B442CE6FD15006C668E /* ChannelSettingModel.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,

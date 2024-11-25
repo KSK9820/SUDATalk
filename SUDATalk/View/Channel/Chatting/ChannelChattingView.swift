@@ -36,13 +36,6 @@ struct ChannelChattingView: View {
                 }
             }
         }
-        .onChange(of: container.model.uploadStatus) { newValue in
-            if newValue {
-                container.model.messageText = ""
-                container.model.selectedImages = []
-                container.model.uploadStatus = false
-            }
-        }
         .onAppear {
             if let channel = container.model.channel {
                 container.intent.action(.viewOnAppear(workspaceID: container.model.workspaceID,
@@ -72,11 +65,11 @@ struct ChannelChattingView: View {
                     ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
                         .task {
                             if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
+                                await container.intent.asyncAction(.fetchProfileImages(url: profileUrl, index: index))
                             }
                             
                             if !item.files.isEmpty {
-                                container.intent.action(.fetchImages(urls: item.files, index: index))
+                                await container.intent.asyncAction(.fetchImages(urls: item.files, index: index))
                             }
                         }
                 }

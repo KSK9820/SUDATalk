@@ -12,13 +12,19 @@ struct ChattingPresentationModel {
     let createdAt: Date
     let files: [String]
     var user: ChatUserPresentationModel
-    var images: [Data]
+    var images: [Data?]
 
     enum CodingKeys: String, CodingKey {
         case channelID = "channel_id"
         case channelName
         case chatID = "chat_id"
         case content, createdAt, files, user
+    }
+}
+
+extension ChattingPresentationModel: Equatable {
+    static func == (lhs: ChattingPresentationModel, rhs: ChattingPresentationModel) -> Bool {
+        lhs.channelID == rhs.channelID
     }
 }
 
