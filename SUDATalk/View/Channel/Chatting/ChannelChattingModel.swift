@@ -13,6 +13,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     private let networkManager = NetworkManager()
     private let repositiory = ChattingRepository()
     private let socketManager: SocketIOManager
+    private var ongoingRequests: Set<String> = []
     
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
@@ -71,17 +72,24 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     }
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
+        let imageData = ImageConverter.shared.convertToData(images: images)
+        let query = ChatQuery(content: content, files: imageData)
+        let requestKey = generateRequestKey(for: query)
+        
         do {
-            let imageData = ImageConverter.shared.convertToData(images: images)
-            let query = ChatQuery(content: content, files: imageData)
+            guard !ongoingRequests.contains(requestKey) else { return }
+            ongoingRequests.insert(requestKey)
+            
             let requestChannel = try ChannelRouter.sendChat(workspaceID: workspaceID, channelID: channelID, query: query).makeRequest()
             
             networkManager.getDecodedDataTaskPublisher(requestChannel, model: SendChatResponse.self)
                 .receive(on: DispatchQueue.main)
-                .sink(receiveCompletion: { completion in
+                .sink(receiveCompletion: { [weak self] completion in
                     if case .failure(let failure) = completion {
                         print(failure)
                     }
+                    
+                    self?.ongoingRequests.remove(requestKey)
                 }, receiveValue: { [weak self] value in
                     print(value)
                     if !value.files.isEmpty {
@@ -92,11 +100,13 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     
                     self?.repositiory?.addChatting(value)
                     self?.chatting.append(value.convertToModel())
-                    self?.uploadStatus = true
+                    self?.messageText = ""
+                    self?.selectedImages = []
                 })
                 .store(in: &cancellables)
         } catch {
             print(error)
+            ongoingRequests.remove(requestKey)
         }
     }
     
