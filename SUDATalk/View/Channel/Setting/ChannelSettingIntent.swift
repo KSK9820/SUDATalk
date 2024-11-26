@@ -44,4 +44,6 @@ extension ChannelSettingIntent: ChannelIntentProtocol {
             model?.updateChannel(channel)
         }
     }
+    
+    func asyncAction(_ action: Action) async {}
 }

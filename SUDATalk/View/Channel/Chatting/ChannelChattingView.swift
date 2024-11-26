@@ -11,30 +11,12 @@ struct ChannelChattingView: View {
     @StateObject private var container: Container<ChannelChattingIntent, ChannelChattingModelStateProtocol>
     @Environment(\.scenePhase) private var scenePhase
     
-    private func binding(for keyPath: WritableKeyPath<ChannelChattingModelStateProtocol, String>) -> Binding<String> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.messageText = newValue
-            }
-        )
-    }
-    
-    private func binding(for keyPath: WritableKeyPath<ChannelChattingModelStateProtocol, [UIImage]>) -> Binding<[UIImage]> {
-        Binding(
-            get: { container.model[keyPath: keyPath] },
-            set: { newValue in
-                container.model.selectedImages = newValue
-            }
-        )
-    }
-    
     var body: some View {
         chattingListSection()
         
         Spacer()
         
-        ChatInputView(messageText: binding(for: \.messageText), selectedImages: binding(for: \.selectedImages), sendButtonTap: {
+        ChatInputView(messageText: container.binding(for: \.messageText), selectedImages: container.binding(for: \.selectedImages), sendButtonTap: {
             if let channel = container.model.channel {
                 container.intent.action(.sendMessage(workspaceID: container.model.workspaceID,
                                                      channelID: channel.channelID,
@@ -52,13 +34,6 @@ struct ChannelChattingView: View {
                 } label: {
                     Images.detail
                 }
-            }
-        }
-        .onChange(of: container.model.uploadStatus) { newValue in
-            if newValue {
-                container.model.messageText = ""
-                container.model.selectedImages = []
-                container.model.uploadStatus = false
             }
         }
         .onAppear {
@@ -87,14 +62,14 @@ struct ChannelChattingView: View {
                     let profileImage = UIImage(data: item.user.profileImageData)
                         .map { Image(uiImage: $0) } ?? Images.userDefaultImage
                     
-                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt)
+                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
                         .task {
                             if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
+                                await container.intent.asyncAction(.fetchProfileImages(url: profileUrl, index: index))
                             }
                             
                             if !item.files.isEmpty {
-                                container.intent.action(.fetchImages(urls: item.files, index: index))
+                                await container.intent.asyncAction(.fetchImages(urls: item.files, index: index))
                             }
                         }
                 }

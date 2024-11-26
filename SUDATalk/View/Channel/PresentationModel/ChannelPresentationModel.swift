@@ -42,13 +42,3 @@ struct ChannelPresentationModel {
     }
 }
 
-struct ChannelMemberPresentationModel {
-    let userID, email, nickname: String
-    let profileImage: String?
-    var profileImageData: Data?
-
-    enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
-        case email, nickname, profileImage
-    }
-}

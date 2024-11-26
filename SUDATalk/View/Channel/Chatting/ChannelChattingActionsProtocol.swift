@@ -10,8 +10,8 @@ import UIKit
 protocol ChannelChattingActionsProtocol: AnyObject {
     func setChattingData(workspaceID: String, channelID: String)
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage])
-    func fetchImages(_ urls: [String], index: Int)
-    func fetchProfileImages(_ url: String, index: Int)
+    func fetchImages(_ urls: [String], index: Int) async
+    func fetchProfileImages(_ url: String, index: Int) async
     func connectSocket()
     func disconnectSocket()
     func dismissKeyboard()

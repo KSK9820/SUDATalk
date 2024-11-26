@@ -27,7 +27,7 @@ struct ChatCellView: View {
                         .textStyle(.body)
                         .foregroundColor(Colors.textPrimary)
                     
-                    if let message = message {
+                    if let message = message, !message.isEmpty {
                         Text(message)
                             .textStyle(.body)
                             .padding(12)

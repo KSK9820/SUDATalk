@@ -14,7 +14,7 @@ final class ChattingRepository {
     init?() {
         do {
             self.realm = try Realm()
-            //print(realm.configuration.fileURL ?? "")
+            print(realm.configuration.fileURL ?? "")
         } catch let error as NSError {
             print("Failed to initialize Realm with error: \(error.localizedDescription)")
             return nil
@@ -28,14 +28,14 @@ final class ChattingRepository {
                 channelName: chat.channelName,
                 chatID: chat.chatID,
                 content: chat.content,
-                createdAt: chat.createdAt,
+                createdAt: chat.createdAt.convertToDate(),
                 user: UserEntity(userID: chat.user.userID, email: chat.user.email, nickname: chat.user.nickname, profileImage: chat.user.profileImage)
             )
             
             chatEntity.files.append(objectsIn: chat.files)
             
             try realm.write {
-                realm.add(chatEntity)
+                realm.add(chatEntity, update: .modified)
             }
         } catch {
             print("addChatting: \(error)")
