@@ -79,7 +79,7 @@ struct ChatCellView: View {
                                             Images.help
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
-                                                .frame(width: firstLineImageWidth, height: firstLineImageWidth)
+                                                .frame(width: secondLineImageWidth, height: secondLineImageWidth)
                                                 .clipped()
                                         }
                                     }
@@ -103,7 +103,7 @@ struct ChatCellView: View {
     
     private func getImageWidth(imageCount: Int, spacing: CGFloat, columns: Int) -> CGFloat {
         let screenWidth = UIScreen.main.bounds.width - 160
-        let imageWidth = screenWidth / CGFloat(min(imageCount, columns)) - CGFloat(min(imageCount, columns) - 1) * spacing
+        let imageWidth = (screenWidth - CGFloat(min(imageCount, columns) - 1) * spacing) / CGFloat(min(imageCount, columns))
         
         return imageWidth
     }

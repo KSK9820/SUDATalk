@@ -11,7 +11,7 @@ import SwiftUI
 final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
-    private let repositiory = ChattingRepository()
+    private let repositiory = ChannelChatRepository()
     private let socketManager: SocketIOManager
     private var ongoingRequests: Set<String> = []
     
@@ -59,6 +59,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                         DispatchQueue.main.async {
                             self?.chatting.append(item.convertToModel())
                             self?.repositiory?.addChatting(item)
+                            self?.connectSocket()
                         }
                     }
                 })
@@ -66,8 +67,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         } catch {
             print(error)
         }
-
-        connectSocket()
     }
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
@@ -118,20 +117,20 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         var chatImages: [Data?] = []
 
         for url in urls {
-            if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
+            if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
                 chatImages.append(cachedImage)
                 continue
             }
             
             if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
                 chatImages.append(fileManagerImage)
-                ImageCacheManager.shared.saveImageToCache(imageData: fileManagerImage, forKey: url)
+                CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
                 continue
             }
             
             do {
                 let value = try await fetchImageFromNetwork(url: url)
-                ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+                CacheManager.shared.saveToCache(data: value, forKey: url)
                 chatImages.append(value)
 
                 if let image = UIImage(data: value) {
@@ -164,14 +163,14 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     }
     
     func fetchProfileImages(_ url: String, index: Int) async {
-        if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
+        if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
             chatting[index].user.profileImageData = cachedImage
             return
         }
 
         do {
             let value = try await fetchImageFromNetwork(url: url)
-            ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+            CacheManager.shared.saveToCache(data: value, forKey: url)
             chatting[index].user.profileImageData = value
 
         } catch {

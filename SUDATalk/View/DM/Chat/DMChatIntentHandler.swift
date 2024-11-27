@@ -25,6 +25,8 @@ final class DMChatIntentHandler: IntentProtocol {
             model.fetchImages(urls: urls, index: index)
         case .disconnectSocket:
             model.disconnectSocket()
+        case .connectSocket:
+            model.connectSocket()
         }
     }
 }
@@ -34,4 +36,5 @@ enum DMChatIntent: IntentType {
     case sendMessage(query: DMChatSendPresentationModel)
     case fetchImages(urls: [String], index: Int)
     case disconnectSocket
+    case connectSocket
 }

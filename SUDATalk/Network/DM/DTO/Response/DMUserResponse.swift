@@ -18,7 +18,7 @@ struct DMUserResponse: Decodable {
 }
 
 extension DMUserResponse {
-    func toModel() -> DMUserPresentationModel {
+    func convertToModel() -> DMUserPresentationModel {
         .init(userID: self.userID,
               email: self.email,
               nickname: self.nickname,

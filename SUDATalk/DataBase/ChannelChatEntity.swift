@@ -1,5 +1,5 @@
 //
-//  ChattingEntity.swift
+//  ChannelChatEntity.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/6/24.
@@ -8,11 +8,11 @@
 import Foundation
 import RealmSwift
 
-final class ChattingEntity: Object, ObjectKeyIdentifiable {
+final class ChannelChatEntity: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var chatID: String
     @Persisted var channelID: String
     @Persisted var channelName: String
-    @Persisted var content: String
+    @Persisted var content: String?
     @Persisted var createdAt: Date
     @Persisted var files: List<String>
     @Persisted var user: UserEntity?
@@ -29,6 +29,6 @@ final class ChattingEntity: Object, ObjectKeyIdentifiable {
     }
     
     func convertToModel() -> ChattingPresentationModel {
-        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content, createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImageUrl: nil, profileImageData: Data()), images: [])
+        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content ?? "", createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImageUrl: nil, profileImageData: Data()), images: [])
     }
 }

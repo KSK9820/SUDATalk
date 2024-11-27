@@ -11,7 +11,7 @@ import Foundation
 final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private var networkManager = NetworkManager()
-    private let repositiory = ChattingRepository()
+    private let repositiory = ChannelChatRepository()
     
     @Published var channelID: String = ""
     @Published var workspaceID: String = ""
@@ -40,7 +40,7 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
     }
     
     func fetchProfileImages(_ url: String, index: Int) {
-        if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
+        if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
             channel.channelMembers[index].profileImageData = cachedImage
             return
         }
@@ -54,7 +54,7 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
                         print(failure)
                     }
                 } receiveValue: { [weak self] value in
-                    ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+                    CacheManager.shared.saveToCache(data: value, forKey: url)
                     self?.channel.channelMembers[index].profileImageData = value
                 }
                 .store(in: &cancellables)

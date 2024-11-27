@@ -8,7 +8,8 @@
 import Foundation
 
 struct SendChatResponse: Decodable {
-    let channelID, channelName, chatID, content: String
+    let channelID, channelName, chatID: String
+    let content: String?
     let createdAt: String
     let files: [String]
     let user: UserResponse
@@ -21,7 +22,7 @@ struct SendChatResponse: Decodable {
     }
     
     func convertToModel() -> ChattingPresentationModel {
-        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content, createdAt: createdAt.convertToDate(), files: files, user: user.convertToModel(), images: [])
+        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content ?? "", createdAt: createdAt.convertToDate(), files: files, user: user.convertToModel(), images: [])
     }
 }
 

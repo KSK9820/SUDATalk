@@ -40,7 +40,7 @@ struct DMChatView<Model: DMModelStateProtocol & DMModelActionProtocol>: View {
             case .background, .inactive:
                 container.intent.handle(intent: .disconnectSocket)
             case .active:
-                break
+                container.intent.handle(intent: .connectSocket)
             @unknown default:
                 print("unknown default")
             }

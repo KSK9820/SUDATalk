@@ -20,9 +20,9 @@ struct DMRoomInfoResponse: Decodable {
 }
 
 extension DMRoomInfoResponse {
-    func toModel() -> DMRoomInfoPresentationModel {
+    func convertToModel() -> DMRoomInfoPresentationModel {
         .init(roomID: self.roomID,
               createdAt: self.createdAt.convertToDate(),
-              user: self.user.toModel())
+              user: self.user.convertToModel())
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ChattingRepository.swift
+//  ChannelChatRepository.swift
 //  SUDATalk
 //
 //  Created by 박다현 on 11/6/24.
@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-final class ChattingRepository {
+final class ChannelChatRepository {
     private let realm: Realm
     
     init?() {
@@ -23,11 +23,11 @@ final class ChattingRepository {
     
     func addChatting(_ chat: SendChatResponse) {
         do {
-            let chatEntity = ChattingEntity(
+            let chatEntity = ChannelChatEntity(
                 channelID: chat.channelID,
                 channelName: chat.channelName,
                 chatID: chat.chatID,
-                content: chat.content,
+                content: chat.content ?? "",
                 createdAt: chat.createdAt.convertToDate(),
                 user: UserEntity(userID: chat.user.userID, email: chat.user.email, nickname: chat.user.nickname, profileImage: chat.user.profileImage)
             )
@@ -43,14 +43,14 @@ final class ChattingRepository {
     }
     
     func fetchChatting(_ channelID: String) -> [ChattingPresentationModel] {
-        let chatList = realm.objects(ChattingEntity.self).filter { $0.channelID == channelID }
+        let chatList = realm.objects(ChannelChatEntity.self).filter("channelID == %@", channelID)
         
         return chatList.map { $0.convertToModel() }
     }
     
     func deleteChatting(_ channelID: String) {
         do {
-            let chatList = realm.objects(ChattingEntity.self).filter { $0.channelID == channelID }
+            let chatList = realm.objects(ChannelChatEntity.self).filter { $0.channelID == channelID }
             
             try realm.write {
                 chatList.forEach {

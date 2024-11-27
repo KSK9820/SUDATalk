@@ -18,7 +18,7 @@ struct ChatInputView: View {
     var body: some View {
         HStack {
             PhotoPicker(selectedImages: $selectedImages) {
-                Image("plus")
+                Images.plus
             }
             inputTextSection()
             sendButton()
@@ -46,7 +46,7 @@ struct ChatInputView: View {
         Button(action: {
             sendButtonTap?()
         }, label: {
-            Image("message")
+            Images.message
                 .foregroundColor(buttonColor)
         })
         .onChange(of: messageText) { _ in

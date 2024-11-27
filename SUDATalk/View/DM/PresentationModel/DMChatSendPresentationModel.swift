@@ -13,7 +13,7 @@ struct DMChatSendPresentationModel {
 }
 
 extension DMChatSendPresentationModel {
-    func toDTOModel() -> DMChatQuery {
+    func convertToDTOModel() -> DMChatQuery {
         .init(content: self.content, files: ImageConverter.shared.convertToData(images: self.files))
     }
 }

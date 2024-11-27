@@ -43,14 +43,14 @@ extension DMChatModel: DMModelActionProtocol {
         var chatImages: [Data?] = Array(repeating: nil, count: urls.count)
         
         urls.enumerated().forEach { (index, url) in
-            if let cachedImage = ImageCacheManager.shared.loadImageFromCache(forKey: url) {
+            if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
                 chatImages[index] = cachedImage
                 return
             }
             
             if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
                 chatImages[index] = fileManagerImage
-                ImageCacheManager.shared.saveImageToCache(imageData: fileManagerImage, forKey: url)
+                CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
                 return
             }
             
@@ -66,7 +66,7 @@ extension DMChatModel: DMModelActionProtocol {
                             dispatchGroup.leave()
                         }
                     } receiveValue: { value in
-                        ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+                        CacheManager.shared.saveToCache(data: value, forKey: url)
                         
                         if let image = UIImage(data: value) {
                             ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
@@ -89,7 +89,7 @@ extension DMChatModel: DMModelActionProtocol {
     
     func sendMessage(query: DMChatSendPresentationModel) {
         do {
-            let DMQuery = query.toDTOModel()
+            let DMQuery = query.convertToDTOModel()
             let request = try DMRouter.chats(workspaceID: SampleTest.workspaceID, roomID: dmRoomInfo.roomID, body: DMQuery).makeRequest()
             
             networkManager.getDecodedDataTaskPublisher(request, model: DMChatResponse.self)
@@ -114,7 +114,7 @@ extension DMChatModel: DMModelActionProtocol {
         socketManager.disconnect()
     }
     
-    private func connectSocket() {
+    func connectSocket() {
         socketManager.connect()
         getRealtimeMessage()
     }
@@ -128,8 +128,6 @@ extension DMChatModel: DMModelActionProtocol {
                 readUnreadMessage()
             }
         }
-        
-        connectSocket()
     }
     
     private func readUnreadMessage(_ date: Date? = nil) {
@@ -151,10 +149,11 @@ extension DMChatModel: DMModelActionProtocol {
                 } receiveValue: { [weak self] value in
                     guard let self else { return }
                     
-                    let chatData = value.map { $0.toModel() }
+                    let chatData = value.map { $0.convertToModel() }
                     
                     repository?.addDMChat(DMChatRoomPresentationModel(roomID: realtimeMessage.roomID, chat: chatData))
                     self.chatting.append(contentsOf: chatData)
+                    self.connectSocket()
                 }
                 .store(in: &cancellables)
         } catch {
@@ -172,7 +171,7 @@ extension DMChatModel: DMModelActionProtocol {
                 guard let self else { return }
                 
                 if let decodedData = data as? DMChatResponse {
-                    let chatData = decodedData.toModel()
+                    let chatData = decodedData.convertToModel()
                     
                     if chatData.user.userID == dmRoomInfo.user.userID {
                         fetchProfileImage(chatData.user.profileImage)
@@ -201,10 +200,10 @@ extension DMChatModel: DMModelActionProtocol {
                         guard let self else { return }
                         
                         if let outdatedProfileImage = dmRoomInfo.user.profileImage {
-                            ImageCacheManager.shared.removeImageFromCache(forKey: outdatedProfileImage)
+                            CacheManager.shared.removeFromCache(forKey: outdatedProfileImage)
                         }
                         
-                        ImageCacheManager.shared.saveImageToCache(imageData: value, forKey: url)
+                        CacheManager.shared.saveToCache(data: value, forKey: url)
                         dmRoomInfo.user.profileImage = url
                         dmRoomInfo.user.profileImageData = UIImage(data: value)
                     }

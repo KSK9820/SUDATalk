@@ -21,12 +21,12 @@ struct DMChatResponse: Decodable {
 }
 
 extension DMChatResponse {
-    func toModel() -> DMChatPresentationModel {
+    func convertToModel() -> DMChatPresentationModel {
         .init(dmID: self.dmID,
               roomID: self.roomID,
               content: self.content,
               createdAt: self.createdAt.convertToDate(),
               files: self.files,
-              user: self.user.toModel())
+              user: self.user.convertToModel())
     }
 }
