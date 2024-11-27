@@ -11,6 +11,7 @@ import Foundation
 final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
+    private let repository = ChannelChatRepository()
     
     @Published var workspaceID: String = SampleTest.workspaceID
     @Published var channelList: [ChannelListPresentationModel] = []
@@ -34,6 +35,9 @@ extension ExploreModel: ExploreActionsProtocol {
                     }
                 }, receiveValue: { [weak self] returnedChannelItems, returnedMyChannelItems in
                     self?.channelList = returnedChannelItems.map { item in
+                        DispatchQueue.main.async {
+                            self?.repository?.createChannel(item.convertToModel())
+                        }
                          var newItem = item.convertToModel()
                          if returnedMyChannelItems.contains(where: { $0.channelID == item.channelID }) {
                              newItem.isMyChannel = true

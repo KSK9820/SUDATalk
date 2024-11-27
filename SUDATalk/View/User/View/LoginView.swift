@@ -21,7 +21,8 @@ struct LoginView: View {
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 NavigationLink("이동") {
-                    DMChatView<DMChatModel>.build()
+
+                    ExploreView.build()
                 }
             }
         }

@@ -10,7 +10,7 @@ import UIKit
 final class ImageConverter {
     static let shared = ImageConverter()
     
-    private var maxSizeMB: Double = 10.0
+    private var maxSizeMB: Double = 7.0
     private var compressionQuality: CGFloat = 1.0
     
     private init() {}

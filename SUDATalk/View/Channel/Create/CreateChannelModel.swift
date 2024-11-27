@@ -11,6 +11,7 @@ import Foundation
 final class CreateChannelModel: ObservableObject, CreateChannelModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
+    private let repository = ChannelChatRepository()
     
     @Published var channelID: String? = ""
     @Published var channelName: String = ""
@@ -46,8 +47,10 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
                         }
                     }
                     
-                } receiveValue: { value in
+                } receiveValue: { [weak self] value in
                     print(value)
+                    self?.repository?.createChannel(value.convertToModel())
+                    
                 }
                 .store(in: &cancellables)
 

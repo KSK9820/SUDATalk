@@ -10,7 +10,8 @@ import Foundation
 struct ChannelListPresentationModel: Equatable {
     let channelID, name: String
     let description, coverImage: String?
-    let ownerID, createdAt: String
+    let ownerID: String
+    let createdAt: Date
     var isMyChannel: Bool = false
 
     enum CodingKeys: String, CodingKey {
@@ -18,5 +19,9 @@ struct ChannelListPresentationModel: Equatable {
         case name, description, coverImage
         case ownerID = "owner_id"
         case createdAt
+    }
+    
+    func convertToEntity() -> ChannelEntity {
+        .init(channelID: channelID, name: name, details: description, coverImage: coverImage, ownerID: ownerID, createdAt: createdAt)
     }
 }
