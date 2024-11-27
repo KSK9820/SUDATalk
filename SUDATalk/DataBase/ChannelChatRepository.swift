@@ -21,44 +21,88 @@ final class ChannelChatRepository {
         }
     }
     
-    func addChatting(_ chat: SendChatResponse) {
+    func createChannel(_ channel: ChannelListPresentationModel) {
         do {
-            let chatEntity = ChannelChatEntity(
-                channelID: chat.channelID,
-                channelName: chat.channelName,
-                chatID: chat.chatID,
-                content: chat.content ?? "",
-                createdAt: chat.createdAt.convertToDate(),
-                user: UserEntity(userID: chat.user.userID, email: chat.user.email, nickname: chat.user.nickname, profileImage: chat.user.profileImage)
-            )
-            
-            chatEntity.files.append(objectsIn: chat.files)
-            
-            try realm.write {
-                realm.add(chatEntity, update: .modified)
+            if realm.object(ofType: ChannelEntity.self, forPrimaryKey: channel.channelID) == nil {
+                let channelListEntity = channel.convertToEntity()
+                
+                try realm.write {
+                    realm.add(channelListEntity)
+                }
             }
         } catch {
-            print("addChatting: \(error)")
+            print("Failed to create channel: \(error)")
+        }
+    }
+    
+    func createChannel(_ channel: ChannelEntity) {
+        do {
+            try realm.write {
+                realm.add(channel)
+            }
+        } catch {
+            print("Failed to create channel: \(error)")
+        }
+    }
+
+    func addChannelChat(_ chat: ChattingPresentationModel) {
+        do {
+            var channelEntity: ChannelEntity
+            if let channel = realm.object(ofType: ChannelEntity.self, forPrimaryKey: chat.channelID) {
+                channelEntity = channel
+            } else {
+                let channel = ChannelEntity(channelID: chat.channelID, name: chat.channelName, ownerID: chat.user.userID, createdAt: chat.createdAt)
+                channelEntity = channel
+                createChannel(channelEntity)
+            }
+            let chatEntity = chat.convertToEntity()
+            if !channelEntity.chat.contains(where: { $0.chatID == chatEntity.chatID }) {
+                
+                try realm.write {
+                    realm.add(chatEntity, update: .modified)
+                    channelEntity.chat.append(chatEntity)
+                }
+            }
+        } catch {
+            print("Failed to add channelChat into channel: \(error)")
         }
     }
     
     func fetchChatting(_ channelID: String) -> [ChattingPresentationModel] {
-        let chatList = realm.objects(ChannelChatEntity.self).filter("channelID == %@", channelID)
+        guard let channel = realm.objects(ChannelEntity.self).filter("channelID == %@", channelID).first else {
+            return []
+        }
         
-        return chatList.map { $0.convertToModel() }
+        return channel.chat.map { $0.convertToModel() }
     }
     
-    func deleteChatting(_ channelID: String) {
+//    func deleteChatting(_ channelID: String) {
+//        do {
+//            let chatList = realm.objects(ChannelChatEntity.self).filter { $0.channelID == channelID }
+//            
+//            try realm.write {
+//                chatList.forEach {
+//                    guard let user = $0.user else { return }
+//                    realm.delete(user)
+//                }
+//                
+//                realm.delete(chatList)
+//            }
+//        } catch {
+//            print("fail to delete Chatting: \(error)")
+//        }
+//    }
+    
+    func deleteChannel(_ channelID: String) {
         do {
-            let chatList = realm.objects(ChannelChatEntity.self).filter { $0.channelID == channelID }
+            let channel = realm.objects(ChannelEntity.self).filter { $0.channelID == channelID }
             
             try realm.write {
-                chatList.forEach {
-                    guard let user = $0.user else { return }
-                    realm.delete(user)
+                channel.forEach {
+                    realm.delete($0.chat)
                 }
                 
-                realm.delete(chatList)
+                realm.delete(channel)
             }
         } catch {
             print("fail to delete Chatting: \(error)")

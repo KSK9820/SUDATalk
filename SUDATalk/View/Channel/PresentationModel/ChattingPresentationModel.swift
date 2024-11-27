@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 struct ChattingPresentationModel {
     let channelID, channelName, chatID, content: String
@@ -20,6 +21,21 @@ struct ChattingPresentationModel {
         case chatID = "chat_id"
         case content, createdAt, files, user
     }
+    
+    func convertToEntity() -> ChannelChatEntity {
+        let chatEntity = ChannelChatEntity(
+            channelID: channelID,
+            channelName: channelName,
+            chatID: chatID,
+            content: content,
+            createdAt: createdAt,
+            user: UserEntity(userID: user.userID, email: user.email, nickname: user.nickname, profileImage: user.profileImageUrl)
+        )
+        
+        chatEntity.files.append(objectsIn: files)
+        
+        return chatEntity
+    }
 }
 
 extension ChattingPresentationModel: Equatable {
@@ -31,7 +47,7 @@ extension ChattingPresentationModel: Equatable {
 struct ChatUserPresentationModel {
     let userID, email, nickname: String
     let profileImageUrl: String?
-    var profileImageData: Data
+    var profileImageData: Data?
 
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"

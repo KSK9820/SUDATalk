@@ -47,4 +47,5 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
         case .onTapGesture:
             model?.dismissKeyboard()
         }
+    }
 }

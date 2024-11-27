@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480818752CF6C11F0045B11D /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818742CF6C11E0045B11D /* ChannelEntity.swift */; };
 		48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */; };
 		48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */; };
 		48088BAE2CD4A82B008DC165 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAD2CD4A82B008DC165 /* NetworkManager.swift */; };
@@ -131,6 +132,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		480818742CF6C11E0045B11D /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
 		48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAD2CD4A82B008DC165 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -511,6 +513,7 @@
 				53DB10C42CEFACA500B60660 /* DMChatRepository.swift */,
 				53E41C242CF216DF004930AF /* UserEntity.swift */,
 				53E41C262CF2172B004930AF /* DMRoomEntity.swift */,
+				480818742CF6C11E0045B11D /* ChannelEntity.swift */,
 			);
 			path = DataBase;
 			sourceTree = "<group>";
@@ -873,6 +876,7 @@
 				5357ADD82CD92B7300FB391A /* DMChatView.swift in Sources */,
 				535F471C2CE898DA00BDB773 /* SocketEventProtocol.swift in Sources */,
 				5357ADDB2CD92B9B00FB391A /* DMChatPresentationModel.swift in Sources */,
+				480818752CF6C11F0045B11D /* ChannelEntity.swift in Sources */,
 				48088BE72CD607F9008DC165 /* ExploreModel.swift in Sources */,
 				5357ADCB2CD9286000FB391A /* DMRouter.swift in Sources */,
 				4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */,

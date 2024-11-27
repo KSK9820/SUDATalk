@@ -44,22 +44,26 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String?) {
+    private func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String?) {
         do {
             guard let date else { return }
             let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
-            
+
             networkManager.getDecodedDataTaskPublisher(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
                         print(failure)
                     }
                 }, receiveValue: { [weak self] value in
+                    guard let self = self else { return }
+
                     value.forEach { item in
                         DispatchQueue.main.async {
-                            self?.chatting.append(item.convertToModel())
-                            self?.repositiory?.addChatting(item)
-                            self?.connectSocket()
+                            let chat = item.convertToModel()
+
+                            self.chatting.append(chat)
+                            self.repositiory?.addChannelChat(chat)
+                            self.connectSocket()
                         }
                     }
                 })
@@ -68,6 +72,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             print(error)
         }
     }
+    
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
         let imageData = ImageConverter.shared.convertToData(images: images)
@@ -95,7 +100,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                         }
                     }
                     
-                    self?.repositiory?.addChatting(value)
+                    self?.repositiory?.addChannelChat(value.convertToModel())
                     self?.chatting.append(value.convertToModel())
                     self?.messageText = ""
                     self?.selectedImages = []
@@ -114,16 +119,16 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
 
     func fetchImages(_ urls: [String], index: Int) async {
-        var chatImages: [Data?] = []
+        var chatImages: [Data?] = Array(repeating: nil, count: urls.count)
 
-        for url in urls {
+        for (index, url) in urls.enumerated() {
             if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-                chatImages.append(cachedImage)
+                chatImages[index] = cachedImage
                 continue
             }
             
             if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
-                chatImages.append(fileManagerImage)
+                chatImages[index] = fileManagerImage
                 CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
                 continue
             }
@@ -131,14 +136,14 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             do {
                 let value = try await fetchImageFromNetwork(url: url)
                 CacheManager.shared.saveToCache(data: value, forKey: url)
-                chatImages.append(value)
+                chatImages[index] = value
 
                 if let image = UIImage(data: value) {
                     ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
                 }
             } catch {
                 print("Error fetching image from network: \(error)")
-                chatImages.append(nil)
+                chatImages[index] = nil
                 continue
             }
         }
@@ -178,6 +183,22 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
+//    func fetchProfileImages(_ url: String) async -> Data? {
+//        if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
+//            return cachedImage
+//        }
+//
+//        do {
+//            let value = try await fetchImageFromNetwork(url: url)
+//            CacheManager.shared.saveToCache(data: value, forKey: url)
+//            
+//            return value
+//        } catch {
+//            print("Error fetching image from network: \(error)")
+//            return nil
+//        }
+//    }
+    
     func connectSocket() {
         socketManager.connect()
         getRealtimeMessage()
@@ -195,7 +216,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 if let decodedData = data as? SendChatResponse {
                     guard let userID = self.userID, userID != decodedData.user.userID else { return }
                     self.chatting.append(decodedData.convertToModel())
-                    self.repositiory?.addChatting(decodedData)
+                    self.repositiory?.addChannelChat(decodedData.convertToModel())
                 }
             }
             .store(in: &cancellables)

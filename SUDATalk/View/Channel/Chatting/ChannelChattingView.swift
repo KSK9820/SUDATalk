@@ -55,30 +55,36 @@ struct ChannelChattingView: View {
     }
     
     func chattingListSection() -> some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(container.model.chatting.indices, id: \.self) { index in
-                    let item = container.model.chatting[index]
-                    let profileImage = UIImage(data: item.user.profileImageData)
-                        .map { Image(uiImage: $0) } ?? Images.userDefaultImage
-                    
-                    ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
-                        .task {
-                            if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                await container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
+        ScrollViewReader { scrollViewProxy in
+            ScrollView {
+                LazyVStack {
+                    ForEach(container.model.chatting.indices, id: \.self) { index in
+                        let item = container.model.chatting[index]
+                        let profileImage = UIImage(data: item.user.profileImageData ?? Data())
+                            .map { Image(uiImage: $0) } ?? Images.userDefaultImage
+                        
+                        ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
+                            .task {
+                                if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
+                                    container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
+                                }
+                                
+                                if !item.files.isEmpty {
+                                    container.intent.action(.fetchImages(urls: item.files, index: index))
+                                }
                             }
-                            
-                            if !item.files.isEmpty {
-                                await container.intent.action(.fetchImages(urls: item.files, index: index))
-                            }
-                        }
+                    }
                 }
             }
-            .rotationEffect(Angle(degrees: 180))
-            .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
+            .onAppear {
+                scrollViewProxy.scrollTo(container.model.chatting.count-1, anchor: .bottom)
+            }
+            .onChange(of: container.model.chatting) { _ in
+                withAnimation {
+                    scrollViewProxy.scrollTo(container.model.chatting.count-1, anchor: .bottom)
+                }
+            }
         }
-        .rotationEffect(Angle(degrees: 180))
-        .scaleEffect(x: -1.0, y: 1.0, anchor: .center)
         .onTapGesture {
             container.intent.action(.onTapGesture)
         }
