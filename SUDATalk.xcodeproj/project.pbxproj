@@ -66,7 +66,6 @@
 		484F52FE2CE0E783008F20D3 /* MultipartFormDataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */; };
 		484F53002CE0E90E008F20D3 /* ChannelListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52FF2CE0E90E008F20D3 /* ChannelListResponse.swift */; };
 		484F53022CE10B86008F20D3 /* ChannelInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F53012CE10B85008F20D3 /* ChannelInput.swift */; };
-		484F53102CE1E26D008F20D3 /* InterfaceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F530F2CE1E26D008F20D3 /* InterfaceContainer.swift */; };
 		484F53122CE1E741008F20D3 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F53112CE1E741008F20D3 /* AuthInterceptor.swift */; };
 		488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3BFC2CD9011100B1E7F6 /* CreateChannelView.swift */; };
 		488E3BFF2CD901B300B1E7F6 /* CreateChannelIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3BFE2CD901B300B1E7F6 /* CreateChannelIntent.swift */; };
@@ -190,7 +189,6 @@
 		484F52FD2CE0E783008F20D3 /* MultipartFormDataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataBuilder.swift; sourceTree = "<group>"; };
 		484F52FF2CE0E90E008F20D3 /* ChannelListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListResponse.swift; sourceTree = "<group>"; };
 		484F53012CE10B85008F20D3 /* ChannelInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInput.swift; sourceTree = "<group>"; };
-		484F530F2CE1E26D008F20D3 /* InterfaceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceContainer.swift; sourceTree = "<group>"; };
 		484F53112CE1E741008F20D3 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		488E3BFC2CD9011100B1E7F6 /* CreateChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelView.swift; sourceTree = "<group>"; };
 		488E3BFE2CD901B300B1E7F6 /* CreateChannelIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelIntent.swift; sourceTree = "<group>"; };
@@ -378,7 +376,6 @@
 			isa = PBXGroup;
 			children = (
 				48088BDE2CD606A8008DC165 /* Container.swift */,
-				484F530F2CE1E26D008F20D3 /* InterfaceContainer.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -861,7 +858,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				484F53102CE1E26D008F20D3 /* InterfaceContainer.swift in Sources */,
 				48088BB02CD4A886008DC165 /* DecodedServices.swift in Sources */,
 				488E3C052CD9029C00B1E7F6 /* CreateChannelModel.swift in Sources */,
 				488E3C032CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift in Sources */,
