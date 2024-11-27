@@ -38,52 +38,64 @@ extension DMChatModel: DMModelActionProtocol {
         readSavedMessage()
     }
     
-    func fetchImages(urls: [String], index: Int) {
-        let dispatchGroup = DispatchGroup()
+    func fetchImages(urls: [String], index: Int) async {
         var chatImages: [Data?] = Array(repeating: nil, count: urls.count)
         
-        urls.enumerated().forEach { (index, url) in
-            if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-                chatImages[index] = cachedImage
-                return
-            }
-            
-            if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
-                chatImages[index] = fileManagerImage
-                CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
-                return
-            }
-            
-            dispatchGroup.enter()
-            
-            do {
-                let request = try DMRouter.fetchImage(url: url).makeRequest()
-                
-                networkManager.getDataTaskPublisher(request)
-                    .sink { completion in
-                        if case .failure(let failure) = completion {
-                            print(failure)
-                            dispatchGroup.leave()
-                        }
-                    } receiveValue: { value in
-                        CacheManager.shared.saveToCache(data: value, forKey: url)
+        await withTaskGroup(of: (Int, Data?).self) { group in
+            for (idx, url) in urls.enumerated() {
+                group.addTask { [weak self] in
+                    guard let self else {
+                        return (idx, nil)
+                    }
+                    
+                    if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
+                        return (idx, cachedImage)
+                    }
+                    
+                    if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
+                        CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
                         
-                        if let image = UIImage(data: value) {
+                        return (idx, fileManagerImage)
+                    }
+                    
+                    do {
+                        let imageData = try await self.fetchImageFromNetwork(url: url)
+                        
+                        CacheManager.shared.saveToCache(data: imageData, forKey: url)
+                        
+                        if let image = UIImage(data: imageData) {
                             ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
                         }
                         
-                        chatImages[index] = value
-                        dispatchGroup.leave()
+                        return (idx, imageData)
+                    } catch {
+                        print("Error: \(error)")
+                        return (idx, nil)
                     }
-                    .store(in: &cancellables)
-            } catch {
-                print("Error: \(error)")
-                dispatchGroup.leave()
+                }
+            }
+            
+            for await (idx, data) in group {
+                chatImages[idx] = data
             }
         }
         
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.chatting[index].dataFiles = chatImages
+        self.chatting[index].dataFiles = chatImages
+    }
+    
+    private func fetchImageFromNetwork(url: String) async throws -> Data {
+        let request = try DMRouter.fetchImage(url: url).makeRequest()
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            networkManager.getDataTaskPublisher(request)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        continuation.resume(throwing: error)
+                    }
+                } receiveValue: { value in
+                    continuation.resume(returning: value)
+                }
+                .store(in: &cancellables)
         }
     }
     
@@ -176,6 +188,7 @@ extension DMChatModel: DMModelActionProtocol {
                     if chatData.user.userID == dmRoomInfo.user.userID {
                         fetchProfileImage(chatData.user.profileImage)
                     }
+                    
                     realtimeMessage = chatData
                     repository?.addDMChat(DMChatRoomPresentationModel(roomID: realtimeMessage.roomID, chat: [realtimeMessage]))
                     chatting.append(chatData)
