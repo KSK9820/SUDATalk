@@ -10,7 +10,6 @@ import SwiftUI
 struct DMChatView: View {
     @StateObject private var container: Container<DMChatIntentHandler, DMModelStateProtocol>
     @Environment(\.scenePhase) private var scenePhase
-    @AppStorage("userID") private var userID: String?
     
     var body: some View {
         VStack {
@@ -53,7 +52,7 @@ struct DMChatView: View {
                 LazyVStack {
                     ForEach(container.model.chatting.indices, id: \.self) { index in
                         let item = container.model.chatting[index]
-                        let profileImage = item.user.userID == container.model.dmRoomInfo.user.userID ? container.model.opponentProfileImage : Images.userDefaultImage
+                        let profileImage = item.user.userID == container.model.dmRoomInfo.user.userID ? container.model.opponentProfileImage : container.model.myProfileImage
                         
                         ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.dataFiles, time: item.createdAt.toMessageDate())
                             .task {

@@ -27,6 +27,14 @@ final class DMChatModel: ObservableObject, DMModelStateProtocol {
             Images.userDefaultImage
         }
     }
+    var myProfileImage: Image {
+        if let profileImageData = UserDefaultsManager.shared.userProfile.profileImageData,
+           let profileImage = UIImage(data: profileImageData) {
+            return Image(uiImage: profileImage)
+        } else {
+            return Images.userDefaultImage
+        }
+    }
     
     init(_ dmRoomInfo: DMRoomInfoPresentationModel) {
         self.dmRoomInfo = dmRoomInfo

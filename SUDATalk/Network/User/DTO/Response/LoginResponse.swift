@@ -22,3 +22,9 @@ struct Token: Decodable {
     let accessToken: String
     let refreshToken: String
 }
+
+extension LoginResponse {
+    func convertToModel() -> UserProfile {
+        .init(userID: self.user_id, email: self.email, nickname: self.nickname, profileImage: self.profileImage)
+    }
+}
