@@ -65,11 +65,11 @@ struct ChannelChattingView: View {
                     ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
                         .task {
                             if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
-                                await container.intent.asyncAction(.fetchProfileImages(url: profileUrl, index: index))
+                                await container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
                             }
                             
                             if !item.files.isEmpty {
-                                await container.intent.asyncAction(.fetchImages(urls: item.files, index: index))
+                                await container.intent.action(.fetchImages(urls: item.files, index: index))
                             }
                         }
                 }

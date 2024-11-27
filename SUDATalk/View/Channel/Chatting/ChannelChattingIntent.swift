@@ -32,25 +32,19 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
             model?.setChattingData(workspaceID: workspaceID, channelID: channelID)
         case .sendMessage(let workspaceID, let channelID, let content, let images):
             model?.sendMessage(workspaceID: workspaceID, channelID: channelID, content: content, images: images)
+        case .fetchImages(let urls, let index):
+            Task {
+                await model?.fetchImages(urls, index: index)
+            }
+        case .fetchProfileImages(let url, let index):
+            Task {
+                await model?.fetchProfileImages(url, index: index)
+            }
         case .appActive:
             model?.connectSocket()
         case .appInactive:
             model?.disconnectSocket()
         case .onTapGesture:
             model?.dismissKeyboard()
-        default:
-            break
         }
-    }
-    
-    func asyncAction(_ action: Action) async {
-        switch action {
-        case .fetchImages(let urls, let index):
-            await model?.fetchImages(urls, index: index)
-        case .fetchProfileImages(let url, let index):
-            await model?.fetchProfileImages(url, index: index)
-        default:
-            break
-        }
-    }
 }

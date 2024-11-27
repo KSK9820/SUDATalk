@@ -29,6 +29,4 @@ extension ExploreIntent: ChannelIntentProtocol {
             model?.toggleAlert()
         }
     }
-    
-    func asyncAction(_ action: Action) async {}
 }

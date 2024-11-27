@@ -33,6 +33,4 @@ extension CreateChannelIntent: ChannelIntentProtocol {
             model?.editChannel(workspaceID, input: input)
         }
     }
-    
-    func asyncAction(_ action: Action) async {}
 }
