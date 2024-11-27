@@ -15,8 +15,8 @@ struct ChannelChattingView: View {
         chattingListSection()
         
         Spacer()
-        
-        ChatInputView(messageText: container.binding(for: \.messageText), selectedImages: container.binding(for: \.selectedImages), sendButtonTap: {
+          
+        ChatInputView(messageText: container.binding(for: \.dmInput.content), selectedImages: container.binding(for: \.dmInput.files), sendButtonTap: {
             if let channel = container.model.channel {
                 container.intent.action(.sendMessage(workspaceID: container.model.workspaceID,
                                                      channelID: channel.channelID,

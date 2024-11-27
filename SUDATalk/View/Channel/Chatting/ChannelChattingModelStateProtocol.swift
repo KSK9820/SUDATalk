@@ -13,4 +13,5 @@ protocol ChannelChattingModelStateProtocol {
     var messageText: String { get set }
     var selectedImages: [UIImage] { get set }
     var chatting: [ChattingPresentationModel] { get set }
+    var dmInput: DMChatSendPresentationModel { get set }
 }

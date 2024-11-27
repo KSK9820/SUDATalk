@@ -19,6 +19,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     @Published var workspaceID: String = ""
     @Published var messageText: String = ""
     @Published var selectedImages: [UIImage] = []
+    @Published var dmInput: DMChatSendPresentationModel = DMChatSendPresentationModel()
     @Published var chatting: [ChattingPresentationModel] = []
     @AppStorage("userID") var userID: String?
     
@@ -47,7 +48,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     private func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String?) {
         do {
             guard let date else { return }
-            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
+            let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: Date().toString(style: .iso)!).makeRequest()
             print("********")
             print(requestChannel.url)
             print(requestChannel.httpMethod)
@@ -80,8 +81,9 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     
     
     func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
-        let imageData = ImageConverter.shared.convertToData(images: images)
-        let query = ChatQuery(content: content, files: imageData)
+//        let imageData = ImageConverter.shared.convertToData(images: images)
+//        let query = ChatQuery(content: content, files: imageData)
+        let query = ChatQuery(content: dmInput.content, files: ImageConverter.shared.convertToData(images: dmInput.files))
         let requestKey = generateRequestKey(for: query)
         
         do {
