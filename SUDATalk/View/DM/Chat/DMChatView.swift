@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DMChatView: View {
-    @StateObject private var container: Container<DMChatIntentHandler, DMModelStateProtocol>
+    @StateObject private var container: Container<DMChatIntentHandler, DMChatModelStateProtocol>
     @Environment(\.scenePhase) private var scenePhase
     
     var body: some View {
@@ -81,7 +81,7 @@ extension DMChatView {
         let intent = DMChatIntentHandler(model: model)
         let container = Container(
             intent: intent,
-            model: model as DMModelStateProtocol,
+            model: model as DMChatModelStateProtocol,
             modelChangePublisher: model.objectWillChange
         )
         

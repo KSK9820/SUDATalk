@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 import UIKit
 
-final class DMChatModel: ObservableObject, DMModelStateProtocol {
+final class DMChatModel: ObservableObject, DMChatModelStateProtocol {
     private let networkManager = NetworkManager()
     private let socketManager = SocketIOManager(event: DMSocketEvent(roomID: SampleTest.roomID))
     private let repository = DMChatRepository()
@@ -41,7 +41,7 @@ final class DMChatModel: ObservableObject, DMModelStateProtocol {
     }
 }
 
-extension DMChatModel: DMModelActionProtocol {
+extension DMChatModel: DMChatModelActionProtocol {
     func setDMChatView() {
         readSavedMessage()
     }

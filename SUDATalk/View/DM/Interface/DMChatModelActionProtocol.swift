@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DMModelActionProtocol: AnyObject {
+protocol DMChatModelActionProtocol: AnyObject {
     func setDMChatView()
     func sendMessage(query: DMChatSendPresentationModel)
     func disconnectSocket()
