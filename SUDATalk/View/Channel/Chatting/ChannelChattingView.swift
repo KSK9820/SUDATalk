@@ -16,12 +16,12 @@ struct ChannelChattingView: View {
         
         Spacer()
         
-        ChatInputView(messageText: container.binding(for: \.messageText), selectedImages: container.binding(for: \.selectedImages), sendButtonTap: {
+        ChatInputView(messageText: container.binding(for: \.input.content), selectedImages: container.binding(for: \.input.images), sendButtonTap: {
             if let channel = container.model.channel {
                 container.intent.action(.sendMessage(workspaceID: container.model.workspaceID,
                                                      channelID: channel.channelID,
-                                                     content: container.model.messageText,
-                                                     images: container.model.selectedImages))
+                                                     content: container.model.input.content,
+                                                     images: container.model.input.images))
             }
         })
         

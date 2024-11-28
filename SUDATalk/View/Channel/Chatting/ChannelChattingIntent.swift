@@ -31,7 +31,8 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
         case .viewOnAppear(let workspaceID, let channelID):
             model?.setChattingData(workspaceID: workspaceID, channelID: channelID)
         case .sendMessage(let workspaceID, let channelID, let content, let images):
-            model?.sendMessage(workspaceID: workspaceID, channelID: channelID, content: content, images: images)
+            let input = ChannelChatInputModel(content: content, images: images)
+            model?.sendMessage(workspaceID: workspaceID, channelID: channelID, input: input)
         case .fetchImages(let urls, let index):
             Task {
                 await model?.fetchImages(urls, index: index)

@@ -22,7 +22,7 @@ struct CreateChannelView: View {
             
             Text(container.model.isEditMode ? "편집하기" : "생성하기")
                 .wrapToDefaultButton(active: container.binding(for: \.activeSubmit)) {
-                    let input = ChannelInput(name: container.binding(for: \.channelName).wrappedValue, description: container.binding(for: \.description).wrappedValue, image: nil)
+                    let input = ChannelInputModel(name: container.binding(for: \.channelName).wrappedValue, description: container.binding(for: \.description).wrappedValue, image: nil)
                     if container.model.isEditMode {
                         container.intent.action(.editChannel(SampleTest.workspaceID, input: input))
                     } else {

@@ -22,7 +22,7 @@ final class CreateChannelModel: ObservableObject, CreateChannelModelStateProtoco
 }
 
 extension CreateChannelModel: CreateChannelActionsProtocol {
-    func createChannel(_ workspaceID: String, input: ChannelInput) {
+    func createChannel(_ workspaceID: String, input: ChannelInputModel) {
         do {
             var query = ChannelQuery(name: "", description: nil, image: nil)
             if let image = input.image {
@@ -59,7 +59,7 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
         }
     }
     
-    func editChannel(_ workspaceID: String, input: ChannelInput) {
+    func editChannel(_ workspaceID: String, input: ChannelInputModel) {
         do {
             var query = ChannelQuery(name: "", description: nil, image: nil)
             if let image = input.image {

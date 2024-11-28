@@ -15,10 +15,9 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     private let socketManager: SocketIOManager
     private var ongoingRequests: Set<String> = []
     
+    @Published var input = ChannelChatInputModel(content: "", images: [])
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
-    @Published var messageText: String = ""
-    @Published var selectedImages: [UIImage] = []
     @Published var chatting: [ChattingPresentationModel] = []
     @AppStorage("userID") var userID: String?
     
@@ -73,10 +72,10 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    
-    func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
-        let imageData = ImageConverter.shared.convertToData(images: images)
-        let query = ChatQuery(content: content, files: imageData)
+
+    func sendMessage(workspaceID: String, channelID: String, input: ChannelChatInputModel) {
+        let imageData = ImageConverter.shared.convertToData(images: input.images)
+        let query = ChatQuery(content: input.content, files: imageData)
         let requestKey = generateRequestKey(for: query)
         
         do {
@@ -94,16 +93,10 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     
                     self?.ongoingRequests.remove(requestKey)
                 }, receiveValue: { [weak self] value in
-                    if !value.files.isEmpty {
-                        value.files.enumerated().forEach { (index, url) in
-                            ImageFileManager.shared.saveImageToDocument(image: images[index], fileUrl: url)
-                        }
-                    }
-                    
+                    self?.input.content = ""
+                    self?.input.images = []
                     self?.repositiory?.addChannelChat(value.convertToModel())
                     self?.chatting.append(value.convertToModel())
-                    self?.messageText = ""
-                    self?.selectedImages = []
                 })
                 .store(in: &cancellables)
         } catch {
@@ -120,31 +113,42 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
 
     func fetchImages(_ urls: [String], index: Int) async {
         var chatImages: [Data?] = Array(repeating: nil, count: urls.count)
-
-        for (index, url) in urls.enumerated() {
-            if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-                chatImages[index] = cachedImage
-                continue
-            }
-            
-            if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
-                chatImages[index] = fileManagerImage
-                CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
-                continue
-            }
-            
-            do {
-                let value = try await fetchImageFromNetwork(url: url)
-                CacheManager.shared.saveToCache(data: value, forKey: url)
-                chatImages[index] = value
-
-                if let image = UIImage(data: value) {
-                    ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+        
+        await withTaskGroup(of: (Int, Data?).self) { group in
+            for (idx, url) in urls.enumerated() {
+                group.addTask { [weak self] in
+                    guard let self else {
+                        return (idx, nil)
+                    }
+                    
+                    if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
+                        return (idx, cachedImage)
+                    }
+                    
+                    if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
+                        CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
+                        
+                        return (idx, fileManagerImage)
+                    }
+                    
+                    do {
+                        let imageData = try await self.fetchImageFromNetwork(url: url)
+                        CacheManager.shared.saveToCache(data: imageData, forKey: url)
+                        
+                        if let image = UIImage(data: imageData) {
+                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+                        }
+                        
+                        return (idx, imageData)
+                    } catch {
+                        print("Error: \(error)")
+                        return (idx, nil)
+                    }
                 }
-            } catch {
-                print("Error fetching image from network: \(error)")
-                chatImages[index] = nil
-                continue
+            }
+            
+            for await (idx, data) in group {
+                chatImages[idx] = data
             }
         }
 
@@ -182,22 +186,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             print("Error fetching image from network: \(error)")
         }
     }
-    
-//    func fetchProfileImages(_ url: String) async -> Data? {
-//        if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-//            return cachedImage
-//        }
-//
-//        do {
-//            let value = try await fetchImageFromNetwork(url: url)
-//            CacheManager.shared.saveToCache(data: value, forKey: url)
-//            
-//            return value
-//        } catch {
-//            print("Error fetching image from network: \(error)")
-//            return nil
-//        }
-//    }
     
     func connectSocket() {
         socketManager.connect()
