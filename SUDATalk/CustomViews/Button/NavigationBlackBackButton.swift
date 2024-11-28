@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NavigationBlackBackButton: ViewModifier {
+private struct NavigationBlackBackButton: ViewModifier {
     @Environment(\.dismiss) private var dismiss
 
     func body(content: Content) -> some View {
