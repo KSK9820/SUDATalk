@@ -22,7 +22,9 @@ final class DMChatIntentHandler: IntentProtocol {
         case .sendMessage(let query):
             model.sendMessage(query: query)
         case .fetchImages(let urls, let index):
-            model.fetchImages(urls: urls, index: index)
+            Task {
+                await model.fetchImages(urls: urls, index: index)
+            }
         case .disconnectSocket:
             model.disconnectSocket()
         case .connectSocket:

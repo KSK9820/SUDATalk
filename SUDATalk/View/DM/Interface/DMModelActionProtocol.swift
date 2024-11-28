@@ -11,6 +11,6 @@ protocol DMModelActionProtocol: AnyObject {
     func setDMChatView()
     func sendMessage(query: DMChatSendPresentationModel)
     func disconnectSocket()
-    func fetchImages(urls: [String], index: Int)
+    func fetchImages(urls: [String], index: Int) async
     func connectSocket()
 }
