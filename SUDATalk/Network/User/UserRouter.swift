@@ -10,6 +10,7 @@ import Foundation
 enum UserRouter {
     case login(query: Encodable)
     case refresh
+    case fetchImage(url: String)
 }
 
 extension UserRouter {
@@ -27,6 +28,13 @@ extension UserRouter {
                 method: .get,
                 path: ["auth", "refresh"],
                 header: EndPointHeader.refreshToken.header
+            ).asURLRequest()
+        case .fetchImage(let url):
+            let boundary = "Boundary-\(UUID().uuidString)"
+            return try EndPoint(
+                method: .get,
+                path: url.split(separator: "/").map { String($0) },
+                header: EndPointHeader.multipartType(boundary: boundary).header
             ).asURLRequest()
         }
     }

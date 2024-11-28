@@ -21,9 +21,7 @@ struct LoginView: View {
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 NavigationLink("이동") {
-//                    let model = DMRoomInfoPresentationModel(roomID: SampleTest.roomID, createdAt: Date(), user: DMUserPresentationModel())
-//                    DMChatView<DMChatModel>.build(model)
-                    ExploreView.build()
+
                 }
             }
         }
@@ -42,12 +40,37 @@ struct LoginView: View {
                         userID = value.user_id
                         KeyChainManager.shared.save(key: .accessToken, value: value.token.accessToken)
                         KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
+                        
+                        UserDefaultsManager.shared.userProfile = value.convertToModel()
+                        
+                        if let profileImage = value.profileImage {
+                            loadProfileImage(profileImage)
+                        }
                     })
                     .store(in: &cancellables)
                 
             } catch {
                 print(error)
             }
+        }
+    }
+    
+    private func loadProfileImage(_ url: String) {
+        do {
+            let request = try UserRouter.fetchImage(url: url).makeRequest()
+            
+            networkManager.getDataTaskPublisher(request)
+                .sink { completion in
+                    if case .failure(let failure) = completion {
+                        print(failure)
+                    }
+                } receiveValue: { value in
+                    CacheManager.shared.saveToCache(data: value, forKey: url)
+                    UserDefaultsManager.shared.userProfile.profileImageData = value
+                }
+                .store(in: &cancellables)
+        } catch {
+            print(error)
         }
     }
 }

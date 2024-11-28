@@ -52,7 +52,7 @@ extension DMChatPresentationModel {
         return DMEntity(dmID: self.dmID,
                         roomID: self.roomID,
                         content: self.content,
-                        createdAt: self.createdAt.toString(style: .iso) ?? "",
+                        createdAt: self.createdAt,
                         files: imagefiles,
                         user: self.user.toEntity())
     }
