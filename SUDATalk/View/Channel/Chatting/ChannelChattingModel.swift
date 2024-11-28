@@ -8,7 +8,7 @@
 import Combine
 import SwiftUI
 
-final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
+final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
     private let repositiory = ChannelChatRepository()
@@ -19,7 +19,7 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
     @Published var chatting: [ChattingPresentationModel] = []
-    @AppStorage("userID") var userID: String?
+    let myProfile = UserDefaultsManager.shared.userProfile
     
     init(socketManager: SocketIOManager) {
         self.socketManager = socketManager
@@ -62,9 +62,10 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
 
                             self.chatting.append(chat)
                             self.repositiory?.addChannelChat(chat)
-                            self.connectSocket()
                         }
                     }
+                    
+                    self.connectSocket()
                 })
                 .store(in: &cancellables)
         } catch {
@@ -202,12 +203,20 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 guard let self else { return }
                 
                 if let decodedData = data as? SendChatResponse {
-                    guard let userID = self.userID, userID != decodedData.user.userID else { return }
+                    guard self.myProfile.userID != decodedData.user.userID else { return }
                     self.chatting.append(decodedData.convertToModel())
                     self.repositiory?.addChannelChat(decodedData.convertToModel())
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    func profileImage(userID: String, url: String, index: Int) async {
+        if userID == myProfile.userID {
+            self.chatting[index].user.profileImageData = myProfile.profileImageData
+        } else {
+            await fetchProfileImages(url, index: index)
+        }
     }
     
     func disconnectSocket() {

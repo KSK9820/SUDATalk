@@ -20,7 +20,7 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
         case viewOnAppear(workspaceID: String, channelID: String)
         case sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage])
         case fetchImages(urls: [String], index: Int)
-        case fetchProfileImages(url: String, index: Int)
+        case fetchProfileImages(userID: String, url: String, index: Int)
         case appActive
         case appInactive
         case onTapGesture
@@ -37,9 +37,9 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
             Task {
                 await model?.fetchImages(urls, index: index)
             }
-        case .fetchProfileImages(let url, let index):
+        case .fetchProfileImages(let userID, let url, let index):
             Task {
-                await model?.fetchProfileImages(url, index: index)
+                await model?.profileImage(userID: userID, url: url, index: index)
             }
         case .appActive:
             model?.connectSocket()
