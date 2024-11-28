@@ -11,6 +11,7 @@ import Foundation
 final class CreateChannelModel: ObservableObject, CreateChannelModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
+    private let repository = ChannelChatRepository()
     
     @Published var channelID: String? = ""
     @Published var channelName: String = ""
@@ -21,7 +22,7 @@ final class CreateChannelModel: ObservableObject, CreateChannelModelStateProtoco
 }
 
 extension CreateChannelModel: CreateChannelActionsProtocol {
-    func createChannel(_ workspaceID: String, input: ChannelInput) {
+    func createChannel(_ workspaceID: String, input: ChannelInputModel) {
         do {
             var query = ChannelQuery(name: "", description: nil, image: nil)
             if let image = input.image {
@@ -46,8 +47,10 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
                         }
                     }
                     
-                } receiveValue: { value in
+                } receiveValue: { [weak self] value in
                     print(value)
+                    self?.repository?.createChannel(value.convertToModel())
+                    
                 }
                 .store(in: &cancellables)
 
@@ -56,7 +59,7 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
         }
     }
     
-    func editChannel(_ workspaceID: String, input: ChannelInput) {
+    func editChannel(_ workspaceID: String, input: ChannelInputModel) {
         do {
             var query = ChannelQuery(name: "", description: nil, image: nil)
             if let image = input.image {

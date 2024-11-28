@@ -74,7 +74,7 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
                     }
                 }, receiveValue: { [weak self] _ in
                     DispatchQueue.main.async {
-                        self?.repositiory?.deleteChatting(self?.channelID ?? "")
+                        self?.repositiory?.deleteChannel(self?.channelID ?? "")
                         self?.goToList = true
                     }
                 })
@@ -103,7 +103,7 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
                     }
                 }, receiveValue: { [weak self] _ in
                     DispatchQueue.main.async {
-                        self?.repositiory?.deleteChatting(self?.channelID ?? "")
+                        self?.repositiory?.deleteChannel(self?.channelID ?? "")
                         self?.goToList = true
                     }
                 })

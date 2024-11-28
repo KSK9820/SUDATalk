@@ -11,5 +11,4 @@ protocol ChannelIntentProtocol {
     associatedtype Action
     
     func action(_ action: Action)
-    func asyncAction(_ action: Action) async
 }

@@ -14,15 +14,15 @@ final class CreateChannelIntent {
         self.model = model
     }
     
-    func createChannel(_ workspaceID: String, input: ChannelInput) {
+    func createChannel(_ workspaceID: String, input: ChannelInputModel) {
         model?.createChannel(workspaceID, input: input)
     }
 }
 
 extension CreateChannelIntent: ChannelIntentProtocol {
     enum Action {
-        case createChannel(_ workspaceID: String, input: ChannelInput)
-        case editChannel(_ workspaceID: String, input: ChannelInput)
+        case createChannel(_ workspaceID: String, input: ChannelInputModel)
+        case editChannel(_ workspaceID: String, input: ChannelInputModel)
     }
     
     func action(_ action: Action) {
@@ -33,6 +33,4 @@ extension CreateChannelIntent: ChannelIntentProtocol {
             model?.editChannel(workspaceID, input: input)
         }
     }
-    
-    func asyncAction(_ action: Action) async {}
 }

@@ -8,19 +8,18 @@
 import Combine
 import SwiftUI
 
-final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {  
+final class ChannelChattingModel: ObservableObject, ChannelChattingModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
     private let networkManager = NetworkManager()
     private let repositiory = ChannelChatRepository()
     private let socketManager: SocketIOManager
     private var ongoingRequests: Set<String> = []
     
+    @Published var input = ChannelChatInputModel(content: "", images: [])
     @Published var channel: ChannelListPresentationModel?
     @Published var workspaceID: String = ""
-    @Published var messageText: String = ""
-    @Published var selectedImages: [UIImage] = []
     @Published var chatting: [ChattingPresentationModel] = []
-    @AppStorage("userID") var userID: String?
+    let myProfile = UserDefaultsManager.shared.userProfile
     
     init(socketManager: SocketIOManager) {
         self.socketManager = socketManager
@@ -44,24 +43,29 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String?) {
+    private func fetchChatFromNetwork(_ workspaceID: String, channelID: String, date: String?) {
         do {
             guard let date else { return }
             let requestChannel = try ChannelRouter.fetchChat(workspaceID: workspaceID, channelID: channelID, date: date).makeRequest()
-            
+
             networkManager.getDecodedDataTaskPublisher(requestChannel, model: [SendChatResponse].self)
                 .sink(receiveCompletion: { completion in
                     if case .failure(let failure) = completion {
                         print(failure)
                     }
                 }, receiveValue: { [weak self] value in
+                    guard let self = self else { return }
+
                     value.forEach { item in
                         DispatchQueue.main.async {
-                            self?.chatting.append(item.convertToModel())
-                            self?.repositiory?.addChatting(item)
-                            self?.connectSocket()
+                            let chat = item.convertToModel()
+
+                            self.chatting.append(chat)
+                            self.repositiory?.addChannelChat(chat)
                         }
                     }
+                    
+                    self.connectSocket()
                 })
                 .store(in: &cancellables)
         } catch {
@@ -69,9 +73,10 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-    func sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage]) {
-        let imageData = ImageConverter.shared.convertToData(images: images)
-        let query = ChatQuery(content: content, files: imageData)
+
+    func sendMessage(workspaceID: String, channelID: String, input: ChannelChatInputModel) {
+        let imageData = ImageConverter.shared.convertToData(images: input.images)
+        let query = ChatQuery(content: input.content, files: imageData)
         let requestKey = generateRequestKey(for: query)
         
         do {
@@ -89,16 +94,10 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     
                     self?.ongoingRequests.remove(requestKey)
                 }, receiveValue: { [weak self] value in
-                    if !value.files.isEmpty {
-                        value.files.enumerated().forEach { (index, url) in
-                            ImageFileManager.shared.saveImageToDocument(image: images[index], fileUrl: url)
-                        }
-                    }
-                    
-                    self?.repositiory?.addChatting(value)
+                    self?.input.content = ""
+                    self?.input.images = []
+                    self?.repositiory?.addChannelChat(value.convertToModel())
                     self?.chatting.append(value.convertToModel())
-                    self?.messageText = ""
-                    self?.selectedImages = []
                 })
                 .store(in: &cancellables)
         } catch {
@@ -114,32 +113,43 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
 
     func fetchImages(_ urls: [String], index: Int) async {
-        var chatImages: [Data?] = []
-
-        for url in urls {
-            if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-                chatImages.append(cachedImage)
-                continue
-            }
-            
-            if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
-                chatImages.append(fileManagerImage)
-                CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
-                continue
-            }
-            
-            do {
-                let value = try await fetchImageFromNetwork(url: url)
-                CacheManager.shared.saveToCache(data: value, forKey: url)
-                chatImages.append(value)
-
-                if let image = UIImage(data: value) {
-                    ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+        var chatImages: [Data?] = Array(repeating: nil, count: urls.count)
+        
+        await withTaskGroup(of: (Int, Data?).self) { group in
+            for (idx, url) in urls.enumerated() {
+                group.addTask { [weak self] in
+                    guard let self else {
+                        return (idx, nil)
+                    }
+                    
+                    if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
+                        return (idx, cachedImage)
+                    }
+                    
+                    if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
+                        CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
+                        
+                        return (idx, fileManagerImage)
+                    }
+                    
+                    do {
+                        let imageData = try await self.fetchImageFromNetwork(url: url)
+                        CacheManager.shared.saveToCache(data: imageData, forKey: url)
+                        
+                        if let image = UIImage(data: imageData) {
+                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
+                        }
+                        
+                        return (idx, imageData)
+                    } catch {
+                        print("Error: \(error)")
+                        return (idx, nil)
+                    }
                 }
-            } catch {
-                print("Error fetching image from network: \(error)")
-                chatImages.append(nil)
-                continue
+            }
+            
+            for await (idx, data) in group {
+                chatImages[idx] = data
             }
         }
 
@@ -193,12 +203,20 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 guard let self else { return }
                 
                 if let decodedData = data as? SendChatResponse {
-                    guard let userID = self.userID, userID != decodedData.user.userID else { return }
+                    guard self.myProfile.userID != decodedData.user.userID else { return }
                     self.chatting.append(decodedData.convertToModel())
-                    self.repositiory?.addChatting(decodedData)
+                    self.repositiory?.addChannelChat(decodedData.convertToModel())
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    func profileImage(userID: String, url: String, index: Int) async {
+        if userID == myProfile.userID {
+            self.chatting[index].user.profileImageData = myProfile.profileImageData
+        } else {
+            await fetchProfileImages(url, index: index)
+        }
     }
     
     func disconnectSocket() {

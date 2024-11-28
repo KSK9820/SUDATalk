@@ -20,7 +20,7 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
         case viewOnAppear(workspaceID: String, channelID: String)
         case sendMessage(workspaceID: String, channelID: String, content: String, images: [UIImage])
         case fetchImages(urls: [String], index: Int)
-        case fetchProfileImages(url: String, index: Int)
+        case fetchProfileImages(userID: String, url: String, index: Int)
         case appActive
         case appInactive
         case onTapGesture
@@ -31,26 +31,22 @@ extension ChannelChattingIntent: ChannelIntentProtocol {
         case .viewOnAppear(let workspaceID, let channelID):
             model?.setChattingData(workspaceID: workspaceID, channelID: channelID)
         case .sendMessage(let workspaceID, let channelID, let content, let images):
-            model?.sendMessage(workspaceID: workspaceID, channelID: channelID, content: content, images: images)
+            let input = ChannelChatInputModel(content: content, images: images)
+            model?.sendMessage(workspaceID: workspaceID, channelID: channelID, input: input)
+        case .fetchImages(let urls, let index):
+            Task {
+                await model?.fetchImages(urls, index: index)
+            }
+        case .fetchProfileImages(let userID, let url, let index):
+            Task {
+                await model?.profileImage(userID: userID, url: url, index: index)
+            }
         case .appActive:
             model?.connectSocket()
         case .appInactive:
             model?.disconnectSocket()
         case .onTapGesture:
             model?.dismissKeyboard()
-        default:
-            break
-        }
-    }
-    
-    func asyncAction(_ action: Action) async {
-        switch action {
-        case .fetchImages(let urls, let index):
-            await model?.fetchImages(urls, index: index)
-        case .fetchProfileImages(let url, let index):
-            await model?.fetchProfileImages(url, index: index)
-        default:
-            break
         }
     }
 }
