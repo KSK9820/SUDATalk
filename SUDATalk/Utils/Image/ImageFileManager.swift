@@ -11,7 +11,7 @@ final class ImageFileManager {
     static let shared = ImageFileManager()
     private init() {}
     
-    func saveImageToDocument(image: UIImage, fileUrl: String) {
+    func saveImageToDocument(image: Data, fileUrl: String) {
         guard let documentDirectory = FileManager.default.urls(
             for: .documentDirectory,
             in: .userDomainMask).first else {
@@ -33,12 +33,16 @@ final class ImageFileManager {
            }
         
         let fileURL = folderURL.appendingPathComponent("\(modifiedPath[2])")
-        let imageData = ImageConverter.shared.convertToData(image: image)
-        
-        do {
-            try imageData.write(to: fileURL)
-        } catch {
-            print("failed to save: \(error)")
+        if let uiImage = UIImage(data: image) {
+            let imageData = ImageConverter.shared.convertToData(image: uiImage)
+            
+            do {
+                try imageData.write(to: fileURL)
+            } catch {
+                print("failed to save: \(error)")
+            }
+        } else {
+            print("failed to save with uiimage")
         }
     }
 

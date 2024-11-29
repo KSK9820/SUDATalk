@@ -40,21 +40,15 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
     }
     
     func fetchProfileImages(_ url: String, index: Int) {
-        if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-            channel.channelMembers[index].profileImageData = cachedImage
-            return
-        }
-        
         do {
             let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
             
-            networkManager.getDataTaskPublisher(requestChannel)
+            networkManager.getCachingImageDataTaskPublisher(request: requestChannel, key: url)
                 .sink { completion in
                     if case .failure(let failure) = completion {
                         print(failure)
                     }
                 } receiveValue: { [weak self] value in
-                    CacheManager.shared.saveToCache(data: value, forKey: url)
                     self?.channel.channelMembers[index].profileImageData = value
                 }
                 .store(in: &cancellables)

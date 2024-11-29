@@ -37,7 +37,7 @@ extension DMRouter {
                     method: .get,
                     path: ["workspaces", workspaceID, "dms", roomID, "chats"],
                     header: EndPointHeader.authorization.header,
-                    parameter: [URLQueryItem(name: "cursor_date", value: cursorDate.toiso8601())]
+                    parameter: [URLQueryItem(name: "cursor_date", value: cursorDate.toiso8601String())]
                 ).asURLRequest()
             } else {
                 return try EndPoint(
