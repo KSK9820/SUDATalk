@@ -55,25 +55,9 @@ extension DMChatModel: DMChatModelActionProtocol {
                     guard let self else {
                         return (idx, nil)
                     }
-                    
-                    if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-                        return (idx, cachedImage)
-                    }
-                    
-                    if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
-                        CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
-                        
-                        return (idx, fileManagerImage)
-                    }
-                    
+                  
                     do {
                         let imageData = try await self.fetchImageFromNetwork(url: url)
-                        
-                        CacheManager.shared.saveToCache(data: imageData, forKey: url)
-                        
-                        if let image = UIImage(data: imageData) {
-                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
-                        }
                         
                         return (idx, imageData)
                     } catch {
@@ -95,7 +79,7 @@ extension DMChatModel: DMChatModelActionProtocol {
         let request = try DMRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
-            networkManager.getDataTaskPublisher(request)
+            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
                 .sink { completion in
                     if case .failure(let error) = completion {
                         continuation.resume(throwing: error)
@@ -214,20 +198,19 @@ extension DMChatModel: DMChatModelActionProtocol {
             do {
                 let request = try DMRouter.fetchImage(url: url).makeRequest()
                 
-                networkManager.getDataTaskPublisher(request)
+                networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
                     .sink { completion in
                         if case .failure(let failure) = completion {
                             print(failure)
-                            
                         }
                     } receiveValue: { [weak self] value in
                         guard let self else { return }
                         
                         if let outdatedProfileImage = dmRoomInfo.user.profileImage {
                             CacheManager.shared.removeFromCache(forKey: outdatedProfileImage)
+                            ImageFileManager.shared.removeImageFromDocument(filename: outdatedProfileImage)
                         }
                         
-                        CacheManager.shared.saveToCache(data: value, forKey: url)
                         dmRoomInfo.user.profileImage = url
                         dmRoomInfo.user.profileImageData = UIImage(data: value)
                     }

@@ -121,24 +121,9 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                     guard let self else {
                         return (idx, nil)
                     }
-                    
-                    if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-                        return (idx, cachedImage)
-                    }
-                    
-                    if let fileManagerImage = ImageFileManager.shared.loadFile(fileUrl: url) {
-                        CacheManager.shared.saveToCache(data: fileManagerImage, forKey: url)
-                        
-                        return (idx, fileManagerImage)
-                    }
-                    
+                  
                     do {
                         let imageData = try await self.fetchImageFromNetwork(url: url)
-                        CacheManager.shared.saveToCache(data: imageData, forKey: url)
-                        
-                        if let image = UIImage(data: imageData) {
-                            ImageFileManager.shared.saveImageToDocument(image: image, fileUrl: url)
-                        }
                         
                         return (idx, imageData)
                     } catch {
@@ -152,18 +137,18 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 chatImages[idx] = data
             }
         }
-
+        
         self.chatting[index].images = chatImages
     }
-
+    
     private func fetchImageFromNetwork(url: String) async throws -> Data {
-        let requestChannel = try ChannelRouter.fetchImage(url: url).makeRequest()
+        let request = try DMRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
-            networkManager.getDataTaskPublisher(requestChannel)
+            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
                 .sink { completion in
-                    if case .failure(let failure) = completion {
-                        continuation.resume(throwing: failure)
+                    if case .failure(let error) = completion {
+                        continuation.resume(throwing: error)
                     }
                 } receiveValue: { value in
                     continuation.resume(returning: value)

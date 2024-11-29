@@ -75,4 +75,34 @@ final class NetworkManager: RawDataFetchable, DecodedDataFetchable {
     func getDecodedDataTaskPublisher<D: Decodable>(_ request: URLRequest, model: D.Type) -> AnyPublisher<D, Error> {
         decoder.getDecodedDataPublisher(response: getDataTaskPublisher(request), model: model)
     }
+    
+    func getCachingImageDataTaskPublisher(request: URLRequest, key: String) -> AnyPublisher<Data, any Error> {
+        Future<Data, Error> { [weak self] promise in
+            guard let self else { return }
+            
+            if let cachedData = CacheManager.shared.loadFromCache(forKey: key) {
+                return promise(.success(cachedData))
+            }
+            
+            if let fileData = ImageFileManager.shared.loadFile(fileUrl: key) {
+                CacheManager.shared.saveToCache(data: fileData, forKey: key)
+               
+                return promise(.success(fileData))
+            }
+            
+            getDataTaskPublisher(request)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        promise(.failure(error))
+                    }
+                } receiveValue: { data in
+                    CacheManager.shared.saveToCache(data: data, forKey: key)
+                    ImageFileManager.shared.saveImageToDocument(image: data, fileUrl: key)
+                    
+                    return promise(.success(data))
+                }
+                .store(in: &cancellables)
+        }
+        .eraseToAnyPublisher()
+    }
 }
