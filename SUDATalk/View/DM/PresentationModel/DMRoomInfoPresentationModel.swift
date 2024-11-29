@@ -11,4 +11,12 @@ struct DMRoomInfoPresentationModel {
     let roomID: String
     let createdAt: Date
     var user: DMUserPresentationModel
+    var unreadChat: [DMChatPresentationModel] = []
+    var lastChat: DMChatPresentationModel?
+    
+    init(roomID: String, createdAt: Date, user: DMUserPresentationModel) {
+        self.roomID = roomID
+        self.createdAt = createdAt
+        self.user = user
+    }
 }

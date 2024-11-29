@@ -8,5 +8,7 @@
 import Foundation
 
 protocol DMListActionProtocol: AnyObject {
-    
+    func getDMList()
+    func getWorkspaceMemberList()
+    func getUnreadChatCount(idx: Int, roomID: String)
 }

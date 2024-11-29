@@ -17,12 +17,18 @@ final class DMListIntentHandler: IntentProtocol {
     
     func handle(intent: DMListIntent) {
         switch intent {
-            
+        case .getDMList:
+            model.getDMList()
+        case .getWorkspaceMember:
+            model.getWorkspaceMemberList()
+        case .getUnreadChat(let idx, let roomID):
+            model.getUnreadChatCount(idx: idx, roomID: roomID)
         }
     }
-    
 }
 
 enum DMListIntent: IntentType {
-    
+    case getDMList
+    case getWorkspaceMember
+    case getUnreadChat(idx: Int, roomID: String)
 }

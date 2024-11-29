@@ -14,15 +14,30 @@ struct DMListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             DMHeaderView(workspace: container.model.workspace)
+            
             Divider()
                 .padding(.vertical, 8)
+            
             DMMemeberListView(container.model.member)
+                .task {
+                    container.intent.handle(intent: .getWorkspaceMember)
+                }
+            
             Divider()
                 .padding(.vertical, 8)
+            
             LazyVStack {
-                DMChatRoomView(roomInfo: DMRoomInfoPresentationModel(roomID: "dddd", createdAt: Date(), user: DMUserPresentationModel(userID: "", email: "", nickname: "ddddddd", profileImage: nil, profileImageData: nil)))
+                ForEach(Array(container.model.dmlist.enumerated()), id: \.element.roomID) { index, dmRoom in
+                    DMChatRoomView(dmRoom)
+                        .task {
+                            container.intent.handle(intent: .getUnreadChat(idx: index, roomID: dmRoom.roomID))
+                        }
+                }
             }
             Spacer()
+        }
+        .task {
+            container.intent.handle(intent: .getDMList)
         }
     }
     
@@ -49,11 +64,9 @@ struct DMListView: View {
                    let userProfileImage = UIImage(data: userProfileData) {
                     Image(uiImage: userProfileImage)
                         .circleImageStyle(width: 30, height: 30)
-                        .padding(.trailing, 20)
                 } else {
                     Images.userDefaultImage
                         .circleImageStyle(width: 30, height: 30)
-                        .padding(.trailing, 20)
                 }
             }
             .padding(.horizontal, 20)
@@ -92,7 +105,7 @@ struct DMListView: View {
     struct DMChatRoomView: View {
         private let roomInfo: DMRoomInfoPresentationModel
         
-        init(roomInfo: DMRoomInfoPresentationModel) {
+        init(_ roomInfo: DMRoomInfoPresentationModel) {
             self.roomInfo = roomInfo
         }
         
@@ -113,23 +126,36 @@ struct DMListView: View {
                 VStack(alignment: .leading) {
                     Text(roomInfo.user.nickname)
                         .bold()
-                    Text("last chat")
+                    if let lastChat = roomInfo.unreadChat.last?.content {
+                        Text(lastChat)
+                    } else if let lastChat = roomInfo.lastChat?.content {
+                        Text(lastChat)
+                    }
                 }
                 
                 Spacer()
                 
                 VStack(alignment: .trailing) {
-                    Text("time")
-                        .font(.callout)
-                        .foregroundStyle(.gray)
-                    Text("1")
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.green)
-                        )
-                        .foregroundColor(.white)
+                    if let lastChat = roomInfo.unreadChat.last {
+                        Text(lastChat.createdAt.toMessageDate())
+                            .font(.callout)
+                            .foregroundStyle(.gray)
+                    } else if let lastChat = roomInfo.lastChat?.createdAt {
+                        Text(lastChat.toMessageDate())
+                            .font(.callout)
+                            .foregroundStyle(.gray)
+                    }
+                    
+                    if roomInfo.unreadChat.count != 0 {
+                        Text("\(roomInfo.unreadChat.count)")
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 2)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(.green)
+                            )
+                            .foregroundColor(.white)
+                    }
                 }
             }
             .padding(.horizontal, 20)
@@ -138,8 +164,8 @@ struct DMListView: View {
 }
 
 extension DMListView {
-    static func build() -> some View {
-        let model = DMListModel()
+    static func build(workspace: WorkSpacePresentationModel) -> some View {
+        let model = DMListModel(workspace: workspace)
         let intent = DMListIntentHandler(model: model)
         let container = Container(
             intent: intent,

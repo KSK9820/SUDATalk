@@ -170,9 +170,12 @@ extension DMChatModel: DMChatModelActionProtocol {
                     guard let self else { return }
                     
                     let chatData = value.map { $0.convertToModel() }
+                    if chatData.count > 0 {
+                        // MARK: - roomid 수정하기
+                        repository?.addDMChat(DMChatRoomPresentationModel(roomID: chatData[0].roomID, chat: chatData))
+                        self.chatting.append(contentsOf: chatData)
+                    }
                     
-                    repository?.addDMChat(DMChatRoomPresentationModel(roomID: realtimeMessage.roomID, chat: chatData))
-                    self.chatting.append(contentsOf: chatData)
                     self.connectSocket()
                 }
                 .store(in: &cancellables)

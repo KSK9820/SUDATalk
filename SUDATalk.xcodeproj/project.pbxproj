@@ -136,6 +136,7 @@
 		53E41C272CF2172B004930AF /* DMRoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E41C262CF2172B004930AF /* DMRoomEntity.swift */; };
 		53E41C292CF2174E004930AF /* DMChatRoomPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E41C282CF2174E004930AF /* DMChatRoomPresentationModel.swift */; };
 		53E41C2B2CF21E9C004930AF /* DMRoomInfoPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E41C2A2CF21E9C004930AF /* DMRoomInfoPresentationModel.swift */; };
+		53EF83942CF8E8BA00FAE4EF /* WorkspaceMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EF83932CF8E8BA00FAE4EF /* WorkspaceMemberResponse.swift */; };
 		53F2391C2CF6FD5700BF028D /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F2391B2CF6FD5700BF028D /* UserDefaultManager.swift */; };
 		53F2391F2CF70DBC00BF028D /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F2391E2CF70DBC00BF028D /* UserProfile.swift */; };
 /* End PBXBuildFile section */
@@ -270,6 +271,7 @@
 		53E41C262CF2172B004930AF /* DMRoomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoomEntity.swift; sourceTree = "<group>"; };
 		53E41C282CF2174E004930AF /* DMChatRoomPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChatRoomPresentationModel.swift; sourceTree = "<group>"; };
 		53E41C2A2CF21E9C004930AF /* DMRoomInfoPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoomInfoPresentationModel.swift; sourceTree = "<group>"; };
+		53EF83932CF8E8BA00FAE4EF /* WorkspaceMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceMemberResponse.swift; sourceTree = "<group>"; };
 		53F2391B2CF6FD5700BF028D /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		53F2391E2CF70DBC00BF028D /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -597,6 +599,7 @@
 				5357ADCD2CD929F600FB391A /* DMChatResponse.swift */,
 				5357ADCF2CD92B0E00FB391A /* DMUserResponse.swift */,
 				532C5BF62CF078D200E4CBC6 /* DMRoomInfoResponse.swift */,
+				53EF83932CF8E8BA00FAE4EF /* WorkspaceMemberResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1021,6 +1024,7 @@
 				484F53022CE10B86008F20D3 /* ChannelInput.swift in Sources */,
 				48088C112CD7C9D0008DC165 /* SendChatResponse.swift in Sources */,
 				48088C032CD733E7008DC165 /* ChannelChattingModel.swift in Sources */,
+				53EF83942CF8E8BA00FAE4EF /* WorkspaceMemberResponse.swift in Sources */,
 				48088BC22CD504B7008DC165 /* Images.swift in Sources */,
 				48088C072CD73416008DC165 /* ChannelChattingActionsProtocol.swift in Sources */,
 				48088C0F2CD79C1C008DC165 /* ChatQuery.swift in Sources */,
