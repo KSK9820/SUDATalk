@@ -11,6 +11,7 @@ extension Date {
     func toString(style to: StringDateFormat) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = to.rawValue
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         return dateFormatter.string(from: self)
     }
@@ -31,5 +32,13 @@ extension Date {
         
         formattedDate = formatterForToday.string(from: self)
         return formattedDate
+    }
+    
+    func toiso8601String() -> String {
+        let formatter = ISO8601DateFormatter()
+        
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        return formatter.string(from: self)
     }
 }

@@ -8,10 +8,10 @@
 import Foundation
 
 final class DMChatIntentHandler: IntentProtocol {
-    private var model: DMModelActionProtocol
+    private var model: DMChatModelActionProtocol
     typealias Intent = DMChatIntent
     
-    init(model: DMModelActionProtocol) {
+    init(model: DMChatModelActionProtocol) {
         self.model = model
     }
     

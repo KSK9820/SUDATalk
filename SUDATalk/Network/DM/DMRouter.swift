@@ -8,9 +8,14 @@
 import Foundation
 
 enum DMRouter {
+    // MARK: - DMChat
     case chats(workspaceID: String, roomID: String, body: DMChatQuery)
     case unreadChats(workSpaceID: String, roomID: String, cursorDate: Date? = nil)
     case fetchImage(url: String)
+    
+    // MARK: - DMList
+    case dmlist(workspaceID: String)
+    case workspaceMember(workspaceID: String)
 }
 
 extension DMRouter {
@@ -32,7 +37,7 @@ extension DMRouter {
                     method: .get,
                     path: ["workspaces", workspaceID, "dms", roomID, "chats"],
                     header: EndPointHeader.authorization.header,
-                    parameter: [URLQueryItem(name: "cursor_date", value: cursorDate.toString(style: .iso))]
+                    parameter: [URLQueryItem(name: "cursor_date", value: cursorDate.toiso8601())]
                 ).asURLRequest()
             } else {
                 return try EndPoint(
@@ -48,6 +53,18 @@ extension DMRouter {
                 method: .get,
                 path: url.split(separator: "/").map { String($0) },
                 header: EndPointHeader.multipartType(boundary: boundary).header
+            ).asURLRequest()
+        case .dmlist(let workspaceID):
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces", workspaceID, "dms"],
+                header: EndPointHeader.authorization.header
+            ).asURLRequest()
+        case .workspaceMember(let workspaceID):
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces", workspaceID, "members"],
+                header: EndPointHeader.authorization.header
             ).asURLRequest()
         }
     }

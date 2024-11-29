@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 import UIKit
 
-final class DMChatModel: ObservableObject, DMModelStateProtocol {
+final class DMChatModel: ObservableObject, DMChatModelStateProtocol {
     private let networkManager = NetworkManager()
     private let socketManager = SocketIOManager(event: DMSocketEvent(roomID: SampleTest.roomID))
     private let repository = DMChatRepository()
@@ -41,7 +41,7 @@ final class DMChatModel: ObservableObject, DMModelStateProtocol {
     }
 }
 
-extension DMChatModel: DMModelActionProtocol {
+extension DMChatModel: DMChatModelActionProtocol {
     func setDMChatView() {
         readSavedMessage()
     }
@@ -170,9 +170,12 @@ extension DMChatModel: DMModelActionProtocol {
                     guard let self else { return }
                     
                     let chatData = value.map { $0.convertToModel() }
+                    if chatData.count > 0 {
+                        // MARK: - roomid 수정하기
+                        repository?.addDMChat(DMChatRoomPresentationModel(roomID: chatData[0].roomID, chat: chatData))
+                        self.chatting.append(contentsOf: chatData)
+                    }
                     
-                    repository?.addDMChat(DMChatRoomPresentationModel(roomID: realtimeMessage.roomID, chat: chatData))
-                    self.chatting.append(contentsOf: chatData)
                     self.connectSocket()
                 }
                 .store(in: &cancellables)
