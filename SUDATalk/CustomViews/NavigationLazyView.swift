@@ -8,14 +8,23 @@
 import SwiftUI
 
 struct NavigationLazyView<Content: View>: View {
-    
+    let title: String?
     let build: () -> Content
     
     var body: some View {
-        build()
+        if let title {
+            build()
+                .navigationTitle(title)
+                .navigationBarTitleDisplayMode(.inline)
+        } else {
+            build()
+        }
+        
+        
     }
     
-    init(_ build: @autoclosure @escaping () -> Content) {
+    init(title: String? = nil, _ build: @autoclosure @escaping () -> Content) {
+        self.title = title
         self.build = build
     }
 }
