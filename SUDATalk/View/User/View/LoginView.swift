@@ -20,8 +20,11 @@ struct LoginView: View {
                 Image(systemName: "globe")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
-                NavigationLink("이동") {
-
+                Button {
+                    let workspace = WorkSpacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: Images.help, ownerID: "", createdAt: Date())
+                    setRootView(what: HomeView.build(workspace))
+                } label: {
+                    Text("이동")
                 }
             }
         }
