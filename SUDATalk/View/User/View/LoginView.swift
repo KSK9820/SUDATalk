@@ -20,8 +20,10 @@ struct LoginView: View {
                 Image(systemName: "globe")
                     .imageScale(.large)
                     .foregroundStyle(.tint)
-                NavigationLink("이동") {
-
+                Button {
+                    setRootView(what: CustomTabView())
+                } label: {
+                    Text("이동")
                 }
             }
         }

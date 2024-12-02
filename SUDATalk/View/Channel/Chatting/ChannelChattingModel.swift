@@ -36,9 +36,9 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             chatting = chatDatafromDB
             
             if let lastChatDate = chatDatafromDB.last?.createdAt {
-                fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate.toString(style: .iso))
+                fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate.toiso8601String())
             } else {
-                fetchChatFromNetwork(workspaceID, channelID: channelID, date: Date().toString(style: .iso))
+                fetchChatFromNetwork(workspaceID, channelID: channelID, date: Date().toiso8601String())
             }
         }
     }
@@ -142,7 +142,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     }
     
     private func fetchImageFromNetwork(url: String) async throws -> Data {
-        let request = try DMRouter.fetchImage(url: url).makeRequest()
+        let request = try ChannelRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
             networkManager.getCachingImageDataTaskPublisher(request: request, key: url)

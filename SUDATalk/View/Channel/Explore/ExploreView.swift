@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreView: View {
     @StateObject private var container: Container<ExploreIntent, ExploreModelStateProtocol>
     @State private var showAlert = false
+    @Binding var changedValue: Bool
     
     var body: some View {
         ScrollView {
@@ -37,10 +38,13 @@ struct ExploreView: View {
                 }
             }
         }
-        .navigationTitle("채널탐색")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             container.intent.action(.viewOnAppear(container.model.workspaceID))    
+        }
+        .onChange(of: changedValue) { newValue in
+            if newValue {
+                container.intent.action(.viewOnAppear(container.model.workspaceID))
+            }
         }
     }
     
@@ -64,8 +68,8 @@ struct ExploreView: View {
 }
 
 extension ExploreView {
-    static func build() -> some View {
-        let model = ExploreModel()
+    static func build(_ workspaceID: String, changedValue: Binding<Bool>? = nil) -> some View {
+        let model = ExploreModel(workspaceID: workspaceID)
         let intent = ExploreIntent(model: model)
         
         let container = Container(
@@ -73,6 +77,6 @@ extension ExploreView {
             model: model as ExploreModelStateProtocol,
             modelChangePublisher: model.objectWillChange)
         
-        return ExploreView(container: container)
+        return ExploreView(container: container, changedValue: changedValue ?? .constant(false))
     }
 }

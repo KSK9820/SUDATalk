@@ -65,7 +65,8 @@ struct ChannelSettingView: View {
         }
         .onChange(of: container.model.goToList) { newValue in
             if newValue {
-                setRootView(what: LoginView())
+                let workspace = WorkSpacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: Images.help, ownerID: "", createdAt: Date())
+                setRootView(what: HomeView.build(workspace))
                }
         }
         .onChange(of: container.model.selectedSheet) { newValue in
@@ -106,7 +107,7 @@ struct ChannelSettingView: View {
                     
                     Spacer()
                     
-                    (isExpanded.wrappedValue ? Images.chevronUp : Images.chevronDown)
+                    (isExpanded.wrappedValue ? Images.chevronDown : Images.chevronUp)
                 }
             })
             
