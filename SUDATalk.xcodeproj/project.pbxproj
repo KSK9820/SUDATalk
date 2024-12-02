@@ -82,6 +82,8 @@
 		488E3C032CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C022CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift */; };
 		488E3C052CD9029C00B1E7F6 /* CreateChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C042CD9029C00B1E7F6 /* CreateChannelModel.swift */; };
 		48D0EE392CF45C490015C4F1 /* ChannelMemberPresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0EE382CF45C490015C4F1 /* ChannelMemberPresentationModel.swift */; };
+		530B05032CFE166500DEC672 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 53C01D242CD246FE00D35B95 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		530B05062CFE1E0900DEC672 /* ContentSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530B05052CFE1E0900DEC672 /* ContentSize.swift */; };
 		531093A12CF7954600FFE14C /* WorkspacePresentationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531093A02CF7954600FFE14C /* WorkspacePresentationModel.swift */; };
 		531093A32CF79A2D00FFE14C /* RoundedSquareImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531093A22CF79A2D00FFE14C /* RoundedSquareImageView.swift */; };
 		531093A52CF79BC200FFE14C /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531093A42CF79BC200FFE14C /* CircleImageView.swift */; };
@@ -118,6 +120,7 @@
 		535F472E2CE8FDED00BDB773 /* DMSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */; };
 		535F47302CE8FE0100BDB773 /* ChannelSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F472F2CE8FE0100BDB773 /* ChannelSocketEvent.swift */; };
 		535F47322CE8FE2E00BDB773 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47312CE8FE2E00BDB773 /* SocketIOManager.swift */; };
+		5372CC622CFE0A6D0069399E /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5372CC612CFE0A6D0069399E /* WorkspaceView.swift */; };
 		539B3AC52CEDDF0000796056 /* NavigationBlackBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539B3AC42CEDDF0000796056 /* NavigationBlackBackButton.swift */; };
 		53A95C6E2CD7B9CD00A49267 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A95C6D2CD7B9CD00A49267 /* LoginView.swift */; };
 		53B9EDC82CD61724000BF728 /* SampleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9EDC72CD61724000BF728 /* SampleTest.swift */; };
@@ -149,6 +152,20 @@
 		53F2391C2CF6FD5700BF028D /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F2391B2CF6FD5700BF028D /* UserDefaultManager.swift */; };
 		53F2391F2CF70DBC00BF028D /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F2391E2CF70DBC00BF028D /* UserProfile.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		530B05042CFE166500DEC672 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				530B05032CFE166500DEC672 /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		480818742CF6C11E0045B11D /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
@@ -226,6 +243,7 @@
 		488E3C022CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelActionsProtocol.swift; sourceTree = "<group>"; };
 		488E3C042CD9029C00B1E7F6 /* CreateChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelModel.swift; sourceTree = "<group>"; };
 		48D0EE382CF45C490015C4F1 /* ChannelMemberPresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelMemberPresentationModel.swift; sourceTree = "<group>"; };
+		530B05052CFE1E0900DEC672 /* ContentSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSize.swift; sourceTree = "<group>"; };
 		531093A02CF7954600FFE14C /* WorkspacePresentationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePresentationModel.swift; sourceTree = "<group>"; };
 		531093A22CF79A2D00FFE14C /* RoundedSquareImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedSquareImageView.swift; sourceTree = "<group>"; };
 		531093A42CF79BC200FFE14C /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
@@ -261,6 +279,7 @@
 		535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSocketEvent.swift; sourceTree = "<group>"; };
 		535F472F2CE8FE0100BDB773 /* ChannelSocketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSocketEvent.swift; sourceTree = "<group>"; };
 		535F47312CE8FE2E00BDB773 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		5372CC612CFE0A6D0069399E /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		539B3AC42CEDDF0000796056 /* NavigationBlackBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBlackBackButton.swift; sourceTree = "<group>"; };
 		53A95C6D2CD7B9CD00A49267 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		53B9EDC72CD61724000BF728 /* SampleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTest.swift; sourceTree = "<group>"; };
@@ -315,6 +334,7 @@
 				4808188B2CFDAD5F0045B11D /* HomeModel.swift */,
 				4808188D2CFDADA60045B11D /* HomeModelStateProtocol.swift */,
 				480818912CFDAE850045B11D /* HomeActionsProtocol.swift */,
+				5372CC612CFE0A6D0069399E /* WorkspaceView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -733,6 +753,7 @@
 				53276B4B2CECAA7B002AD8E2 /* Image */,
 				53276B4C2CECAAA3002AD8E2 /* StringDateFormat.swift */,
 				53F2391B2CF6FD5700BF028D /* UserDefaultManager.swift */,
+				530B05052CFE1E0900DEC672 /* ContentSize.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -880,6 +901,7 @@
 				53D0C81A2CD213EB00034179 /* Sources */,
 				53D0C81B2CD213EB00034179 /* Frameworks */,
 				53D0C81C2CD213EB00034179 /* Resources */,
+				530B05042CFE166500DEC672 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -971,6 +993,7 @@
 				480818752CF6C11F0045B11D /* ChannelEntity.swift in Sources */,
 				48088BE72CD607F9008DC165 /* ExploreModel.swift in Sources */,
 				5357ADCB2CD9286000FB391A /* DMRouter.swift in Sources */,
+				5372CC622CFE0A6D0069399E /* WorkspaceView.swift in Sources */,
 				4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */,
 				53276B4D2CECAAA3002AD8E2 /* StringDateFormat.swift in Sources */,
 				48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */,
@@ -1082,6 +1105,7 @@
 				531093A12CF7954600FFE14C /* WorkspacePresentationModel.swift in Sources */,
 				48D0EE392CF45C490015C4F1 /* ChannelMemberPresentationModel.swift in Sources */,
 				5357ADD42CD92B2000FB391A /* DMChatQuery.swift in Sources */,
+				530B05062CFE1E0900DEC672 /* ContentSize.swift in Sources */,
 				48486B442CE6FD15006C668E /* ChannelSettingModel.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,
 				48486B552CE874B7006C668E /* ChannelSettingAlertType.swift in Sources */,
@@ -1228,7 +1252,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SUDATalk/Preview Content\"";
-				DEVELOPMENT_TEAM = U4HJYQP2ZD;
+				DEVELOPMENT_TEAM = CX8P4D8Z7M;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1260,7 +1284,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SUDATalk/Preview Content\"";
-				DEVELOPMENT_TEAM = U4HJYQP2ZD;
+				DEVELOPMENT_TEAM = CX8P4D8Z7M;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;

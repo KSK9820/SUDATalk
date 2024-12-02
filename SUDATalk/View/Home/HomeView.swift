@@ -12,27 +12,52 @@ struct HomeView: View {
     
     @State private var isChannelExpanded = false
     @State private var isDMlExpanded = false
+    @State private var offset: CGFloat = -ContentSize.screenWidth
     
     var body: some View {
-        NavigationStack {
-            VStack(alignment: .leading) {
-                ListHeaderView(workspace: container.model.workspace)
-                
-                Divider()
-                
-                SectionWrap(title: "채널", content: ChannelSection(workSpaceID: container.model.workspace.workspaceID), isExpanded: $isChannelExpanded)
-                
-                Divider()
-                
-                SectionWrap(title: "DM", content: DMSection(), isExpanded: $isDMlExpanded)
-                
-                Divider()
-                
-                Spacer()
+        ZStack {
+            NavigationStack {
+                VStack(alignment: .leading) {
+                    ListHeaderView(workspace: container.model.workspace)
+                    
+                    Divider()
+                    
+                    SectionWrap(title: "채널", content: ChannelSection(workSpaceID: container.model.workspace.workspaceID), isExpanded: $isChannelExpanded)
+                    
+                    Divider()
+                    
+                    SectionWrap(title: "DM", content: DMSection(), isExpanded: $isDMlExpanded)
+                    
+                    Divider()
+                    
+                    Spacer()
+                }
             }
+            
+            WorkspaceView(offsetX: $offset)
+                .offset(x: offset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if value.translation.width > 0 {
+                                withAnimation {
+                                    self.offset = 0
+                                }
+                            }
+                        }
+                        .onEnded { _ in
+                            if self.offset < -150 {
+                                self.offset = -ContentSize.workspaceScreen.size.width
+                            } else {
+                                self.offset = 0
+                            }
+                        }
+                )
         }
     }
 }
+
+
 
 struct SectionWrap<Content: View>: View {
     var title: String
