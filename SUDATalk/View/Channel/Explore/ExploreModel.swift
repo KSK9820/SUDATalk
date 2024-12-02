@@ -13,9 +13,14 @@ final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     private let networkManager = NetworkManager()
     private let repository = ChannelChatRepository()
     
-    @Published var workspaceID: String = SampleTest.workspaceID
+    var workspaceID: String
+    
     @Published var channelList: [ChannelListPresentationModel] = []
     @Published var showAlert: Bool = false
+    
+    init(workspaceID: String) {
+        self.workspaceID = workspaceID
+    }
 }
 
 extension ExploreModel: ExploreActionsProtocol {

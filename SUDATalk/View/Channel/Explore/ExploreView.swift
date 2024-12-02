@@ -37,8 +37,6 @@ struct ExploreView: View {
                 }
             }
         }
-        .navigationTitle("채널탐색")
-        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             container.intent.action(.viewOnAppear(container.model.workspaceID))    
         }
@@ -64,10 +62,10 @@ struct ExploreView: View {
 }
 
 extension ExploreView {
-    static func build() -> some View {
-        let model = ExploreModel()
+    static func build(_ workspaceID: String) -> some View {
+        let model = ExploreModel(workspaceID: workspaceID)
         let intent = ExploreIntent(model: model)
-        
+
         let container = Container(
             intent: intent,
             model: model as ExploreModelStateProtocol,
