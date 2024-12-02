@@ -48,9 +48,9 @@ extension CreateChannelModel: CreateChannelActionsProtocol {
                     }
                     
                 } receiveValue: { [weak self] value in
-                    print(value)
-                    self?.repository?.createChannel(value.convertToModel())
-                    
+                    DispatchQueue.main.async {
+                        self?.repository?.createChannel(value.convertToModel())
+                    }
                 }
                 .store(in: &cancellables)
 
