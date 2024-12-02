@@ -5,8 +5,6 @@
 //  Created by 박다현 on 12/2/24.
 //
 
-import Foundation
-
 import SwiftUI
 
 struct HomeView: View {
@@ -57,7 +55,6 @@ struct SectionWrap<Content: View>: View {
                     
                     (isExpanded.wrappedValue ? Images.chevronDown : Images.chevronUp)
                 }
-                .padding(.bottom)
             })
             
             if isExpanded.wrappedValue {
@@ -108,7 +105,7 @@ struct ChannelSection: View {
             )
         }
         .navigationDestination(isPresented: $moveNextView) {
-            NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID, changedValue: $changedValue))
+            NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID))
         }
         .sheet(isPresented: $showSheet) {
             NavigationLazyView(CreateChannelView.build() { _ in

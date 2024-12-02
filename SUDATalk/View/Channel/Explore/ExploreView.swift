@@ -42,7 +42,9 @@ struct ExploreView: View {
             container.intent.action(.viewOnAppear(container.model.workspaceID))    
         }
         .onChange(of: changedValue) { newValue in
-            container.intent.action(.viewOnAppear(container.model.workspaceID))
+            if newValue {
+                container.intent.action(.viewOnAppear(container.model.workspaceID))
+            }
         }
     }
     
@@ -66,7 +68,7 @@ struct ExploreView: View {
 }
 
 extension ExploreView {
-    static func build(_ workspaceID: String, changedValue: Binding<Bool>) -> some View {
+    static func build(_ workspaceID: String, changedValue: Binding<Bool>? = nil) -> some View {
         let model = ExploreModel(workspaceID: workspaceID)
         let intent = ExploreIntent(model: model)
         
@@ -75,6 +77,6 @@ extension ExploreView {
             model: model as ExploreModelStateProtocol,
             modelChangePublisher: model.objectWillChange)
         
-        return ExploreView(container: container, changedValue: changedValue)
+        return ExploreView(container: container, changedValue: changedValue ?? .constant(false))
     }
 }

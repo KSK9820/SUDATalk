@@ -142,7 +142,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     }
     
     private func fetchImageFromNetwork(url: String) async throws -> Data {
-        let request = try DMRouter.fetchImage(url: url).makeRequest()
+        let request = try ChannelRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
             networkManager.getCachingImageDataTaskPublisher(request: request, key: url)

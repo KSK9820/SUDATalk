@@ -21,8 +21,7 @@ struct LoginView: View {
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 Button {
-                    let workspace = WorkSpacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: Images.help, ownerID: "", createdAt: Date())
-                    setRootView(what: HomeView.build(workspace))
+                    setRootView(what: CustomTabView())
                 } label: {
                     Text("이동")
                 }
