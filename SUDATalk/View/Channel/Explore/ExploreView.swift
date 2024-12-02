@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreView: View {
     @StateObject private var container: Container<ExploreIntent, ExploreModelStateProtocol>
     @State private var showAlert = false
+    @Binding var changedValue: Bool
     
     var body: some View {
         ScrollView {
@@ -40,6 +41,9 @@ struct ExploreView: View {
         .onAppear {
             container.intent.action(.viewOnAppear(container.model.workspaceID))    
         }
+        .onChange(of: changedValue) { newValue in
+            container.intent.action(.viewOnAppear(container.model.workspaceID))
+        }
     }
     
     private func listRow(_ item: ChannelListPresentationModel) -> some View {
@@ -62,15 +66,15 @@ struct ExploreView: View {
 }
 
 extension ExploreView {
-    static func build(_ workspaceID: String) -> some View {
+    static func build(_ workspaceID: String, changedValue: Binding<Bool>) -> some View {
         let model = ExploreModel(workspaceID: workspaceID)
         let intent = ExploreIntent(model: model)
-
+        
         let container = Container(
             intent: intent,
             model: model as ExploreModelStateProtocol,
             modelChangePublisher: model.objectWillChange)
         
-        return ExploreView(container: container)
+        return ExploreView(container: container, changedValue: changedValue)
     }
 }

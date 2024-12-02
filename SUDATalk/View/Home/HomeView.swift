@@ -12,8 +12,8 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var container: Container<HomeIntent, HomeModelStateProtocol>
     
-    @State private var isChannelExpanded = true
-    @State private var isDMlExpanded = true
+    @State private var isChannelExpanded = false
+    @State private var isDMlExpanded = false
     
     var body: some View {
         NavigationStack {
@@ -74,9 +74,10 @@ struct ChannelSection: View {
     @State private var showActionSheet = false
     @State private var showSheet = false
     @State private var moveNextView = false
+    @State private var changedValue = false
     
     var body: some View {
-        ExploreView.build(workSpaceID)
+        ExploreView.build(workSpaceID, changedValue: $changedValue)
             .padding(.horizontal, -16)
         
         Button {
@@ -107,10 +108,12 @@ struct ChannelSection: View {
             )
         }
         .navigationDestination(isPresented: $moveNextView) {
-            NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID))
+            NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID, changedValue: $changedValue))
         }
         .sheet(isPresented: $showSheet) {
-            NavigationLazyView(CreateChannelView.build())
+            NavigationLazyView(CreateChannelView.build() { _ in
+                changedValue = true
+            })
         }
     }
 }
