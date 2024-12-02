@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol HomeModelStateProtocol: AnyObject {
+    var workspace: WorkSpacePresentationModel { get }
+}

@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+final class HomeModel: ObservableObject, HomeModelStateProtocol {
+    var workspace: WorkSpacePresentationModel
+    
+    init(workspace: WorkSpacePresentationModel) {
+        self.workspace = workspace
+    }
+}
+
+extension HomeModel: HomeActionsProtocol {}

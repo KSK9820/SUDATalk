@@ -106,7 +106,7 @@ struct ChannelSettingView: View {
                     
                     Spacer()
                     
-                    (isExpanded.wrappedValue ? Images.chevronUp : Images.chevronDown)
+                    (isExpanded.wrappedValue ? Images.chevronDown : Images.chevronUp)
                 }
             })
             

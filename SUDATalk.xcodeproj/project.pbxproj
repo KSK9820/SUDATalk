@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		480818752CF6C11F0045B11D /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818742CF6C11E0045B11D /* ChannelEntity.swift */; };
 		480818772CF725690045B11D /* ChannelChatInputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818762CF725690045B11D /* ChannelChatInputModel.swift */; };
+		480818882CFD8BFA0045B11D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818872CFD8BFA0045B11D /* HomeView.swift */; };
+		4808188A2CFD8ED50045B11D /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818892CFD8ED50045B11D /* ListHeaderView.swift */; };
+		4808188C2CFDAD5F0045B11D /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808188B2CFDAD5F0045B11D /* HomeModel.swift */; };
+		4808188E2CFDADA60045B11D /* HomeModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808188D2CFDADA60045B11D /* HomeModelStateProtocol.swift */; };
+		480818902CFDAE320045B11D /* HomeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808188F2CFDAE310045B11D /* HomeIntent.swift */; };
+		480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818912CFDAE850045B11D /* HomeActionsProtocol.swift */; };
 		48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */; };
 		48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */; };
 		48088BAE2CD4A82B008DC165 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAD2CD4A82B008DC165 /* NetworkManager.swift */; };
@@ -146,6 +152,12 @@
 /* Begin PBXFileReference section */
 		480818742CF6C11E0045B11D /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEntity.swift; sourceTree = "<group>"; };
 		480818762CF725690045B11D /* ChannelChatInputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChatInputModel.swift; sourceTree = "<group>"; };
+		480818872CFD8BFA0045B11D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		480818892CFD8ED50045B11D /* ListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeaderView.swift; sourceTree = "<group>"; };
+		4808188B2CFDAD5F0045B11D /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		4808188D2CFDADA60045B11D /* HomeModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModelStateProtocol.swift; sourceTree = "<group>"; };
+		4808188F2CFDAE310045B11D /* HomeIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIntent.swift; sourceTree = "<group>"; };
+		480818912CFDAE850045B11D /* HomeActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeActionsProtocol.swift; sourceTree = "<group>"; };
 		48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAD2CD4A82B008DC165 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -293,6 +305,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		480818862CFD8BCB0045B11D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				480818872CFD8BFA0045B11D /* HomeView.swift */,
+				4808188F2CFDAE310045B11D /* HomeIntent.swift */,
+				4808188B2CFDAD5F0045B11D /* HomeModel.swift */,
+				4808188D2CFDADA60045B11D /* HomeModelStateProtocol.swift */,
+				480818912CFDAE850045B11D /* HomeActionsProtocol.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		48088BB12CD4AE4C008DC165 /* Query */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +336,7 @@
 		48088BB42CD4AEB8008DC165 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				480818862CFD8BCB0045B11D /* Home */,
 				5357ADD52CD92B6300FB391A /* DM */,
 				48088BDA2CD60565008DC165 /* Channel */,
 				48088BB52CD4AEC6008DC165 /* User */,
@@ -397,6 +422,7 @@
 				48486B512CE8423D006C668E /* Button */,
 				48088C0C2CD77667008DC165 /* Chatting */,
 				48088BF42CD62570008DC165 /* NavigationLazyView.swift */,
+				480818892CFD8ED50045B11D /* ListHeaderView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -926,6 +952,7 @@
 			files = (
 				48088BB02CD4A886008DC165 /* DecodedServices.swift in Sources */,
 				531093A52CF79BC200FFE14C /* CircleImageView.swift in Sources */,
+				4808188A2CFD8ED50045B11D /* ListHeaderView.swift in Sources */,
 				488E3C052CD9029C00B1E7F6 /* CreateChannelModel.swift in Sources */,
 				488E3C032CD9023E00B1E7F6 /* CreateChannelActionsProtocol.swift in Sources */,
 				535F47242CE8F80500BDB773 /* SocketNameSpace.swift in Sources */,
@@ -937,6 +964,7 @@
 				5357ADD82CD92B7300FB391A /* DMChatView.swift in Sources */,
 				535F471C2CE898DA00BDB773 /* SocketEventProtocol.swift in Sources */,
 				5357ADDB2CD92B9B00FB391A /* DMChatPresentationModel.swift in Sources */,
+				480818882CFD8BFA0045B11D /* HomeView.swift in Sources */,
 				480818752CF6C11F0045B11D /* ChannelEntity.swift in Sources */,
 				48088BE72CD607F9008DC165 /* ExploreModel.swift in Sources */,
 				5357ADCB2CD9286000FB391A /* DMRouter.swift in Sources */,
@@ -970,6 +998,7 @@
 				48088C052CD73402008DC165 /* ChannelChattingModelStateProtocol.swift in Sources */,
 				48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */,
 				5357ADEB2CD92F7F00FB391A /* DMChatIntentHandler.swift in Sources */,
+				4808188C2CFDAD5F0045B11D /* HomeModel.swift in Sources */,
 				48088BF02CD60C62008DC165 /* ExploreResponse.swift in Sources */,
 				488E3BFF2CD901B300B1E7F6 /* CreateChannelIntent.swift in Sources */,
 				53276B4F2CECAAB6002AD8E2 /* Date+.swift in Sources */,
@@ -1011,6 +1040,7 @@
 				531093A82CF7A02B00FFE14C /* WorkspaceMemeberPresentation.swift in Sources */,
 				53DA0C162CF792A100564938 /* DMListActionProtocol.swift in Sources */,
 				53C01D2B2CD249A700D35B95 /* HTTPMethod.swift in Sources */,
+				480818902CFDAE320045B11D /* HomeIntent.swift in Sources */,
 				48088C0B2CD76F1E008DC165 /* TextFieldAttachedImageView.swift in Sources */,
 				484F52D72CD9097A008F20D3 /* ChattingPresentationModel.swift in Sources */,
 				48486B5C2CE9E604006C668E /* ChannelIntentProtocol.swift in Sources */,
@@ -1029,12 +1059,14 @@
 				535F47302CE8FE0100BDB773 /* ChannelSocketEvent.swift in Sources */,
 				53DB10C32CEF5B1C00B60660 /* DMEntity.swift in Sources */,
 				535F47192CE8954400BDB773 /* SocketEnvironment.swift in Sources */,
+				4808188E2CFDADA60045B11D /* HomeModelStateProtocol.swift in Sources */,
 				484F53022CE10B86008F20D3 /* ChannelInputModel.swift in Sources */,
 				48088C112CD7C9D0008DC165 /* SendChatResponse.swift in Sources */,
 				48088C032CD733E7008DC165 /* ChannelChattingModel.swift in Sources */,
 				53EF83942CF8E8BA00FAE4EF /* WorkspaceMemberResponse.swift in Sources */,
 				48088BC22CD504B7008DC165 /* Images.swift in Sources */,
 				48088C072CD73416008DC165 /* ChannelChattingActionsProtocol.swift in Sources */,
+				480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */,
 				48088C0F2CD79C1C008DC165 /* ChatQuery.swift in Sources */,
 				48088C092CD7692F008DC165 /* PhotoPicker.swift in Sources */,
 				484F52E02CDB61F0008F20D3 /* ChannelChatRepository.swift in Sources */,

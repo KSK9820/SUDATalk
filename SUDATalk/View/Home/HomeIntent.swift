@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+final class HomeIntent {
+    private weak var model: HomeActionsProtocol?
+
+    init(model: HomeActionsProtocol) {
+        self.model = model
+    }
+}
+
+extension HomeIntent: ChannelIntentProtocol {
+    enum Action {
+    }
+    
+    func action(_ action: Action) {
+    }
+}
