@@ -9,5 +9,7 @@ import Foundation
 
 protocol ExploreActionsProtocol: AnyObject {
     func fetchChennelList(_ workspaceID: String)
+    func getUnreadChatCount(idx: Int, channelID: String)
+    func resetUnreadChatCount(idx: Int)
     func toggleAlert()
 }
