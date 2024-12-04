@@ -19,8 +19,6 @@ struct NavigationLazyView<Content: View>: View {
         } else {
             build()
         }
-        
-        
     }
     
     init(title: String? = nil, _ build: @autoclosure @escaping () -> Content) {
