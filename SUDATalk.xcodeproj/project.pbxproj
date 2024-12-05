@@ -16,6 +16,7 @@
 		480818902CFDAE320045B11D /* HomeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808188F2CFDAE310045B11D /* HomeIntent.swift */; };
 		480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818912CFDAE850045B11D /* HomeActionsProtocol.swift */; };
 		480818942CFDE3EC0045B11D /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818932CFDE3EC0045B11D /* CustomTabView.swift */; };
+		4808189C2D0036F60045B11D /* UnreadChatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808189B2D0036F60045B11D /* UnreadChatResponse.swift */; };
 		48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */; };
 		48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */; };
 		48088BAE2CD4A82B008DC165 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAD2CD4A82B008DC165 /* NetworkManager.swift */; };
@@ -177,6 +178,7 @@
 		4808188F2CFDAE310045B11D /* HomeIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeIntent.swift; sourceTree = "<group>"; };
 		480818912CFDAE850045B11D /* HomeActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeActionsProtocol.swift; sourceTree = "<group>"; };
 		480818932CFDE3EC0045B11D /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		4808189B2D0036F60045B11D /* UnreadChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadChatResponse.swift; sourceTree = "<group>"; };
 		48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAD2CD4A82B008DC165 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				48088C102CD7C9D0008DC165 /* SendChatResponse.swift */,
 				484F52FF2CE0E90E008F20D3 /* ChannelListResponse.swift */,
 				48486B4B2CE787D4006C668E /* ChannelResponse.swift */,
+				4808189B2D0036F60045B11D /* UnreadChatResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1096,6 +1099,7 @@
 				480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */,
 				48088C0F2CD79C1C008DC165 /* ChatQuery.swift in Sources */,
 				48088C092CD7692F008DC165 /* PhotoPicker.swift in Sources */,
+				4808189C2D0036F60045B11D /* UnreadChatResponse.swift in Sources */,
 				484F52E02CDB61F0008F20D3 /* ChannelChatRepository.swift in Sources */,
 				48088BC62CD507F5008DC165 /* TextStyle.swift in Sources */,
 				48088BBD2CD4B9B2008DC165 /* EndPointHeader.swift in Sources */,

@@ -19,6 +19,8 @@ extension ExploreIntent: ChannelIntentProtocol {
     enum Action {
         case viewOnAppear(_ workspaceID: String)
         case onTapList
+        case getUnreadChat(idx: Int, channelID: String)
+        case resetUnreadChat(idx: Int)
     }
     
     func action(_ action: Action) {
@@ -27,6 +29,10 @@ extension ExploreIntent: ChannelIntentProtocol {
             model?.fetchChennelList(workspaceID)
         case .onTapList:
             model?.toggleAlert()
+        case .getUnreadChat(let idx, let channelID):
+            model?.getUnreadChatCount(idx: idx, channelID: channelID)
+        case .resetUnreadChat(let idx):
+            model?.resetUnreadChatCount(idx: idx)
         }
     }
 }

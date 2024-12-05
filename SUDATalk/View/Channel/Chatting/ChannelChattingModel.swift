@@ -38,7 +38,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             if let lastChatDate = chatDatafromDB.last?.createdAt {
                 fetchChatFromNetwork(workspaceID, channelID: channelID, date: lastChatDate.toiso8601String())
             } else {
-                fetchChatFromNetwork(workspaceID, channelID: channelID, date: Date().toiso8601String())
+                fetchChatFromNetwork(workspaceID, channelID: channelID, date: "")
             }
         }
     }

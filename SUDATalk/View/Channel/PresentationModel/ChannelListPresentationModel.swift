@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct ChannelListPresentationModel: Equatable {
+struct ChannelListPresentationModel {
     let channelID, name: String
     let description, coverImage: String?
     let ownerID: String
     let createdAt: Date
     var isMyChannel: Bool = false
+    var unreadsCount: Int = 0
 
     enum CodingKeys: String, CodingKey {
         case channelID = "channel_id"
@@ -25,3 +26,5 @@ struct ChannelListPresentationModel: Equatable {
         .init(channelID: channelID, name: name, details: description, coverImage: coverImage, ownerID: ownerID, createdAt: createdAt)
     }
 }
+
+extension ChannelListPresentationModel: Equatable, Hashable {}
