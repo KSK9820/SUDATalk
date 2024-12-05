@@ -30,9 +30,18 @@ extension ContentSize {
     var size: CGSize {
         switch self {
         case .workspaceScreen:
-            return CGSize(width: ContentSize.screenWidth * 0.85, height: 0)
+            return CGSize(width: ContentSize.screenWidth * 0.85, height: ContentSize.screenHeight)
         default:
             return CGSize(width: 0, height: 0)
+        }
+    }
+    
+    var cornerRadius: CGFloat {
+        switch self {
+        case .workspaceScreen:
+            return 50
+        default:
+            return 5
         }
     }
 }
