@@ -42,18 +42,19 @@ struct DMListView: View {
     }
     
     struct DMHeaderView: View {
-        private var workspace: WorkSpacePresentationModel
+        private var workspace: WorkspacePresentationModel
         
-        init(workspace: WorkSpacePresentationModel) {
+        init(workspace: WorkspacePresentationModel) {
             self.workspace = workspace
         }
         
         var body: some View {
             HStack {
-                workspace.coverImage
-                    .roundedImageStyle(width: 30, height: 30)
-                    .padding(.trailing, 8)
-                    
+                if let coverImageData = workspace.coverImageData {
+                    coverImageData
+                        .roundedImageStyle(width: 30, height: 30)
+                        .padding(.trailing, 8)
+                }
                 Text("Direct Message")
                     .font(.title2)
                     .bold()
@@ -164,7 +165,7 @@ struct DMListView: View {
 }
 
 extension DMListView {
-    static func build(workspace: WorkSpacePresentationModel) -> some View {
+    static func build(workspace: WorkspacePresentationModel) -> some View {
         let model = DMListModel(workspace: workspace)
         let intent = DMListIntentHandler(model: model)
         let container = Container(

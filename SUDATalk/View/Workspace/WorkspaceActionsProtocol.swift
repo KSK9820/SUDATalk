@@ -10,4 +10,6 @@ import Foundation
 protocol WorkspaceActionsProtocol: AnyObject {
     func hideWorkspace()
     func showWorkspace() 
+    func getWorkspaceList()
+    func fetchThumbnail(_ url: String, idx: Int) 
 }

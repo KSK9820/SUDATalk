@@ -9,4 +9,12 @@ import Foundation
 
 protocol WorkspaceModelStateProtocol: AnyObject {
     var isShowWorkspace: Bool { get }
+    var workspaceStatus: WorkSpaceStatus { get }
+    var workspaceList: [WorkspacePresentationModel] { get set }
+}
+
+enum WorkSpaceStatus {
+    case loading
+    case none
+    case more
 }

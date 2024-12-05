@@ -8,18 +8,20 @@
 import SwiftUI
 
 struct ListHeaderView: View {
-    private var workspace: WorkSpacePresentationModel
+    private var workspace: WorkspacePresentationModel
     
-    init(workspace: WorkSpacePresentationModel) {
+    init(workspace: WorkspacePresentationModel) {
         self.workspace = workspace
     }
     
     var body: some View {
         HStack {
-            workspace.coverImage
-                .roundedImageStyle(width: 30, height: 30)
-                .padding(.trailing, 8)
-                
+            if let coverImageData = workspace.coverImageData {
+                coverImageData
+                    .roundedImageStyle(width: 30, height: 30)
+                    .padding(.trailing, 8)
+            }
+            
             Text(workspace.name)
                 .textStyle(.title1)
             

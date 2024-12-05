@@ -95,6 +95,8 @@
 		53276B4F2CECAAB6002AD8E2 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53276B4E2CECAAB6002AD8E2 /* Date+.swift */; };
 		532C5BF72CF078D200E4CBC6 /* DMRoomInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532C5BF62CF078D200E4CBC6 /* DMRoomInfoResponse.swift */; };
 		53343ECD2D01CC1000186A3B /* SystemImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343ECC2D01CC1000186A3B /* SystemImageButton.swift */; };
+		53343ED62D01CDE800186A3B /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343ED52D01CDE800186A3B /* WorkspaceResponse.swift */; };
+		53343EDA2D01CE1500186A3B /* WorkspaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343ED92D01CE1500186A3B /* WorkspaceRouter.swift */; };
 		533EDAE82D01806100FD701E /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533EDAE72D01806100FD701E /* WorkspaceView.swift */; };
 		533EDAEA2D01807200FD701E /* WorkspaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533EDAE92D01807200FD701E /* WorkspaceModel.swift */; };
 		533EDAEC2D01808600FD701E /* WorkspaceIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533EDAEB2D01808600FD701E /* WorkspaceIntentHandler.swift */; };
@@ -260,6 +262,8 @@
 		53276B4E2CECAAB6002AD8E2 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		532C5BF62CF078D200E4CBC6 /* DMRoomInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoomInfoResponse.swift; sourceTree = "<group>"; };
 		53343ECC2D01CC1000186A3B /* SystemImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImageButton.swift; sourceTree = "<group>"; };
+		53343ED52D01CDE800186A3B /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
+		53343ED92D01CE1500186A3B /* WorkspaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRouter.swift; sourceTree = "<group>"; };
 		533EDAE72D01806100FD701E /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		533EDAE92D01807200FD701E /* WorkspaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceModel.swift; sourceTree = "<group>"; };
 		533EDAEB2D01808600FD701E /* WorkspaceIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceIntentHandler.swift; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 		480818862CFD8BCB0045B11D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				53343EDC2D02290F00186A3B /* DM */,
 				480818872CFD8BFA0045B11D /* HomeView.swift */,
 				4808188F2CFDAE310045B11D /* HomeIntent.swift */,
 				4808188B2CFDAD5F0045B11D /* HomeModel.swift */,
@@ -644,9 +649,50 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
+		53343ED02D01CDBD00186A3B /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				53343ED12D01CDCD00186A3B /* DTO */,
+				53343ED92D01CE1500186A3B /* WorkspaceRouter.swift */,
+			);
+			path = Workspace;
+			sourceTree = "<group>";
+		};
+		53343ED12D01CDCD00186A3B /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				53343ED22D01CDD500186A3B /* Response */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		53343ED22D01CDD500186A3B /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				53343ED52D01CDE800186A3B /* WorkspaceResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		53343EDB2D01CEE900186A3B /* PresentationModel */ = {
+			isa = PBXGroup;
+			children = (
+				531093A02CF7954600FFE14C /* WorkspacePresentationModel.swift */,
+			);
+			path = PresentationModel;
+			sourceTree = "<group>";
+		};
+		53343EDC2D02290F00186A3B /* DM */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DM;
+			sourceTree = "<group>";
+		};
 		533EDAE62D01804600FD701E /* Workspace */ = {
 			isa = PBXGroup;
 			children = (
+				53343EDB2D01CEE900186A3B /* PresentationModel */,
 				480818932CFDE3EC0045B11D /* CustomTabView.swift */,
 				533EDAE72D01806100FD701E /* WorkspaceView.swift */,
 				533EDAE92D01807200FD701E /* WorkspaceModel.swift */,
@@ -713,7 +759,6 @@
 				53DB10BE2CEF48CD00B60660 /* DMChatSendPresentationModel.swift */,
 				53E41C282CF2174E004930AF /* DMChatRoomPresentationModel.swift */,
 				53E41C2A2CF21E9C004930AF /* DMRoomInfoPresentationModel.swift */,
-				531093A02CF7954600FFE14C /* WorkspacePresentationModel.swift */,
 				531093A72CF7A02B00FFE14C /* WorkspaceMemeberPresentation.swift */,
 			);
 			path = PresentationModel;
@@ -796,6 +841,7 @@
 		53C01D262CD248EC00D35B95 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				53343ED02D01CDBD00186A3B /* Workspace */,
 				535F471D2CE8F78E00BDB773 /* Socket */,
 				48088BAD2CD4A82B008DC165 /* NetworkManager.swift */,
 				5357ADC92CD9285200FB391A /* DM */,
@@ -1026,6 +1072,7 @@
 				53276B4D2CECAAA3002AD8E2 /* StringDateFormat.swift in Sources */,
 				48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */,
 				53E41C2B2CF21E9C004930AF /* DMRoomInfoPresentationModel.swift in Sources */,
+				53343EDA2D01CE1500186A3B /* WorkspaceRouter.swift in Sources */,
 				53E41C272CF2172B004930AF /* DMRoomEntity.swift in Sources */,
 				48088BE12CD606FC008DC165 /* ExploreIntent.swift in Sources */,
 				53C01D332CD25BBE00D35B95 /* URLRequestConvertible.swift in Sources */,
@@ -1064,6 +1111,7 @@
 				53DB10C52CEFACA500B60660 /* DMChatRepository.swift in Sources */,
 				53C01D2D2CD24A1E00D35B95 /* NetworkError.swift in Sources */,
 				53C01D2F2CD24C3900D35B95 /* EndPointConfigurable.swift in Sources */,
+				53343ED62D01CDE800186A3B /* WorkspaceResponse.swift in Sources */,
 				48088BDF2CD606A8008DC165 /* Container.swift in Sources */,
 				532756762CE4987A00376E09 /* MultiPartFormDatable.swift in Sources */,
 				53DA0C102CF7926700564938 /* DMListView.swift in Sources */,

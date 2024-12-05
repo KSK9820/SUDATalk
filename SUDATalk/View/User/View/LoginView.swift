@@ -21,7 +21,7 @@ struct LoginView: View {
                     .imageScale(.large)
                     .foregroundStyle(.tint)
                 Button {
-                    setRootView(what: CustomTabView())
+                    setRootView(what: CustomTabView(workspace: SampleTest.workspace))
                 } label: {
                     Text("이동")
                 }

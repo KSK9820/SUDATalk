@@ -13,9 +13,9 @@ final class DMListModel: ObservableObject, DMListModelStateProtocol {
     private let repository = DMChatRepository()
     private var cancellables = Set<AnyCancellable>()
     
-    var workspace: WorkSpacePresentationModel
+    var workspace: WorkspacePresentationModel
     
-    init(workspace: WorkSpacePresentationModel) {
+    init(workspace: WorkspacePresentationModel) {
         self.workspace = workspace
     }
     

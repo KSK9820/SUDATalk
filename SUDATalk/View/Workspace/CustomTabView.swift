@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct CustomTabView: View {
-    
     @StateObject var workspaceContainer = WorkspaceView.buildContainer()
+    var workspace: WorkspacePresentationModel
     
     var body: some View {
         TabView {
             Group {
                 NavigationStack {
-                    let workspace = WorkSpacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: Images.help, ownerID: "", createdAt: Date())
+//                    let workspace = WorkspacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: "", coverImageData: Images.help, ownerID: "", createdAt: Date())
                     NavigationLazyView(
                         HomeView.build(workspace)
                             .contentShape(Rectangle())

@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct WorkSpacePresentationModel {
+struct WorkspacePresentationModel {
     let workspaceID: String
     var name: String
     var description: String?
-    var coverImage: Image
+    var coverImage: String
+    var coverImageData: Image?
     var ownerID: String
-    var createdAt: Date
+    var createdAt: Date    
 }
