@@ -29,16 +29,22 @@ struct LoginView: View {
                     .padding(12)
                     .background(Colors.white)
                     .cornerRadius(10)
-                    .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 0, y: 0)
                     .autocapitalization(.none)
                     .keyboardType(.emailAddress)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Colors.inactive, lineWidth: 1)
+                    )
                 
                 SecureField("비번를 입력하세요.", text: container.binding(for: \.userPW))
                     .padding(12)
                     .background(Colors.white)
                     .cornerRadius(10)
-                    .shadow(color: Color.gray.opacity(0.3), radius: 3, x: 0, y: 0)
                     .autocapitalization(.none)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Colors.inactive, lineWidth: 1)
+                    )
                 
                 Text("로그인 하기")
                     .wrapToDefaultButton(active: $isButtonActive) {
