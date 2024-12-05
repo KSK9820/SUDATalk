@@ -14,7 +14,7 @@ final class ChannelChatRepository {
     init?() {
         do {
             self.realm = try Realm()
-            print(realm.configuration.fileURL ?? "")
+            //print(realm.configuration.fileURL ?? "")
         } catch let error as NSError {
             print("Failed to initialize Realm with error: \(error.localizedDescription)")
             return nil
@@ -75,23 +75,6 @@ final class ChannelChatRepository {
         
         return channel.chat.map { $0.convertToModel() }
     }
-    
-//    func deleteChatting(_ channelID: String) {
-//        do {
-//            let chatList = realm.objects(ChannelChatEntity.self).filter { $0.channelID == channelID }
-//            
-//            try realm.write {
-//                chatList.forEach {
-//                    guard let user = $0.user else { return }
-//                    realm.delete(user)
-//                }
-//                
-//                realm.delete(chatList)
-//            }
-//        } catch {
-//            print("fail to delete Chatting: \(error)")
-//        }
-//    }
     
     func deleteChannel(_ channelID: String) {
         do {
