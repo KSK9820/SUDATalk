@@ -15,12 +15,18 @@ struct ExploreView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(container.model.channelList, id: \.channelID) { item in
+                ForEach(Array(container.model.channelList.enumerated()), id: \.element) { index, item in
                     if item.isMyChannel {
                         NavigationLink {
                             NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
+                                .onAppear {
+                                    container.intent.action(.resetUnreadChat(idx: index))
+                                }
                         } label: {
                             listRow(item)
+                                .task {
+                                    container.intent.action(.getUnreadChat(idx: index, channelID: item.channelID))
+                                }
                         }
                     } else {
                         listRow(item)
@@ -30,9 +36,15 @@ struct ExploreView: View {
                             .alert("채널 참여", isPresented: container.binding(for: \.showAlert)) {
                                 NavigationLink {
                                     NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
+                                        .onAppear {
+                                            container.intent.action(.resetUnreadChat(idx: index))
+                                        }
                                 } label: {
                                     Text("확인")
                                 }
+                            }
+                            .task {
+                                container.intent.action(.getUnreadChat(idx: index, channelID: item.channelID))
                             }
                     }
                 }
@@ -60,6 +72,20 @@ struct ExploreView: View {
                 Text(item.description ?? "")
                     .textStyle(.caption)
                     .foregroundStyle(Colors.textSecondary)
+            }
+            
+            Spacer()
+            
+            if item.unreadsCount != 0 {
+                Text("\(item.unreadsCount)")
+                    .textStyle(.body)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(Colors.primary)
+                    )
+                    .foregroundColor(Colors.white)
             }
         }
         .padding(.horizontal)

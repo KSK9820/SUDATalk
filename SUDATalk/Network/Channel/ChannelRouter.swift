@@ -18,6 +18,7 @@ enum ChannelRouter {
     case exitChannel(workspaceID: String, channelID: String)
     case deleteChannel(workspaceID: String, channelID: String)
     case editChannel(workspaceID: String, channelID: String, query: ChannelQuery)
+    case unreads(workspaceID: String, channelID: String, date: String)
 }
 
 extension ChannelRouter {
@@ -97,6 +98,13 @@ extension ChannelRouter {
                 path: ["workspaces", workspaceID, "channels", channelID],
                 header: EndPointHeader.multipartType(boundary: boundary).header,
                 multipartBody: body
+            ).asURLRequest()
+        case .unreads(let workspaceID, let channelID, let date):
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces", workspaceID, "channels", channelID, "unreads"],
+                header: EndPointHeader.authorization.header,
+                parameter: [URLQueryItem(name: "after", value: date)]
             ).asURLRequest()
         }
     }

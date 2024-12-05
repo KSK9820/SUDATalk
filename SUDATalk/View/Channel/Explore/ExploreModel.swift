@@ -56,7 +56,35 @@ extension ExploreModel: ExploreActionsProtocol {
         }
     }
     
+    func getUnreadChatCount(idx: Int, channelID: String) {
+        do {
+            guard let chatDatafromDB = repository?.fetchChatting(channelID).last?.createdAt else { return }
+            let request = try ChannelRouter.unreads(workspaceID: workspaceID, channelID: channelID, date: chatDatafromDB.toiso8601String()).makeRequest()
+
+            networkManager.getDecodedDataTaskPublisher(request, model: UnreadChatResponse.self)
+                .receive(on: DispatchQueue.main)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print(error)
+                    }
+                } receiveValue: { [weak self] value in
+                    guard let self else { return }
+
+                    if value.count > 0 {
+                        channelList[idx].unreadsCount = value.count
+                    }
+                }
+                .store(in: &cancellables)
+        } catch {
+            print(error)
+        }
+    }
+    
     func toggleAlert() {
         self.showAlert.toggle()
+    }
+    
+    func resetUnreadChatCount(idx: Int) {
+        channelList[idx].unreadsCount = 0
     }
 }
