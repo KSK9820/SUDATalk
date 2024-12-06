@@ -82,6 +82,12 @@ final class ChannelChatRepository {
             
             try realm.write {
                 channel.forEach {
+                    if let chat = $0.chat.first {
+                        chat.files.forEach { url in
+                            ImageFileManager.shared.removeImageFromDocument(filename: url)
+                        }
+                    }
+                    
                     realm.delete($0.chat)
                 }
                 

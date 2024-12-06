@@ -71,7 +71,7 @@ final class ImageFileManager {
                 for: .documentDirectory,
                 in: .userDomainMask).first else { return }
 
-            let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
+            let fileURL = documentDirectory.appendingPathComponent("\(filename)")
             
             if FileManager.default.fileExists(atPath: fileURL.path) {
                 do {
