@@ -29,6 +29,6 @@ final class ChannelChatEntity: Object, ObjectKeyIdentifiable {
     }
 
     func convertToModel() -> ChattingPresentationModel {
-        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content ?? "", createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImageUrl: nil, profileImageData: Data()), images: [])
+        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content ?? "", createdAt: createdAt, files: Array(files), user: user?.convertToModel() ?? ChatUserPresentationModel(userID: "", email: "", nickname: "", profileImageUrl: nil, profileImage: nil), images: [])
     }
 }

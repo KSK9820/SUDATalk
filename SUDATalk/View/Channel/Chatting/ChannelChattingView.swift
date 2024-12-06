@@ -60,8 +60,7 @@ struct ChannelChattingView: View {
                 LazyVStack {
                     ForEach(container.model.chatting.indices, id: \.self) { index in
                         let item = container.model.chatting[index]
-                        let profileImage = UIImage(data: item.user.profileImageData ?? Data())
-                            .map { Image(uiImage: $0) } ?? Images.userDefaultImage
+                        let profileImage = item.user.profileImage ?? Images.userDefaultImage
                         
                         ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
                             .task {

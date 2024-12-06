@@ -120,7 +120,7 @@ struct ChannelSettingView: View {
                         
                         memberRow(memeber)
                             .task {
-                                if let profileUrl = memeber.profileImage {
+                                if let profileUrl = memeber.profileImageURL {
                                     container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
                                 }
                             }
@@ -132,9 +132,7 @@ struct ChannelSettingView: View {
     
     private func memberRow(_ member: ChannelMemberPresentationModel) -> some View {
         VStack {
-            let profileImage = UIImage(data: member.profileImageData ?? Data())
-                .map { Image(uiImage: $0) }
-                ?? Images.userDefaultImage
+            let profileImage = member.profileImage ?? Images.userDefaultImage
             
             profileImage
                     .resizable()

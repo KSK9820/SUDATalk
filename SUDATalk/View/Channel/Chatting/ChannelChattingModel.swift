@@ -113,7 +113,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
 
     func fetchImages(_ urls: [String], index: Int) async {
-        var chatImages: [Data?] = Array(repeating: nil, count: urls.count)
+        var chatImages: [Image?] = Array(repeating: nil, count: urls.count)
         
         await withTaskGroup(of: (Int, Data?).self) { group in
             for (idx, url) in urls.enumerated() {
@@ -134,7 +134,8 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             }
             
             for await (idx, data) in group {
-                chatImages[idx] = data
+                guard let data, let uiImage = UIImage(data: data) else { return }
+                chatImages[idx] = Image(uiImage: uiImage)
             }
         }
         
@@ -159,14 +160,16 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     
     func fetchProfileImages(_ url: String, index: Int) async {
         if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
-            chatting[index].user.profileImageData = cachedImage
+            guard let uiImage = UIImage(data: cachedImage) else { return }
+            chatting[index].user.profileImage = Image(uiImage: uiImage)
             return
         }
 
         do {
             let value = try await fetchImageFromNetwork(url: url)
             CacheManager.shared.saveToCache(data: value, forKey: url)
-            chatting[index].user.profileImageData = value
+            guard let uiImage = UIImage(data: value) else { return }
+            chatting[index].user.profileImage = Image(uiImage: uiImage)
 
         } catch {
             print("Error fetching image from network: \(error)")
@@ -198,7 +201,8 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
     
     func profileImage(userID: String, url: String, index: Int) async {
         if userID == myProfile.userID {
-            self.chatting[index].user.profileImageData = myProfile.profileImageData
+            guard let data = myProfile.profileImageData, let uiImage = UIImage(data: data) else { return }
+            self.chatting[index].user.profileImage = Image(uiImage: uiImage)
         } else {
             await fetchProfileImages(url, index: index)
         }
