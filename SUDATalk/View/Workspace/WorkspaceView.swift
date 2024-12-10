@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct WorkspaceView: View {
-    @ObservedObject private var container: Container<WorkspaceIntentHandler, WorkspaceModelStateProtocol>
+    @ObservedObject var container: Container<WorkspaceIntentHandler, WorkspaceModelStateProtocol>
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("워크스페이스 ")
+            Text("워크스페이스")
                 .font(.title)
                 .bold()
                 .padding(.top, 60)
@@ -27,17 +27,14 @@ struct WorkspaceView: View {
                 NoneWorkspaceView()
             case .more:
                 LazyVStack(alignment: .leading) {
-                    ForEach($container.model.workspaceList.indices, id: \.self) { index in
+                    ForEach(Array(container.model.workspaceList.enumerated()), id: \.offset) { index, value in
                         Button(action: {
-                            setRootView(what: CustomTabView(workspace: container.model.workspaceList[index]))
+                            setRootView(what: CustomTabView(workspace: value))
                         }, label: {
-                            WorkspaceListView(workspace: $container.model.workspaceList[index])
-                                .task {
-    //                                print(container.model.workspaceList[index].coverImageData)
-    //                                print($container.model.workspaceList[index].coverImageData.wrappedValue)
-                                    if $container.model.workspaceList[index].coverImageData.wrappedValue == nil {
-                                        container.intent.handle(intent: .getThumbnailImage(url: container.model.workspaceList[index].coverImage, idx: index))
-    //                                    print("asdfasdf", container.model.workspaceList[index].coverImageData)
+                            WorkspaceListView(workspace: value, idx: index)
+                                .onAppear {
+                                    if container.model.isLoaded && container.model.workspaceList[index].coverImageData == nil {
+                                        container.intent.handle(intent: .getThumbnailImage(url: value.coverImage, idx: index))
                                     }
                                 }
                         })
@@ -62,8 +59,11 @@ struct WorkspaceView: View {
         .background(.white)
         .clipShape(RoundedRectangle(cornerRadius: ContentSize.workspaceScreen.cornerRadius))
         .ignoresSafeArea()
-        .task {
+        .onAppear {
             container.intent.handle(intent: .getWorkspace)
+        }
+        .onDisappear {
+            container.intent.handle(intent: .setDisappear)
         }
     }
     
@@ -90,13 +90,17 @@ struct WorkspaceView: View {
     }
     
     private struct WorkspaceListView: View {
-        @Binding var workspace: WorkspacePresentationModel
+        var workspace: WorkspacePresentationModel
+        var idx: Int
         
         var body: some View {
             HStack(spacing: 12) {
-                if let workspaceCoverImage = workspace.coverImageData {
+                if let workspaceCoverImage = workspace.coverImageSwiftUI {
                     workspaceCoverImage
                         .roundedImageStyle(width: 40, height: 40)
+                } else {
+                    EmptyView()
+                        .frame(width: 40, height: 40)
                 }
                 
                 VStack(alignment: .leading) {
@@ -104,6 +108,7 @@ struct WorkspaceView: View {
                         .bold()
                     Text(workspace.createdAt.toString(style: .yymmddDot) ?? "")
                 }
+                
                 Spacer()
             }
             .padding(.horizontal, 20)

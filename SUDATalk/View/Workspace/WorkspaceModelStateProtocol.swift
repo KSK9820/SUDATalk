@@ -11,6 +11,7 @@ protocol WorkspaceModelStateProtocol: AnyObject {
     var isShowWorkspace: Bool { get }
     var workspaceStatus: WorkSpaceStatus { get }
     var workspaceList: [WorkspacePresentationModel] { get set }
+    var isLoaded: Bool { get }
 }
 
 enum WorkSpaceStatus {

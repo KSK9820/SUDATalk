@@ -15,7 +15,6 @@ struct CustomTabView: View {
         TabView {
             Group {
                 NavigationStack {
-//                    let workspace = WorkspacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: "", coverImageData: Images.help, ownerID: "", createdAt: Date())
                     NavigationLazyView(
                         HomeView.build(workspace)
                             .contentShape(Rectangle())
@@ -30,6 +29,7 @@ struct CustomTabView: View {
                 }
                 
                 NavigationStack {
+                    NavigationLazyView(DMListView.build(workspace: workspace))
                 }
                 .tabItem {
                     Images.message
@@ -37,7 +37,7 @@ struct CustomTabView: View {
                 }
                 
                 NavigationStack {
-                    NavigationLazyView(title: "채널 탐색", ExploreView.build(SampleTest.workspaceID))
+                    NavigationLazyView(title: "채널 탐색", ExploreView.build(workspace.workspaceID))
                 }
                 .tabItem {
                     Images.profile
@@ -65,7 +65,6 @@ struct CustomTabView: View {
                         .transition(.move(edge: .leading))
                         .dragGesture(direction: .left) {
                             workspaceContainer.intent.handle(intent: .dragLeft)
-                            
                         }
                 }
             }

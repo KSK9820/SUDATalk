@@ -12,7 +12,16 @@ struct WorkspacePresentationModel {
     var name: String
     var description: String?
     var coverImage: String
-    var coverImageData: Image?
+    var coverImageData: UIImage?
     var ownerID: String
-    var createdAt: Date    
+    var createdAt: Date
+    
+    var coverImageSwiftUI: Image? {
+        guard let image = coverImageData else {
+            return nil
+        }
+            return Image(uiImage: image)
+        }
 }
+
+extension WorkspacePresentationModel: Equatable {}

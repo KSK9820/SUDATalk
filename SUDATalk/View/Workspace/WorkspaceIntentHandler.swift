@@ -25,6 +25,8 @@ final class WorkspaceIntentHandler: IntentProtocol {
             model.getWorkspaceList()
         case .getThumbnailImage(let url, let idx):
             model.fetchThumbnail(url, idx: idx)
+        case .setDisappear:
+            model.setDisappear()
         }
     }
 }
@@ -34,4 +36,5 @@ enum WorkspaceIntent: IntentType {
     case dragRight
     case getWorkspace
     case getThumbnailImage(url: String, idx: Int)
+    case setDisappear
 }

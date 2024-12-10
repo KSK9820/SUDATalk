@@ -16,7 +16,7 @@ struct ListHeaderView: View {
     
     var body: some View {
         HStack {
-            if let coverImageData = workspace.coverImageData {
+            if let coverImageData = workspace.coverImageSwiftUI {
                 coverImageData
                     .roundedImageStyle(width: 30, height: 30)
                     .padding(.trailing, 8)
