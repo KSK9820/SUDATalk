@@ -17,7 +17,7 @@ private struct DefaultButton: ViewModifier {
                 Spacer()
                 
                 content
-                    .textStyle(.bodyBold)
+                    .textStyle(.title2)
                 
                 Spacer()
             }

@@ -11,7 +11,7 @@ import SwiftUI
 struct SUDATalkApp: App {
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            LoginView.build()
         }
     }
 }

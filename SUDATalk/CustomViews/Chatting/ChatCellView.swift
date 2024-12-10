@@ -11,7 +11,7 @@ struct ChatCellView: View {
     let image: Image
     let userName: String
     let message: String?
-    let images: [Data?]
+    let images: [Image?]
     let time: String
     
     var body: some View {
@@ -48,9 +48,8 @@ struct ChatCellView: View {
                         if !images.isEmpty {
                             HStack(spacing: imageSpacing) {
                                 ForEach(0..<min(imageCount, columnsInRow), id: \.self) { index in
-                                    if let fileImage = images[index],
-                                       let convertedImage = UIImage(data: fileImage) {
-                                        Image(uiImage: convertedImage)
+                                    if let messageImage = images[index] {
+                                        messageImage
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                             .frame(width: firstLineImageWidth, height: firstLineImageWidth)
@@ -68,9 +67,8 @@ struct ChatCellView: View {
                             if images.count > columnsInRow {
                                 HStack(spacing: imageSpacing) {
                                     ForEach(columnsInRow..<min(images.count, imageCount), id: \.self) { index in
-                                        if let fileImage = images[index],
-                                           let convertedImage = UIImage(data: fileImage) {
-                                            Image(uiImage: convertedImage)
+                                        if let messageImage = images[index] {
+                                            messageImage
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                                 .frame(width: secondLineImageWidth, height: secondLineImageWidth)

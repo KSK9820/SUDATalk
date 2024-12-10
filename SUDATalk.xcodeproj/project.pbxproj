@@ -17,6 +17,10 @@
 		480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818912CFDAE850045B11D /* HomeActionsProtocol.swift */; };
 		480818942CFDE3EC0045B11D /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818932CFDE3EC0045B11D /* CustomTabView.swift */; };
 		4808189C2D0036F60045B11D /* UnreadChatResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808189B2D0036F60045B11D /* UnreadChatResponse.swift */; };
+		4808189E2D01DC400045B11D /* LoginIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808189D2D01DC3F0045B11D /* LoginIntent.swift */; };
+		480818A02D01DD250045B11D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808189F2D01DD250045B11D /* LoginModel.swift */; };
+		480818A22D01DD460045B11D /* LoginModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818A12D01DD460045B11D /* LoginModelStateProtocol.swift */; };
+		480818A42D01DD730045B11D /* LoginActionsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480818A32D01DD730045B11D /* LoginActionsProtocol.swift */; };
 		48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */; };
 		48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */; };
 		48088BAE2CD4A82B008DC165 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48088BAD2CD4A82B008DC165 /* NetworkManager.swift */; };
@@ -191,6 +195,10 @@
 		480818912CFDAE850045B11D /* HomeActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeActionsProtocol.swift; sourceTree = "<group>"; };
 		480818932CFDE3EC0045B11D /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
 		4808189B2D0036F60045B11D /* UnreadChatResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreadChatResponse.swift; sourceTree = "<group>"; };
+		4808189D2D01DC3F0045B11D /* LoginIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginIntent.swift; sourceTree = "<group>"; };
+		4808189F2D01DD250045B11D /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		480818A12D01DD460045B11D /* LoginModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModelStateProtocol.swift; sourceTree = "<group>"; };
+		480818A32D01DD730045B11D /* LoginActionsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginActionsProtocol.swift; sourceTree = "<group>"; };
 		48088BA92CD4A7D7008DC165 /* RawDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAB2CD4A7FD008DC165 /* DecodedDataFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodedDataFetchable.swift; sourceTree = "<group>"; };
 		48088BAD2CD4A82B008DC165 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -407,6 +415,10 @@
 			isa = PBXGroup;
 			children = (
 				53A95C6D2CD7B9CD00A49267 /* LoginView.swift */,
+				4808189D2D01DC3F0045B11D /* LoginIntent.swift */,
+				4808189F2D01DD250045B11D /* LoginModel.swift */,
+				480818A12D01DD460045B11D /* LoginModelStateProtocol.swift */,
+				480818A32D01DD730045B11D /* LoginActionsProtocol.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1086,6 +1098,7 @@
 				4815F8D92CD37F0D009FC599 /* LoginQuery.swift in Sources */,
 				53276B4D2CECAAA3002AD8E2 /* StringDateFormat.swift in Sources */,
 				48088BAC2CD4A7FD008DC165 /* DecodedDataFetchable.swift in Sources */,
+				480818A22D01DD460045B11D /* LoginModelStateProtocol.swift in Sources */,
 				53E41C2B2CF21E9C004930AF /* DMRoomInfoPresentationModel.swift in Sources */,
 				53343EDA2D01CE1500186A3B /* WorkspaceRouter.swift in Sources */,
 				53E41C272CF2172B004930AF /* DMRoomEntity.swift in Sources */,
@@ -1168,6 +1181,7 @@
 				48486B5C2CE9E604006C668E /* ChannelIntentProtocol.swift in Sources */,
 				48486B3D2CE6E3BA006C668E /* WebSocketManager.swift in Sources */,
 				488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */,
+				480818A02D01DD250045B11D /* LoginModel.swift in Sources */,
 				48486B402CE6FCB0006C668E /* ChannelSettingView.swift in Sources */,
 				53343EE72D02309400186A3B /* HomeDMIntentHandler.swift in Sources */,
 				48486B602CEB1D68006C668E /* View+.swift in Sources */,
@@ -1193,6 +1207,7 @@
 				53343EE32D02304200186A3B /* HomeDMView.swift in Sources */,
 				480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */,
 				48088C0F2CD79C1C008DC165 /* ChatQuery.swift in Sources */,
+				4808189E2D01DC400045B11D /* LoginIntent.swift in Sources */,
 				48088C092CD7692F008DC165 /* PhotoPicker.swift in Sources */,
 				4808189C2D0036F60045B11D /* UnreadChatResponse.swift in Sources */,
 				484F52E02CDB61F0008F20D3 /* ChannelChatRepository.swift in Sources */,
@@ -1206,6 +1221,7 @@
 				5357ADD42CD92B2000FB391A /* DMChatQuery.swift in Sources */,
 				530B05062CFE1E0900DEC672 /* ContentSize.swift in Sources */,
 				48486B442CE6FD15006C668E /* ChannelSettingModel.swift in Sources */,
+				480818A42D01DD730045B11D /* LoginActionsProtocol.swift in Sources */,
 				533EDAF02D0180D500FD701E /* WorkspaceActionsProtocol.swift in Sources */,
 				48088BFF2CD732C9008DC165 /* ChatInputView.swift in Sources */,
 				48486B552CE874B7006C668E /* ChannelSettingAlertType.swift in Sources */,
