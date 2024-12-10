@@ -54,7 +54,7 @@ struct DMChatView: View {
                         let item = container.model.chatting[index]
                         let profileImage = item.user.userID == container.model.dmRoomInfo.user.userID ? container.model.opponentProfileImage : container.model.myProfileImage
                         
-                        ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.dataFiles, time: item.createdAt.toMessageDate())
+                        ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.convertedImage, time: item.createdAt.toMessageDate())
                             .task {
                                 if !item.files.isEmpty {
                                     container.intent.handle(intent: .fetchImages(urls: item.files, index: index))

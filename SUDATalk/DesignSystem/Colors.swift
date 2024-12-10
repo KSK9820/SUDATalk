@@ -24,4 +24,6 @@ enum Colors {
     
     static let separator = Color(red: 236 / 255, green: 236 / 255, blue: 236 / 255)
     static let alpha = Color(red: 128 / 255, green: 128 / 255, blue: 128 / 255)
+    
+    static let lightGray = Color(red: 245 / 255, green: 245 / 255, blue: 245 / 255)
 }

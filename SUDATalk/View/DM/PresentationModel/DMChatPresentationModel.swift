@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import RealmSwift
 
 struct DMChatPresentationModel {
@@ -15,6 +16,19 @@ struct DMChatPresentationModel {
     let files: [String]
     var dataFiles: [Data?]
     let user: DMUserPresentationModel
+    
+    var convertedImage: [Image?] {
+        var images = [Image]()
+        
+        dataFiles.forEach { data in
+            if let dataFile = data,
+               let image = UIImage(data: dataFile) {
+                images.append(Image(uiImage: image))
+            }
+        }
+        
+        return images
+    }
     
     init() {
         self.dmID = ""
@@ -45,15 +59,14 @@ extension DMChatPresentationModel: Equatable {
 
 extension DMChatPresentationModel {
     func toEntity() -> DMEntity {
-        let imagefiles = List<String>()
-           
-        imagefiles.append(objectsIn: self.files)
+        let entity = DMEntity(dmID: self.dmID,
+                              roomID: self.roomID,
+                              content: self.content,
+                              createdAt: self.createdAt,
+                              user: self.user.toEntity())
         
-        return DMEntity(dmID: self.dmID,
-                        roomID: self.roomID,
-                        content: self.content,
-                        createdAt: self.createdAt,
-                        files: imagefiles,
-                        user: self.user.toEntity())
+        entity.files.append(objectsIn: self.files)
+        
+        return entity
     }
 }
