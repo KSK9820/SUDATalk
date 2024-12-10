@@ -7,4 +7,6 @@
 
 import Foundation
 
-protocol HomeActionsProtocol: AnyObject {}
+protocol HomeActionsProtocol: AnyObject {
+    func getDMList() 
+}

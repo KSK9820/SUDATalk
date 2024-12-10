@@ -24,7 +24,14 @@ struct HomeView: View {
                 
                 Divider()
                 
-                SectionWrap(title: "DM", content: DMSection(), isExpanded: $isDMlExpanded)
+                SectionWrap(title: "DM", content: DMSection(workSpaceID: container.model.workspace.workspaceID), isExpanded: $isDMlExpanded)
+                    .onChange(of: $isDMlExpanded.wrappedValue) { newValue in
+                           if newValue {
+                               Task {
+                                   container.intent.action(.getDMList)
+                               }
+                           }
+                       }
                 
                 Divider()
                 
@@ -33,7 +40,6 @@ struct HomeView: View {
         }
     }
 }
-
 
 struct SectionWrap<Content: View>: View {
     var title: String
@@ -117,13 +123,58 @@ struct ChannelSection: View {
 }
 
 struct DMSection: View {
+    var workSpaceID: String
+    
+    @State private var showActionSheet = false
+    @State private var showSheet = false
+    @State private var moveNextView = false
+    @State private var changedValue = false
+    
     var body: some View {
-        Text("여기는 DM list자리")
+        VStack(spacing: 12) {
+            HomeDMView.build(workspace: workSpaceID)
+                
+            Button {
+                showActionSheet = true
+            } label: {
+                HStack {
+                    Images.plus
+                    
+                    Text("새 매시지 시작")
+                        .textStyle(.title2)
+                        .foregroundStyle(Colors.textSecondary)
+                    
+                    Spacer()
+                }
+            }
+            .actionSheet(isPresented: $showActionSheet) {
+                ActionSheet(
+                    title: Text("옵션을 선택하세요"),
+                    buttons: [
+                        .default(Text("채널 추가")) {
+                            showSheet = true
+                        },
+                        .default(Text("채널 탐색")) {
+                            moveNextView = true
+                        },
+                        .cancel()
+                    ]
+                )
+            }
+            .navigationDestination(isPresented: $moveNextView) {
+                NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID))
+            }
+            .sheet(isPresented: $showSheet) {
+                NavigationLazyView(CreateChannelView.build() { _ in
+                    changedValue = true
+                })
+            }
+        }
     }
 }
 
 extension HomeView {
-    static func build(_ workSpace: WorkSpacePresentationModel) -> some View {
+    static func build(_ workSpace: WorkspacePresentationModel) -> some View {
         let model = HomeModel(workspace: workSpace)
         let intent = HomeIntent(model: model)
         

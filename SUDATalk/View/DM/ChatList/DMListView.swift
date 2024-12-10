@@ -28,10 +28,14 @@ struct DMListView: View {
             
             LazyVStack {
                 ForEach(Array(container.model.dmlist.enumerated()), id: \.element.roomID) { index, dmRoom in
-                    DMChatRoomView(dmRoom)
-                        .task {
-                            container.intent.handle(intent: .getUnreadChat(idx: index, roomID: dmRoom.roomID))
-                        }
+                    NavigationLink {
+                        NavigationLazyView(DMChatView.build(dmRoom))
+                    } label: {
+                        DMChatRoomView(dmRoom)
+                            .task {
+                                container.intent.handle(intent: .getUnreadChat(idx: index, roomID: dmRoom.roomID))
+                            }
+                    }
                 }
             }
             Spacer()
@@ -50,7 +54,7 @@ struct DMListView: View {
         
         var body: some View {
             HStack {
-                if let coverImageData = workspace.coverImageData {
+                if let coverImageData = workspace.coverImageSwiftUI {
                     coverImageData
                         .roundedImageStyle(width: 30, height: 30)
                         .padding(.trailing, 8)

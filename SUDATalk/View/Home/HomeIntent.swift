@@ -17,8 +17,13 @@ final class HomeIntent {
 
 extension HomeIntent: ChannelIntentProtocol {
     enum Action {
+        case getDMList
     }
     
     func action(_ action: Action) {
+        switch action {
+        case .getDMList:
+            model?.getDMList()
+        }
     }
 }

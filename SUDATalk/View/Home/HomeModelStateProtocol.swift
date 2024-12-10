@@ -8,5 +8,6 @@
 import Foundation
 
 protocol HomeModelStateProtocol: AnyObject {
-    var workspace: WorkSpacePresentationModel { get }
+    var workspace: WorkspacePresentationModel { get }
+    var dmlist: [DMRoomInfoPresentationModel] { get }
 }

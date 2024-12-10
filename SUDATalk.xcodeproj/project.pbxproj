@@ -97,6 +97,11 @@
 		53343ECD2D01CC1000186A3B /* SystemImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343ECC2D01CC1000186A3B /* SystemImageButton.swift */; };
 		53343ED62D01CDE800186A3B /* WorkspaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343ED52D01CDE800186A3B /* WorkspaceResponse.swift */; };
 		53343EDA2D01CE1500186A3B /* WorkspaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343ED92D01CE1500186A3B /* WorkspaceRouter.swift */; };
+		53343EE32D02304200186A3B /* HomeDMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343EE22D02304200186A3B /* HomeDMView.swift */; };
+		53343EE52D02305C00186A3B /* HomeDMModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343EE42D02305C00186A3B /* HomeDMModel.swift */; };
+		53343EE72D02309400186A3B /* HomeDMIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343EE62D02309400186A3B /* HomeDMIntentHandler.swift */; };
+		53343EE92D0230CE00186A3B /* HomeDMActionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343EE82D0230CE00186A3B /* HomeDMActionProtocol.swift */; };
+		53343EEB2D0230F500186A3B /* HomeDMModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53343EEA2D0230F500186A3B /* HomeDMModelStateProtocol.swift */; };
 		533EDAE82D01806100FD701E /* WorkspaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533EDAE72D01806100FD701E /* WorkspaceView.swift */; };
 		533EDAEA2D01807200FD701E /* WorkspaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533EDAE92D01807200FD701E /* WorkspaceModel.swift */; };
 		533EDAEC2D01808600FD701E /* WorkspaceIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533EDAEB2D01808600FD701E /* WorkspaceIntentHandler.swift */; };
@@ -264,6 +269,11 @@
 		53343ECC2D01CC1000186A3B /* SystemImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemImageButton.swift; sourceTree = "<group>"; };
 		53343ED52D01CDE800186A3B /* WorkspaceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceResponse.swift; sourceTree = "<group>"; };
 		53343ED92D01CE1500186A3B /* WorkspaceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceRouter.swift; sourceTree = "<group>"; };
+		53343EE22D02304200186A3B /* HomeDMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDMView.swift; sourceTree = "<group>"; };
+		53343EE42D02305C00186A3B /* HomeDMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDMModel.swift; sourceTree = "<group>"; };
+		53343EE62D02309400186A3B /* HomeDMIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDMIntentHandler.swift; sourceTree = "<group>"; };
+		53343EE82D0230CE00186A3B /* HomeDMActionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDMActionProtocol.swift; sourceTree = "<group>"; };
+		53343EEA2D0230F500186A3B /* HomeDMModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDMModelStateProtocol.swift; sourceTree = "<group>"; };
 		533EDAE72D01806100FD701E /* WorkspaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceView.swift; sourceTree = "<group>"; };
 		533EDAE92D01807200FD701E /* WorkspaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceModel.swift; sourceTree = "<group>"; };
 		533EDAEB2D01808600FD701E /* WorkspaceIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceIntentHandler.swift; sourceTree = "<group>"; };
@@ -345,7 +355,7 @@
 		480818862CFD8BCB0045B11D /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				53343EDC2D02290F00186A3B /* DM */,
+				53343EDF2D02302E00186A3B /* DM */,
 				480818872CFD8BFA0045B11D /* HomeView.swift */,
 				4808188F2CFDAE310045B11D /* HomeIntent.swift */,
 				4808188B2CFDAD5F0045B11D /* HomeModel.swift */,
@@ -682,9 +692,14 @@
 			path = PresentationModel;
 			sourceTree = "<group>";
 		};
-		53343EDC2D02290F00186A3B /* DM */ = {
+		53343EDF2D02302E00186A3B /* DM */ = {
 			isa = PBXGroup;
 			children = (
+				53343EE22D02304200186A3B /* HomeDMView.swift */,
+				53343EE42D02305C00186A3B /* HomeDMModel.swift */,
+				53343EE62D02309400186A3B /* HomeDMIntentHandler.swift */,
+				53343EE82D0230CE00186A3B /* HomeDMActionProtocol.swift */,
+				53343EEA2D0230F500186A3B /* HomeDMModelStateProtocol.swift */,
 			);
 			path = DM;
 			sourceTree = "<group>";
@@ -1078,6 +1093,7 @@
 				53C01D332CD25BBE00D35B95 /* URLRequestConvertible.swift in Sources */,
 				48088BDD2CD60612008DC165 /* ExploreView.swift in Sources */,
 				48088BE52CD607CA008DC165 /* ExploreActionsProtocol.swift in Sources */,
+				53343EEB2D0230F500186A3B /* HomeDMModelStateProtocol.swift in Sources */,
 				48088BF52CD62570008DC165 /* NavigationLazyView.swift in Sources */,
 				484F52E92CDDD60F008F20D3 /* CacheManager.swift in Sources */,
 				53C01D312CD24FFE00D35B95 /* EndPoint.swift in Sources */,
@@ -1106,6 +1122,7 @@
 				53276B4F2CECAAB6002AD8E2 /* Date+.swift in Sources */,
 				484F52E52CDC5D73008F20D3 /* String+.swift in Sources */,
 				484F52FC2CE0DDDA008F20D3 /* ChannelQuery.swift in Sources */,
+				53343EE92D0230CE00186A3B /* HomeDMActionProtocol.swift in Sources */,
 				48486B532CE8460C006C668E /* ChannelSettingButtonsView.swift in Sources */,
 				48486B502CE79402006C668E /* BorderButton.swift in Sources */,
 				53DB10C52CEFACA500B60660 /* DMChatRepository.swift in Sources */,
@@ -1128,6 +1145,7 @@
 				4815F8D72CD37414009FC599 /* UserRouter.swift in Sources */,
 				488E3C012CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift in Sources */,
 				533EDAEC2D01808600FD701E /* WorkspaceIntentHandler.swift in Sources */,
+				53343EE52D02305C00186A3B /* HomeDMModel.swift in Sources */,
 				535F47222CE8F7ED00BDB773 /* SocketEvent.swift in Sources */,
 				535F472A2CE8FDB500BDB773 /* DMEventHandler.swift in Sources */,
 				48088BE32CD6073C008DC165 /* ExploreModelStateProtocol.swift in Sources */,
@@ -1151,6 +1169,7 @@
 				48486B3D2CE6E3BA006C668E /* WebSocketManager.swift in Sources */,
 				488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */,
 				48486B402CE6FCB0006C668E /* ChannelSettingView.swift in Sources */,
+				53343EE72D02309400186A3B /* HomeDMIntentHandler.swift in Sources */,
 				48486B602CEB1D68006C668E /* View+.swift in Sources */,
 				535F47262CE8F86600BDB773 /* SocketEventHandler.swift in Sources */,
 				53E41C292CF2174E004930AF /* DMChatRoomPresentationModel.swift in Sources */,
@@ -1171,6 +1190,7 @@
 				480818942CFDE3EC0045B11D /* CustomTabView.swift in Sources */,
 				48088BC22CD504B7008DC165 /* Images.swift in Sources */,
 				48088C072CD73416008DC165 /* ChannelChattingActionsProtocol.swift in Sources */,
+				53343EE32D02304200186A3B /* HomeDMView.swift in Sources */,
 				480818922CFDAE850045B11D /* HomeActionsProtocol.swift in Sources */,
 				48088C0F2CD79C1C008DC165 /* ChatQuery.swift in Sources */,
 				48088C092CD7692F008DC165 /* PhotoPicker.swift in Sources */,
