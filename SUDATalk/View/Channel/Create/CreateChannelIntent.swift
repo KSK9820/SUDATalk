@@ -13,10 +13,6 @@ final class CreateChannelIntent {
     init(model: CreateChannelActionsProtocol) {
         self.model = model
     }
-    
-    func createChannel(_ workspaceID: String, input: ChannelInputModel) {
-        model?.createChannel(workspaceID, input: input)
-    }
 }
 
 extension CreateChannelIntent: ChannelIntentProtocol {

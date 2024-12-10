@@ -5,7 +5,7 @@
 //  Created by 박다현 on 11/4/24.
 //
 
-import Foundation
+import SwiftUI
 import RealmSwift
 
 struct ChattingPresentationModel {
@@ -13,7 +13,7 @@ struct ChattingPresentationModel {
     let createdAt: Date
     let files: [String]
     var user: ChatUserPresentationModel
-    var images: [Data?]
+    var images: [Image?]
 
     enum CodingKeys: String, CodingKey {
         case channelID = "channel_id"
@@ -47,7 +47,7 @@ extension ChattingPresentationModel: Equatable {
 struct ChatUserPresentationModel {
     let userID, email, nickname: String
     let profileImageUrl: String?
-    var profileImageData: Data?
+    var profileImage: Image?
 
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"

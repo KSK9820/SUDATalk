@@ -37,6 +37,6 @@ struct ChannelMember: Decodable {
     }
     
     func convertToModel() -> ChannelMemberPresentationModel {
-        .init(userID: userID, email: email, nickname: nickname, profileImage: profileImage)
+        .init(userID: userID, email: email, nickname: nickname, profileImageURL: profileImage)
     }
 }

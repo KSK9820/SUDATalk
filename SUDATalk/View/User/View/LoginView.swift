@@ -5,78 +5,86 @@
 //  Created by 박다현 on 11/1/24.
 //
 
-import Combine
 import SwiftUI
 
 struct LoginView: View {
+    @StateObject private var container: Container<LoginIntent, LoginModelStateProtocol>
     private let networkManager = NetworkManager()
-    
-    @State var cancellables = Set<AnyCancellable>()
-    @AppStorage("userID") var userID: String = ""
+
+    @State private var isButtonActive: Bool = false
 
     var body: some View {
         NavigationStack {
             VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Button {
-                    setRootView(what: CustomTabView())
-                } label: {
-                    Text("이동")
-                }
+                Images.logo
+                    .resizable()
+                    .frame(width: 264, height: 50)
+                
+                Images.readyToMake
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                
+                TextField("이메일을 입력하세요.", text: container.binding(for: \.userID))
+                    .padding(12)
+                    .background(Colors.white)
+                    .cornerRadius(10)
+                    .autocapitalization(.none)
+                    .keyboardType(.emailAddress)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Colors.inactive, lineWidth: 1)
+                    )
+                
+                SecureField("비번를 입력하세요.", text: container.binding(for: \.userPW))
+                    .padding(12)
+                    .background(Colors.white)
+                    .cornerRadius(10)
+                    .autocapitalization(.none)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Colors.inactive, lineWidth: 1)
+                    )
+                
+                Text("로그인 하기")
+                    .wrapToDefaultButton(active: $isButtonActive) {
+                        container.intent.action(.tapSubmitButton)
+                    }
+                    .padding(.vertical)
             }
+            .padding(.horizontal, 30)
         }
-        .task {
-            let query = SampleTest.user1
-            
-            do {
-                let request = try UserRouter.login(query: query).makeRequest()
-                
-                networkManager.getDecodedDataTaskPublisher(request, model: LoginResponse.self)
-                    .sink(receiveCompletion: { completion in
-                        if case .failure(let failure) = completion {
-                            print(failure)
-                        }
-                    }, receiveValue: { value in
-                        userID = value.user_id
-                        KeyChainManager.shared.save(key: .accessToken, value: value.token.accessToken)
-                        KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
-                        
-                        UserDefaultsManager.shared.userProfile = value.convertToModel()
-                        
-                        if let profileImage = value.profileImage {
-                            loadProfileImage(profileImage)
-                        }
-                    })
-                    .store(in: &cancellables)
-                
-            } catch {
-                print(error)
+        .onChange(of: container.model.userID) { _ in
+            updateSubmitButtonState()
+        }
+        .onChange(of: container.model.userPW) { _ in
+            updateSubmitButtonState()
+        }
+        .onChange(of: container.model.loginSuccessful) { value in
+            if value {
+                setRootView(what: CustomTabView())
             }
         }
     }
     
-    private func loadProfileImage(_ url: String) {
-        do {
-            let request = try UserRouter.fetchImage(url: url).makeRequest()
-            
-            networkManager.getDataTaskPublisher(request)
-                .sink { completion in
-                    if case .failure(let failure) = completion {
-                        print(failure)
-                    }
-                } receiveValue: { value in
-                    CacheManager.shared.saveToCache(data: value, forKey: url)
-                    UserDefaultsManager.shared.userProfile.profileImageData = value
-                }
-                .store(in: &cancellables)
-        } catch {
-            print(error)
-        }
+    private func updateSubmitButtonState() {
+        let value = !container.binding(for: \.userID).wrappedValue.isEmpty && !container.binding(for: \.userPW).wrappedValue.isEmpty
+        isButtonActive = value
     }
+    
+
 }
 
-#Preview {
-    LoginView()
+extension LoginView {
+    static func build() -> some View {
+        let model = LoginModel()
+        let intent = LoginIntent(model: model)
+        
+        let container = Container(
+            intent: intent,
+            model: model as LoginModelStateProtocol,
+            modelChangePublisher: model.objectWillChange)
+        
+        return LoginView(container: container)
+    }
 }

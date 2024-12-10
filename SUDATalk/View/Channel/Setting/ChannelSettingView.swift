@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ChannelSettingView: View {
     @StateObject private var container: Container<ChannelSettingIntent, ChannelSettingModelStateProtocol>
-    @AppStorage("userID") var userID: String?
+    
+    private let userID = UserDefaultsManager.shared.userProfile.userID
+    
     @State private var isExpanded = false
     @State private var alertType: ChannelSettingAlertType?
     @State private var isSheetPresented = false
@@ -23,7 +25,7 @@ struct ChannelSettingView: View {
                 membersSection(container.model.channel.channelMembers, isExpanded: $isExpanded)
                 
                 ChannelSettingButtonsView(
-                    isOwner: userID ?? "" == container.model.channel.ownerID,
+                    isOwner: userID == container.model.channel.ownerID,
                     alertTypeHandler: { alertType = $0 }
                 )
                 .alert(item: $alertType) { type in
@@ -118,7 +120,7 @@ struct ChannelSettingView: View {
                         
                         memberRow(memeber)
                             .task {
-                                if let profileUrl = memeber.profileImage {
+                                if let profileUrl = memeber.profileImageURL {
                                     container.intent.action(.fetchProfileImages(url: profileUrl, index: index))
                                 }
                             }
@@ -130,9 +132,7 @@ struct ChannelSettingView: View {
     
     private func memberRow(_ member: ChannelMemberPresentationModel) -> some View {
         VStack {
-            let profileImage = UIImage(data: member.profileImageData ?? Data())
-                .map { Image(uiImage: $0) }
-                ?? Images.userDefaultImage
+            let profileImage = member.profileImage ?? Images.userDefaultImage
             
             profileImage
                     .resizable()

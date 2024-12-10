@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import SwiftUI
 
 final class ChannelSettingModel: ObservableObject, ChannelSettingModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
@@ -49,7 +49,8 @@ extension ChannelSettingModel: ChannelSettingActionProtocol {
                         print(failure)
                     }
                 } receiveValue: { [weak self] value in
-                    self?.channel.channelMembers[index].profileImageData = value
+                    guard let uiImage = UIImage(data: value) else { return }
+                    self?.channel.channelMembers[index].profileImage = Image(uiImage: uiImage)
                 }
                 .store(in: &cancellables)
         } catch {
