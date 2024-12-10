@@ -71,8 +71,6 @@ struct LoginView: View {
         let value = !container.binding(for: \.userID).wrappedValue.isEmpty && !container.binding(for: \.userPW).wrappedValue.isEmpty
         isButtonActive = value
     }
-    
-
 }
 
 extension LoginView {

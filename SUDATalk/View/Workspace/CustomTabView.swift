@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CustomTabView: View {
     @StateObject var workspaceContainer = WorkspaceView.buildContainer()
-    var workspace: WorkspacePresentationModel
+    var workspace: WorkspacePresentationModel = SampleTest.workspace
     
     var body: some View {
         TabView {
