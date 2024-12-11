@@ -65,14 +65,15 @@ struct LoginView: View {
                 setRootView(what: CustomTabView())
             }
         }
+        .onAppear {
+            updateSubmitButtonState()
+        }
     }
     
     private func updateSubmitButtonState() {
-        let value = !container.binding(for: \.userID).wrappedValue.isEmpty && !container.binding(for: \.userPW).wrappedValue.isEmpty
+        let value = !container.model.userID.isEmpty && !container.model.userPW.isEmpty
         isButtonActive = value
     }
-    
-
 }
 
 extension LoginView {
