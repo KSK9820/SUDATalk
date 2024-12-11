@@ -20,6 +20,13 @@ final class ChannelChattingModel: ObservableObject, ChannelChattingModelStatePro
     @Published var workspaceID: String = ""
     @Published var chatting: [ChattingPresentationModel] = []
     let myProfile = UserDefaultsManager.shared.userProfile
+    var myProfileImage: Image {
+        if let data = UserDefaultsManager.shared.userProfile.profileImageData, let uiImage = UIImage(data: data) {
+            return Image(uiImage: uiImage)
+        } else {
+            return Images.userDefaultImage
+        }
+    }
     
     init(socketManager: SocketIOManager) {
         self.socketManager = socketManager
@@ -113,22 +120,34 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
 
     func fetchImages(_ urls: [String], index: Int) async {
-        var chatImages: [Image?] = Array(repeating: nil, count: urls.count)
+        var chatImages: [Image?] 
+        
+        if chatting[index].images.count == 0 {
+            chatImages = Array(repeating: nil, count: urls.count)
+        } else {
+            chatImages = chatting[index].images
+        }
         
         await withTaskGroup(of: (Int, Data?).self) { group in
             for (idx, url) in urls.enumerated() {
-                group.addTask { [weak self] in
-                    guard let self else {
-                        return (idx, nil)
-                    }
-                  
-                    do {
-                        let imageData = try await self.fetchImageFromNetwork(url: url)
+                if chatting[index].checkImages.contains(url) {
+                    continue
+                } else {
+                    chatting[index].checkImages.insert(url)
+                    
+                    group.addTask { [weak self] in
+                        guard let self else {
+                            return (idx, nil)
+                        }
                         
-                        return (idx, imageData)
-                    } catch {
-                        print("Error: \(error)")
-                        return (idx, nil)
+                        do {
+                            let imageData = try await self.fetchImageFromNetwork(url: url)
+                            
+                            return (idx, imageData)
+                        } catch {
+                            print("Error: \(error)")
+                            return (idx, nil)
+                        }
                     }
                 }
             }
@@ -138,7 +157,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 chatImages[idx] = Image(uiImage: uiImage)
             }
         }
-        
+
         self.chatting[index].images = chatImages
     }
     
@@ -146,7 +165,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         let request = try ChannelRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
-            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
+            _ = networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
                 .sink { completion in
                     if case .failure(let error) = completion {
                         continuation.resume(throwing: error)
@@ -154,7 +173,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 } receiveValue: { value in
                     continuation.resume(returning: value)
                 }
-                .store(in: &cancellables)
         }
     }
     
@@ -162,6 +180,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         if let cachedImage = CacheManager.shared.loadFromCache(forKey: url) {
             guard let uiImage = UIImage(data: cachedImage) else { return }
             chatting[index].user.profileImage = Image(uiImage: uiImage)
+            
             return
         }
 
@@ -169,6 +188,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
             let value = try await fetchImageFromNetwork(url: url)
             CacheManager.shared.saveToCache(data: value, forKey: url)
             guard let uiImage = UIImage(data: value) else { return }
+            
             chatting[index].user.profileImage = Image(uiImage: uiImage)
 
         } catch {

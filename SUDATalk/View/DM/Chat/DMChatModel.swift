@@ -79,7 +79,7 @@ extension DMChatModel: DMChatModelActionProtocol {
         let request = try DMRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
-            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
+            _ = networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
                 .sink { completion in
                     if case .failure(let error) = completion {
                         continuation.resume(throwing: error)
@@ -87,7 +87,6 @@ extension DMChatModel: DMChatModelActionProtocol {
                 } receiveValue: { value in
                     continuation.resume(returning: value)
                 }
-                .store(in: &cancellables)
         }
     }
     

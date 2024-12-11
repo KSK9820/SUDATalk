@@ -60,11 +60,12 @@ struct ChannelChattingView: View {
                 LazyVStack {
                     ForEach(container.model.chatting.indices, id: \.self) { index in
                         let item = container.model.chatting[index]
-                        let profileImage = item.user.profileImage ?? Images.userDefaultImage
+                        
+                        let profileImage = item.user.userID == container.model.myProfile.userID ? container.model.myProfileImage : item.user.profileImage ?? Images.userDefaultImage
                         
                         ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.images, time: item.createdAt.toMessageDate())
                             .task {
-                                if let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
+                                if item.user.userID != container.model.myProfile.userID, let profileUrl = item.user.profileImageUrl, !profileUrl.isEmpty {
                                     container.intent.action(.fetchProfileImages(userID: item.user.userID, url: profileUrl, index: index))
                                 }
                                 
