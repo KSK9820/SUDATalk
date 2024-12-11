@@ -13,4 +13,5 @@ protocol ChannelChattingModelStateProtocol {
     var chatting: [ChattingPresentationModel] { get set }
     var input: ChannelChatInputModel { get set }
     var myProfile: UserProfile { get }
+    var myProfileImage: Image { get }
 }

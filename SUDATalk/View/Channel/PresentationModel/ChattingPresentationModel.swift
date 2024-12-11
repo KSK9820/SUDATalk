@@ -14,6 +14,7 @@ struct ChattingPresentationModel {
     let files: [String]
     var user: ChatUserPresentationModel
     var images: [Image?]
+    var checkImages: Set<String>
 
     enum CodingKeys: String, CodingKey {
         case channelID = "channel_id"

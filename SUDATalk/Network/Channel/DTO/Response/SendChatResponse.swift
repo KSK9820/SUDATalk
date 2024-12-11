@@ -22,7 +22,7 @@ struct SendChatResponse: Decodable {
     }
     
     func convertToModel() -> ChattingPresentationModel {
-        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content ?? "", createdAt: createdAt.convertToDate(), files: files, user: user.convertToModel(), images: [])
+        .init(channelID: channelID, channelName: channelName, chatID: chatID, content: content ?? "", createdAt: createdAt.convertToDate(), files: files, user: user.convertToModel(), images: [], checkImages: [])
     }
 }
 
