@@ -36,7 +36,7 @@ extension DMListModel: DMListActionProtocol {
                 } receiveValue: { [weak self]  value in
                     guard let self else { return }
                     
-                    dmlist = value.map { $0.convertToModel() }
+                    dmlist = value.map { $0.convertToModel() }.sorted { $0.createdAt < $1.createdAt }
                 }
                 .store(in: &cancellables)
         } catch {

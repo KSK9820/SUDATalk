@@ -33,4 +33,12 @@ extension WorkspaceResponse {
               ownerID: self.ownerID,
               createdAt: self.createdAt.convertToDate())
     }
+    
+    func convertToDomainModel() -> WorkspaceDomainModel {
+        .init(workspaceID: self.workspaceID,
+              name: self.name,
+              coverImage: self.coverImage,
+              ownerID: self.ownerID,
+              createdAt: self.createdAt.convertToDate())
+    }
 }

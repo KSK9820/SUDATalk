@@ -30,6 +30,7 @@ struct WorkspaceView: View {
                     ForEach(Array(container.model.workspaceList.enumerated()), id: \.offset) { index, value in
                         Button(action: {
                             setRootView(what: CustomTabView(workspace: value))
+                            container.intent.handle(intent: .selectWorkspace(value))
                         }, label: {
                             WorkspaceListView(workspace: value, idx: index)
                                 .onAppear {

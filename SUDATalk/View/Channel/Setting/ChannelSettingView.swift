@@ -67,8 +67,7 @@ struct ChannelSettingView: View {
         }
         .onChange(of: container.model.goToList) { newValue in
             if newValue {
-                let workspace = WorkspacePresentationModel(workspaceID: SampleTest.workspaceID, name: "워크스페이스닷", coverImage: "", coverImageData: UIImage(systemName: "star"), ownerID: "", createdAt: Date())
-                setRootView(what: HomeView.build(workspace))
+                setRootView(what: HomeView.build(UserDefaultsManager.shared.workspace.coverToPresentationModel()))
                }
         }
         .onChange(of: container.model.selectedSheet) { newValue in

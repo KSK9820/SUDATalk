@@ -138,6 +138,7 @@
 		535F472E2CE8FDED00BDB773 /* DMSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */; };
 		535F47302CE8FE0100BDB773 /* ChannelSocketEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F472F2CE8FE0100BDB773 /* ChannelSocketEvent.swift */; };
 		535F47322CE8FE2E00BDB773 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535F47312CE8FE2E00BDB773 /* SocketIOManager.swift */; };
+		53742F202D0A21B000DFBE29 /* WorkspaceDomainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53742F1F2D0A21B000DFBE29 /* WorkspaceDomainModel.swift */; };
 		539B3AC52CEDDF0000796056 /* NavigationBlackBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539B3AC42CEDDF0000796056 /* NavigationBlackBackButton.swift */; };
 		53A95C6E2CD7B9CD00A49267 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A95C6D2CD7B9CD00A49267 /* LoginView.swift */; };
 		53B9EDC82CD61724000BF728 /* SampleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B9EDC72CD61724000BF728 /* SampleTest.swift */; };
@@ -314,6 +315,7 @@
 		535F472D2CE8FDED00BDB773 /* DMSocketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMSocketEvent.swift; sourceTree = "<group>"; };
 		535F472F2CE8FE0100BDB773 /* ChannelSocketEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSocketEvent.swift; sourceTree = "<group>"; };
 		535F47312CE8FE2E00BDB773 /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		53742F1F2D0A21B000DFBE29 /* WorkspaceDomainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceDomainModel.swift; sourceTree = "<group>"; };
 		539B3AC42CEDDF0000796056 /* NavigationBlackBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBlackBackButton.swift; sourceTree = "<group>"; };
 		53A95C6D2CD7B9CD00A49267 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		53B9EDC72CD61724000BF728 /* SampleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleTest.swift; sourceTree = "<group>"; };
@@ -700,6 +702,7 @@
 			isa = PBXGroup;
 			children = (
 				531093A02CF7954600FFE14C /* WorkspacePresentationModel.swift */,
+				53742F1F2D0A21B000DFBE29 /* WorkspaceDomainModel.swift */,
 			);
 			path = PresentationModel;
 			sourceTree = "<group>";
@@ -1185,6 +1188,7 @@
 				48486B402CE6FCB0006C668E /* ChannelSettingView.swift in Sources */,
 				53343EE72D02309400186A3B /* HomeDMIntentHandler.swift in Sources */,
 				48486B602CEB1D68006C668E /* View+.swift in Sources */,
+				53742F202D0A21B000DFBE29 /* WorkspaceDomainModel.swift in Sources */,
 				535F47262CE8F86600BDB773 /* SocketEventHandler.swift in Sources */,
 				53E41C292CF2174E004930AF /* DMChatRoomPresentationModel.swift in Sources */,
 				539B3AC52CEDDF0000796056 /* NavigationBlackBackButton.swift in Sources */,

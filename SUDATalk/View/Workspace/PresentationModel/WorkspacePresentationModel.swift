@@ -12,16 +12,29 @@ struct WorkspacePresentationModel {
     var name: String
     var description: String?
     var coverImage: String
-    var coverImageData: UIImage?
+    var coverImageData: Data?
     var ownerID: String
     var createdAt: Date
     
     var coverImageSwiftUI: Image? {
-        guard let image = coverImageData else {
-            return nil
+        if let data = coverImageData,
+           let uiImage = UIImage(data: data) {
+            return Image(uiImage: uiImage)
         }
-            return Image(uiImage: image)
-        }
+        
+        return nil
+    }
+}
+
+extension WorkspacePresentationModel {
+    func convertToDomainModel() -> WorkspaceDomainModel {
+        .init(workspaceID: self.workspaceID,
+              name: self.name,
+              coverImage: self.coverImage,
+              coverImageData: self.coverImageData,
+              ownerID: self.ownerID,
+              createdAt: self.createdAt)
+    }
 }
 
 extension WorkspacePresentationModel: Equatable {}
