@@ -62,7 +62,7 @@ struct LoginView: View {
         }
         .onChange(of: container.model.loginSuccessful) { value in
             if value {
-                setRootView(what: CustomTabView(workspace: UserDefaultsManager.shared.workspace.coverToPresentationModel()))
+                setRootView(what: CustomTabView())
             }
         }
         .onAppear {
