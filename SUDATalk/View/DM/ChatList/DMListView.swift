@@ -10,6 +10,7 @@ import UIKit
 
 struct DMListView: View {
     @StateObject private var container: Container<DMListIntentHandler, DMListModelStateProtocol>
+    @State private var isNavigating = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,10 +19,23 @@ struct DMListView: View {
             Divider()
                 .padding(.vertical, 8)
             
-            DMMemeberListView(container.model.member)
-                .task {
-                    container.intent.handle(intent: .getWorkspaceMember)
+            LazyHStack(spacing: 12) {
+                ForEach(container.model.member, id: \.userID) { member in
+                    DMMemeberListView(member)
+                        .onTapGesture {
+                            isNavigating = false
+                            container.intent.handle(intent: .selectedMember(opponentID: member.userID))
+                            isNavigating = true
+                        }
                 }
+            }
+            .navigationDestination(isPresented: $isNavigating) {
+                if let chatRoom = container.model.selectedChat {
+                    NavigationLazyView(DMChatView.build(chatRoom))
+                }
+            }
+            .padding(20)
+            .frame(maxHeight: 60)
             
             Divider()
                 .padding(.vertical, 8)
@@ -42,6 +56,7 @@ struct DMListView: View {
         }
         .task {
             container.intent.handle(intent: .getDMList)
+            container.intent.handle(intent: .getWorkspaceMember)
         }
     }
     
@@ -79,31 +94,24 @@ struct DMListView: View {
     }
     
     struct DMMemeberListView: View {
-        private var memberList: [WorkspaceMemeberPresentation]
+        private let member: WorkspaceMemeberPresentationModel
         
-        init(_ memberList: [WorkspaceMemeberPresentation]) {
-            self.memberList = memberList
+        init(_ member: WorkspaceMemeberPresentationModel) {
+            self.member = member
         }
         
         var body: some View {
-            LazyHStack(spacing: 12) {
-                ForEach(memberList, id: \.userID) { member in
-                    VStack(alignment: .center, spacing: 4) {
-                        if let profileData = member.profileImagefile,
-                           let profileImage = UIImage(data: profileData) {
-                            Image(uiImage: profileImage)
-                                .roundedImageStyle(width: 40, height: 40)
-                        } else {
-                            Images.userDefaultImage
-                                .roundedImageStyle(width: 40, height: 40)
-                        }
-                        Text(member.nickname)
-                    }
-                    
+            VStack(alignment: .center, spacing: 4) {
+                if let profileData = member.profileImagefile,
+                   let profileImage = UIImage(data: profileData) {
+                    Image(uiImage: profileImage)
+                        .roundedImageStyle(width: 40, height: 40)
+                } else {
+                    Images.userDefaultImage
+                        .roundedImageStyle(width: 40, height: 40)
                 }
+                Text(member.nickname)
             }
-            .padding(20)
-            .frame(maxHeight: 60)
         }
     }
     
@@ -127,7 +135,7 @@ struct DMListView: View {
                         .roundedImageStyle(width: 40, height: 40)
                         .padding(.trailing, 8)
                 }
-                    
+                
                 VStack(alignment: .leading) {
                     Text(roomInfo.user.nickname)
                         .bold()

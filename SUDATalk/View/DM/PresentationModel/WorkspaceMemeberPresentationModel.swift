@@ -1,5 +1,5 @@
 //
-//  WorkspaceMemeberPresentation.swift
+//  WorkspaceMemeberPresentationModel.swift
 //  SUDATalk
 //
 //  Created by 김수경 on 11/28/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WorkspaceMemeberPresentation {
+struct WorkspaceMemeberPresentationModel {
     let userID: String
     let email: String
     let nickname: String

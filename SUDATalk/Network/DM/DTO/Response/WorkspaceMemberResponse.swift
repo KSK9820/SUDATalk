@@ -22,7 +22,7 @@ struct WorkspaceMemberResponse: Decodable {
 }
 
 extension WorkspaceMemberResponse {
-    func convertToModel() -> WorkspaceMemeberPresentation {
+    func convertToModel() -> WorkspaceMemeberPresentationModel {
         .init(userID: self.userID,
               email: self.email,
               nickname: self.nickname,
