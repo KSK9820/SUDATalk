@@ -31,6 +31,10 @@ extension WorkspaceModel: WorkspaceActionsProtocol {
         isLoaded = false
     }
     
+    func setRootWorkspace(_ workspace: WorkspacePresentationModel) {
+        UserDefaultsManager.shared.workspace = workspace.convertToDomainModel()
+    }
+    
     func getWorkspaceList() {
         do {
             let request = try WorkspaceRouter.workspaceList.makeRequest()
@@ -71,9 +75,7 @@ extension WorkspaceModel: WorkspaceActionsProtocol {
                 } receiveValue: { [weak self] value in
                     guard let self else { return }
                     
-                    if let uiImage = UIImage(data: value) {
-                        self.workspaceList[idx].coverImageData = uiImage
-                    }
+                    self.workspaceList[idx].coverImageData = value
                 }
                 .store(in: &cancellables)
         } catch {
@@ -81,4 +83,3 @@ extension WorkspaceModel: WorkspaceActionsProtocol {
         }
     }
 }
-

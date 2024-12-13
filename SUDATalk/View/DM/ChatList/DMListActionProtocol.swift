@@ -11,4 +11,5 @@ protocol DMListActionProtocol: AnyObject {
     func getDMList()
     func getWorkspaceMemberList()
     func getUnreadChatCount(idx: Int, roomID: String)
+    func setSelectedChat(opponentID: String) async
 }

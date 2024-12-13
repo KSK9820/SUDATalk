@@ -16,6 +16,7 @@ enum DMRouter {
     // MARK: - DMList
     case dmlist(workspaceID: String)
     case workspaceMember(workspaceID: String)
+    case createChat(workspaceID: String, opponentID: String)
 }
 
 extension DMRouter {
@@ -46,7 +47,6 @@ extension DMRouter {
                     header: EndPointHeader.authorization.header
                 ).asURLRequest()
             }
-            
         case .fetchImage(let url):
             let boundary = "Boundary-\(UUID().uuidString)"
             return try EndPoint(
@@ -65,6 +65,13 @@ extension DMRouter {
                 method: .get,
                 path: ["workspaces", workspaceID, "members"],
                 header: EndPointHeader.authorization.header
+            ).asURLRequest()
+    case .createChat(let workspaceID, let opponentID):
+            return try EndPoint(
+                method: .post,
+                path: ["workspaces", workspaceID, "dms"],
+                header: EndPointHeader.authorization.header,
+                parameter: [URLQueryItem(name: "opponent_id", value: opponentID)]
             ).asURLRequest()
         }
     }

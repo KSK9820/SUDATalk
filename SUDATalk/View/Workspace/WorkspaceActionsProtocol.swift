@@ -13,4 +13,5 @@ protocol WorkspaceActionsProtocol: AnyObject {
     func getWorkspaceList()
     func fetchThumbnail(_ url: String, idx: Int) 
     func setDisappear()
+    func setRootWorkspace(_ workspace: WorkspacePresentationModel)
 }

@@ -23,6 +23,10 @@ final class DMListIntentHandler: IntentProtocol {
             model.getWorkspaceMemberList()
         case .getUnreadChat(let idx, let roomID):
             model.getUnreadChatCount(idx: idx, roomID: roomID)
+        case .selectedMember(let opponentID):
+            Task {
+                await model.setSelectedChat(opponentID: opponentID)
+            }
         }
     }
 }
@@ -31,4 +35,5 @@ enum DMListIntent: IntentType {
     case getDMList
     case getWorkspaceMember
     case getUnreadChat(idx: Int, roomID: String)
+    case selectedMember(opponentID: String)
 }

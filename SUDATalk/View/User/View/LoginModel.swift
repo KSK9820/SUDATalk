@@ -13,8 +13,8 @@ final class LoginModel: ObservableObject, LoginModelStateProtocol {
     private let networkManager = NetworkManager()
     private let repository = ChannelChatRepository()
 
-    @Published var userID: String = ""
-    @Published var userPW: String = ""
+    @Published var userID: String = "1@sesac.com"
+    @Published var userPW: String = "Ssesac1234@@"
     @Published var loginSuccessful: Bool = false
 }
 

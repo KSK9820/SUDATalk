@@ -11,6 +11,7 @@ final class UserDefaultsManager {
     
     enum UserDefaultsKey: String {
         case profile
+        case workspace
     }
     
     static let shared = UserDefaultsManager()
@@ -19,6 +20,9 @@ final class UserDefaultsManager {
     
     @UserDefaultType(key: UserDefaultsKey.profile.rawValue, defaultValue: UserProfile(userID: "", email: ""))
     var userProfile: UserProfile
+    
+    @UserDefaultType(key: UserDefaultsKey.workspace.rawValue, defaultValue: WorkspaceDomainModel(workspaceID: "", name: "", coverImage: "", ownerID: "", createdAt: Date()))
+    var workspace: WorkspaceDomainModel
 }
 
 @propertyWrapper

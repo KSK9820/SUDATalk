@@ -9,6 +9,7 @@ import Foundation
 
 protocol DMListModelStateProtocol: AnyObject {
     var workspace: WorkspacePresentationModel { get }
-    var member: [WorkspaceMemeberPresentation] { get }
+    var member: [WorkspaceMemeberPresentationModel] { get }
     var dmlist: [DMRoomInfoPresentationModel] { get }
+    var selectedChat: DMRoomInfoPresentationModel? { get }
 }

@@ -11,7 +11,7 @@ import UIKit
 
 final class DMChatModel: ObservableObject, DMChatModelStateProtocol {
     private let networkManager = NetworkManager()
-    private let socketManager = SocketIOManager(event: DMSocketEvent(roomID: SampleTest.roomID))
+    private let socketManager: SocketIOManager
     private let repository = DMChatRepository()
     private var cancellables = Set<AnyCancellable>()
     
@@ -38,6 +38,7 @@ final class DMChatModel: ObservableObject, DMChatModelStateProtocol {
     
     init(_ dmRoomInfo: DMRoomInfoPresentationModel) {
         self.dmRoomInfo = dmRoomInfo
+        self.socketManager = SocketIOManager(event: DMSocketEvent(roomID: dmRoomInfo.roomID))
     }
 }
 
@@ -93,7 +94,7 @@ extension DMChatModel: DMChatModelActionProtocol {
     func sendMessage(query: DMChatSendPresentationModel) {
         do {
             let DMQuery = query.convertToDTOModel()
-            let request = try DMRouter.chats(workspaceID: SampleTest.workspaceID, roomID: dmRoomInfo.roomID, body: DMQuery).makeRequest()
+            let request = try DMRouter.chats(workspaceID: UserDefaultsManager.shared.workspace.workspaceID, roomID: dmRoomInfo.roomID, body: DMQuery).makeRequest()
             
             networkManager.getDecodedDataTaskPublisher(request, model: DMChatResponse.self)
                 .receive(on: DispatchQueue.main)
@@ -138,9 +139,9 @@ extension DMChatModel: DMChatModelActionProtocol {
             let request: URLRequest
             
             if let date {
-                request = try DMRouter.unreadChats(workSpaceID: SampleTest.workspaceID, roomID: dmRoomInfo.roomID, cursorDate: date).makeRequest()
+                request = try DMRouter.unreadChats(workSpaceID: UserDefaultsManager.shared.workspace.workspaceID, roomID: dmRoomInfo.roomID, cursorDate: date).makeRequest()
             } else {
-                request = try DMRouter.unreadChats(workSpaceID: SampleTest.workspaceID, roomID: dmRoomInfo.roomID).makeRequest()
+                request = try DMRouter.unreadChats(workSpaceID: UserDefaultsManager.shared.workspace.workspaceID, roomID: dmRoomInfo.roomID).makeRequest()
             }
             
             networkManager.getDecodedDataTaskPublisher(request, model: [DMChatResponse].self)
@@ -154,7 +155,6 @@ extension DMChatModel: DMChatModelActionProtocol {
                     
                     let chatData = value.map { $0.convertToModel() }
                     if chatData.count > 0 {
-                        // MARK: - roomid 수정하기
                         repository?.addDMChat(DMChatRoomPresentationModel(roomID: chatData[0].roomID, chat: chatData))
                         self.chatting.append(contentsOf: chatData)
                     }
