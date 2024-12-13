@@ -165,7 +165,7 @@ struct DMListView: View {
                             .padding(.vertical, 2)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(.green)
+                                    .fill(.primary)
                             )
                             .foregroundColor(.white)
                     }
