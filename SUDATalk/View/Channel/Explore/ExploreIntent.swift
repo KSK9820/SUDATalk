@@ -21,6 +21,7 @@ extension ExploreIntent: ChannelIntentProtocol {
         case onTapList
         case getUnreadChat(idx: Int, channelID: String)
         case resetUnreadChat(idx: Int)
+        case fetchRoomImage(url: String, idx: Int)
     }
     
     func action(_ action: Action) {
@@ -33,6 +34,8 @@ extension ExploreIntent: ChannelIntentProtocol {
             model?.getUnreadChatCount(idx: idx, channelID: channelID)
         case .resetUnreadChat(let idx):
             model?.resetUnreadChatCount(idx: idx)
+        case .fetchRoomImage(let url, let idx):
+            model?.fetchThumbnail(url, idx: idx)
         }
     }
 }

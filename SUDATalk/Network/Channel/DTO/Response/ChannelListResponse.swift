@@ -16,6 +16,6 @@ struct ChannelListResponse: Decodable {
     let createdAt: String
     
     func convertToModel() -> ChannelListPresentationModel {
-        .init(channelID: channel_id, name: name, description: description, coverImage: coverImage, ownerID: owner_id, createdAt: createdAt.convertToDate())
+        .init(channelID: channel_id, name: name, description: description, coverImageUrl: coverImage, ownerID: owner_id, createdAt: createdAt.convertToDate(), coverImage: nil)
     }
 }

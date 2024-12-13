@@ -15,7 +15,7 @@ struct ExploreView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                ForEach(Array(container.model.channelList.enumerated()), id: \.element) { index, item in
+                ForEach(Array(container.model.channelList.enumerated()), id: \.element.channelID) { index, item in
                     if item.isMyChannel {
                         NavigationLink {
                             NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
@@ -26,6 +26,10 @@ struct ExploreView: View {
                             listRow(item)
                                 .task {
                                     container.intent.action(.getUnreadChat(idx: index, channelID: item.channelID))
+                                    
+                                    if let imageUrl = item.coverImageUrl {
+                                        container.intent.action(.fetchRoomImage(url: imageUrl, idx: index))
+                                    }
                                 }
                         }
                     } else {
@@ -45,6 +49,10 @@ struct ExploreView: View {
                             }
                             .task {
                                 container.intent.action(.getUnreadChat(idx: index, channelID: item.channelID))
+                                
+                                if let imageUrl = item.coverImageUrl {
+                                    container.intent.action(.fetchRoomImage(url: imageUrl, idx: index))
+                                }
                             }
                     }
                 }
@@ -62,7 +70,13 @@ struct ExploreView: View {
     
     private func listRow(_ item: ChannelListPresentationModel) -> some View {
         HStack(alignment: .top) {
-            Images.tag
+            if let image = item.coverImage {
+                image
+                    .roundedImageStyle(width: 30, height: 30)
+            } else {
+                Images.userDefaultImage
+                    .roundedImageStyle(width: 30, height: 30)
+            }
             
             VStack(alignment: .leading) {
                 Text(item.name)

@@ -24,9 +24,9 @@ struct CreateChannelView: View {
                 .wrapToDefaultButton(active: container.binding(for: \.activeSubmit)) {
                     let input = ChannelInputModel(name: container.binding(for: \.channelName).wrappedValue, description: container.binding(for: \.description).wrappedValue, image: nil)
                     if container.model.isEditMode {
-                        container.intent.action(.editChannel(SampleTest.workspaceID, input: input))
+                        container.intent.action(.editChannel(UserDefaultsManager.shared.workspace.workspaceID, input: input))
                     } else {
-                        container.intent.action(.createChannel(SampleTest.workspaceID, input: input))
+                        container.intent.action(.createChannel(UserDefaultsManager.shared.workspace.workspaceID, input: input))
                     }
                 }
         }
