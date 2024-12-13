@@ -32,7 +32,7 @@ struct CustomTabView: View {
                     NavigationLazyView(DMListView.build(workspace: workspace))
                 }
                 .tabItem {
-                    Images.message
+                    Images.dm
                     Text("DM")
                 }
                 
@@ -69,6 +69,6 @@ struct CustomTabView: View {
                 }
             }
         }
-        .accentColor(Colors.textPrimary)
+        .accentColor(Colors.primary)
     }
 }
