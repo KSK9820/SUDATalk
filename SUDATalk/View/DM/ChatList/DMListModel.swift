@@ -91,8 +91,10 @@ extension DMListModel: DMListActionProtocol {
                     }
                 } receiveValue: { [weak self]  value in
                     guard let self else { return }
+                
+                    member = value.filter { $0.userID != UserDefaultsManager.shared.userProfile.userID }
+                        .map { $0.convertToModel() }
                     
-                    member = value.map { $0.convertToModel() }
                 }
                 .store(in: &cancellables)
         } catch {
@@ -106,7 +108,6 @@ extension DMListModel: DMListActionProtocol {
         } else {
             await createDMChatRoom(opponentID: opponentID)
         }
-        print(selectedChat)
     }
     
     private func createDMChatRoom(opponentID: String) async {
