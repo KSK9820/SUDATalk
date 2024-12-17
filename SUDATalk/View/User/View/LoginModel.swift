@@ -36,7 +36,7 @@ extension LoginModel: LoginActionsProtocol {
                     KeyChainManager.shared.save(key: .refreshToken, value: value.token.refreshToken)
                     
                     UserDefaultsManager.shared.userProfile = value.convertToModel()
-                    
+                    print(UserDefaultsManager.shared.workspace.workspaceID)
                     if let profileImage = value.profileImage {
                         loadProfileImage(profileImage)
                     }

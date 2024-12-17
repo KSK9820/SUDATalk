@@ -69,13 +69,13 @@ struct ExploreView: View {
     }
     
     private func listRow(_ item: ChannelListPresentationModel) -> some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .center) {
             if let image = item.coverImage {
                 image
-                    .roundedImageStyle(width: 30, height: 30)
+                    .roundedImageStyle(width: 50, height: 50)
             } else {
                 Images.userDefaultImage
-                    .roundedImageStyle(width: 30, height: 30)
+                    .roundedImageStyle(width: 50, height: 50)
             }
             
             VStack(alignment: .leading) {
@@ -86,6 +86,7 @@ struct ExploreView: View {
                 Text(item.description ?? "")
                     .textStyle(.caption)
                     .foregroundStyle(Colors.textSecondary)
+                    .multilineTextAlignment(.leading)
             }
             
             Spacer()

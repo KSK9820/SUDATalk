@@ -17,7 +17,7 @@ private struct CircleImageView: ViewModifier {
             .clipShape(Circle())
             .overlay(
                 Circle()
-                    .stroke(.black, lineWidth: 2)
+                    .stroke(Colors.primary, lineWidth: 2)
             )
     }
 }

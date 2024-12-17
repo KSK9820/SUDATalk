@@ -22,9 +22,9 @@ extension TextStyle {
         case .title1:
             return .system(size: 23, weight: .bold, design: .default)
         case .title2:
-            return .system(size: 14, weight: .bold, design: .default)
+            return .system(size: 15, weight: .bold, design: .default)
         case .title3:
-            return .system(size: 16, weight: .regular, design: .default)
+            return .system(size: 17, weight: .regular, design: .default)
         case .bodyBold:
             return .system(size: 13, weight: .bold, design: .default)
         case .body:
