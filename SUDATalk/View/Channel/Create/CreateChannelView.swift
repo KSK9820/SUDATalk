@@ -15,8 +15,8 @@ struct CreateChannelView: View {
 
     var body: some View {
         VStack {
-            textfieldRow("채널 이름", description: "채널명을 입력하세요.", value: container.binding(for: \.channelName))
-            textfieldRow("채널 설명", description: "채널을 설명하세요.", value: container.binding(for: \.description))
+            textfieldRow("GroupChat 이름", description: "GroupChat명을 입력하세요.", value: container.binding(for: \.channelName))
+            textfieldRow("GroupChat 설명", description: "GroupChat을 설명하세요.", value: container.binding(for: \.description))
             
             Spacer()
             
@@ -24,14 +24,14 @@ struct CreateChannelView: View {
                 .wrapToDefaultButton(active: container.binding(for: \.activeSubmit)) {
                     let input = ChannelInputModel(name: container.binding(for: \.channelName).wrappedValue, description: container.binding(for: \.description).wrappedValue, image: nil)
                     if container.model.isEditMode {
-                        container.intent.action(.editChannel(SampleTest.workspaceID, input: input))
+                        container.intent.action(.editChannel(UserDefaultsManager.shared.workspace.workspaceID, input: input))
                     } else {
-                        container.intent.action(.createChannel(SampleTest.workspaceID, input: input))
+                        container.intent.action(.createChannel(UserDefaultsManager.shared.workspace.workspaceID, input: input))
                     }
                 }
         }
         .padding()
-        .navigationTitle("채널 생성")
+        .navigationTitle("GroupChat 생성")
         .onChange(of: container.model.modifiedChannel) { newValue in
             if let newValue {
                 isModifiedData?(newValue)

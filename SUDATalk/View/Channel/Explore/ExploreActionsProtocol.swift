@@ -12,4 +12,5 @@ protocol ExploreActionsProtocol: AnyObject {
     func getUnreadChatCount(idx: Int, channelID: String)
     func resetUnreadChatCount(idx: Int)
     func toggleAlert()
+    func fetchThumbnail(_ url: String, idx: Int)
 }

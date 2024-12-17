@@ -13,7 +13,7 @@ struct ChannelSettingButtonsView: View {
     
     var body: some View {
         VStack {
-            Text("채널에서 나가기")
+            Text("GroupChat에서 나가기")
                 .wrapToBorderButton(Colors.textPrimary) {
                     if isOwner {
                         alertTypeHandler(.ownerExitChannel)
@@ -23,17 +23,17 @@ struct ChannelSettingButtonsView: View {
                 }
             
             if isOwner {
-                Text("채널 편집")
+                Text("GroupChat 편집")
                     .wrapToBorderButton(Colors.textPrimary) {
                         alertTypeHandler(.editChannel)
                     }
                 
-                Text("채널 관리자 변경")
+                Text("GroupChat 관리자 변경")
                     .wrapToBorderButton(Colors.textPrimary) {
                         alertTypeHandler(.changeAdmin)
                     }
                 
-                Text("채널 삭제")
+                Text("GroupChat 삭제")
                     .wrapToBorderButton(Colors.error) {
                         alertTypeHandler(.deleteChannel)
                     }

@@ -25,30 +25,30 @@ struct CustomTabView: View {
                 }
                 .tabItem {
                     Images.home
-                    Text("홈")
+                    Text("Home")
                 }
                 
                 NavigationStack {
                     NavigationLazyView(DMListView.build(workspace: workspace))
                 }
                 .tabItem {
-                    Images.message
+                    Images.dm
                     Text("DM")
                 }
                 
                 NavigationStack {
-                    NavigationLazyView(title: "채널 탐색", ExploreView.build(workspace.workspaceID))
+                    NavigationLazyView(title: "GroupChat 탐색", ExploreView.build(workspace.workspaceID))
                 }
                 .tabItem {
                     Images.profile
-                    Text("채널")
+                    Text("GroupChat")
                 }
                 
                 NavigationStack {
                 }
                 .tabItem {
                     Images.setting
-                    Text("설정")
+                    Text("Setting")
                 }
 
             }
@@ -69,6 +69,6 @@ struct CustomTabView: View {
                 }
             }
         }
-        .accentColor(Colors.textPrimary)
+        .accentColor(Colors.primary)
     }
 }

@@ -16,13 +16,6 @@ struct ChattingPresentationModel {
     var images: [Image?]
     var checkImages: Set<String>
 
-    enum CodingKeys: String, CodingKey {
-        case channelID = "channel_id"
-        case channelName
-        case chatID = "chat_id"
-        case content, createdAt, files, user
-    }
-    
     func convertToEntity() -> ChannelChatEntity {
         let chatEntity = ChannelChatEntity(
             channelID: channelID,
@@ -49,9 +42,4 @@ struct ChatUserPresentationModel {
     let userID, email, nickname: String
     let profileImageUrl: String?
     var profileImage: Image?
-
-    enum CodingKeys: String, CodingKey {
-        case userID = "user_id"
-        case email, nickname, profileImage
-    }
 }

@@ -14,13 +14,6 @@ struct ChannelPresentationModel {
     let ownerID, createdAt: String
     var channelMembers: [ChannelMemberPresentationModel]
 
-    enum CodingKeys: String, CodingKey {
-        case channelID = "channel_id"
-        case name, description, coverImage
-        case ownerID = "owner_id"
-        case createdAt, channelMembers
-    }
-    
     init(channelID: String, name: String, description: String?, coverImage: String?, ownerID: String, createdAt: String, channelMembers: [ChannelMemberPresentationModel]) {
         self.channelID = channelID
         self.name = name

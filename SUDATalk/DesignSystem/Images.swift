@@ -28,4 +28,5 @@ enum Images {
     static let detail = Image("detail")
     static let userDefaultImage = Image("user_default")
     static let logo = Image("sudatalk_logo")
+    static let dm = Image("dm")
 }

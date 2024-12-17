@@ -20,7 +20,7 @@ struct HomeView: View {
                 
                 Divider()
                 
-                SectionWrap(title: "채널", content: ChannelSection(workSpaceID: container.model.workspace.workspaceID), isExpanded: $isChannelExpanded)
+                SectionWrap(title: "GroupChat", content: ChannelSection(workSpaceID: container.model.workspace.workspaceID), isExpanded: $isChannelExpanded)
                 
                 Divider()
                 
@@ -90,7 +90,7 @@ struct ChannelSection: View {
             HStack {
                 Images.plus
                 
-                Text("채널추가")
+                Text("GroupChat 추가")
                     .textStyle(.title2)
                     .foregroundStyle(Colors.textSecondary)
                 
@@ -101,10 +101,10 @@ struct ChannelSection: View {
             ActionSheet(
                 title: Text("옵션을 선택하세요"),
                 buttons: [
-                    .default(Text("채널 추가")) {
+                    .default(Text("GroupChat 추가")) {
                         showSheet = true
                     },
-                    .default(Text("채널 탐색")) {
+                    .default(Text("GroupChat 탐색")) {
                         moveNextView = true
                     },
                     .cancel()
@@ -112,7 +112,7 @@ struct ChannelSection: View {
             )
         }
         .navigationDestination(isPresented: $moveNextView) {
-            NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID))
+            NavigationLazyView(title: "GroupChat 탐색", ExploreView.build(workSpaceID))
         }
         .sheet(isPresented: $showSheet) {
             NavigationLazyView(CreateChannelView.build() { _ in
@@ -151,10 +151,10 @@ struct DMSection: View {
                 ActionSheet(
                     title: Text("옵션을 선택하세요"),
                     buttons: [
-                        .default(Text("채널 추가")) {
+                        .default(Text("GroupChat 추가")) {
                             showSheet = true
                         },
-                        .default(Text("채널 탐색")) {
+                        .default(Text("GroupChat 탐색")) {
                             moveNextView = true
                         },
                         .cancel()
@@ -162,7 +162,7 @@ struct DMSection: View {
                 )
             }
             .navigationDestination(isPresented: $moveNextView) {
-                NavigationLazyView(title: "채널 탐색", ExploreView.build(workSpaceID))
+                NavigationLazyView(title: "GroupChat 탐색", ExploreView.build(workSpaceID))
             }
             .sheet(isPresented: $showSheet) {
                 NavigationLazyView(CreateChannelView.build() { _ in

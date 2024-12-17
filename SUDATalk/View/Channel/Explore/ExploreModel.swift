@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import SwiftUI
 
 final class ExploreModel: ObservableObject, ExploreModelStateProtocol {
     private var cancellables: Set<AnyCancellable> = []
@@ -39,7 +39,7 @@ extension ExploreModel: ExploreActionsProtocol {
                         print(failure)
                     }
                 }, receiveValue: { [weak self] returnedChannelItems, returnedMyChannelItems in
-                    self?.channelList = returnedChannelItems.map { item in
+                    self?.channelList = returnedChannelItems.enumerated().map { (index, item) in
                         DispatchQueue.main.async {
                             self?.repository?.createChannel(item.convertToModel())
                         }
@@ -47,7 +47,8 @@ extension ExploreModel: ExploreActionsProtocol {
                          if returnedMyChannelItems.contains(where: { $0.channelID == item.channelID }) {
                              newItem.isMyChannel = true
                          }
-                         return newItem
+
+                        return newItem
                      }
                 })
                 .store(in: &cancellables)
@@ -86,5 +87,27 @@ extension ExploreModel: ExploreActionsProtocol {
     
     func resetUnreadChatCount(idx: Int) {
         channelList[idx].unreadsCount = 0
+    }
+    
+    func fetchThumbnail(_ url: String, idx: Int) {
+        do {
+            let request = try ChannelRouter.fetchImage(url: url).makeRequest()
+            
+            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print(error)
+                    }
+                } receiveValue: { [weak self] value in
+                    guard let self else { return }
+                    
+                    if let uiImage = UIImage(data: value) {
+                        self.channelList[idx].coverImage = Image(uiImage: uiImage)
+                    }
+                }
+                .store(in: &cancellables)
+        } catch {
+            print(error)
+        }
     }
 }
