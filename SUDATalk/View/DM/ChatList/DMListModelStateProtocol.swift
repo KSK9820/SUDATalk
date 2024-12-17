@@ -12,4 +12,5 @@ protocol DMListModelStateProtocol: AnyObject {
     var member: [WorkspaceMemeberPresentationModel] { get }
     var dmlist: [DMRoomInfoPresentationModel] { get }
     var selectedChat: DMRoomInfoPresentationModel? { get }
+    var isSelected: Bool { get set }
 }

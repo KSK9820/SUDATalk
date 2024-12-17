@@ -23,6 +23,7 @@ final class DMListModel: ObservableObject, DMListModelStateProtocol {
     @Published var member: [WorkspaceMemeberPresentationModel] = []
     @Published var dmlist: [DMRoomInfoPresentationModel] = []
     @Published var selectedChat: DMRoomInfoPresentationModel?
+    @Published var isSelected = false
 }
 
 extension DMListModel: DMListActionProtocol {
@@ -104,6 +105,7 @@ extension DMListModel: DMListActionProtocol {
     func setSelectedChat(opponentID: String) async {
         if chatMemeberId.contains(opponentID) {
             selectedChat = dmlist.filter { $0.user.userID == opponentID }[0]
+            isSelected = true
         } else {
             await createDMChatRoom(opponentID: opponentID)
         }
@@ -124,6 +126,7 @@ extension DMListModel: DMListActionProtocol {
                     dmlist.append(value.convertToModel())
                     chatMemeberId.insert(opponentID)
                     selectedChat = value.convertToModel()
+                    isSelected = true
                 }
                 .store(in: &cancellables)
         } catch {

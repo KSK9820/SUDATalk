@@ -154,6 +154,7 @@
 		53D0C8262CD213ED00034179 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53D0C8252CD213ED00034179 /* Assets.xcassets */; };
 		53D0C8292CD213ED00034179 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53D0C8282CD213ED00034179 /* Preview Assets.xcassets */; };
 		53D0C8302CD214DA00034179 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 53D0C82F2CD214DA00034179 /* .gitignore */; };
+		53D601592D1186390084AECF /* CreateDMQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D601582D1186390084AECF /* CreateDMQuery.swift */; };
 		53DA0C0C2CF7925600564938 /* DMListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DA0C0B2CF7925600564938 /* DMListModel.swift */; };
 		53DA0C0E2CF7926000564938 /* DMListIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DA0C0D2CF7926000564938 /* DMListIntentHandler.swift */; };
 		53DA0C102CF7926700564938 /* DMListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53DA0C0F2CF7926700564938 /* DMListView.swift */; };
@@ -332,6 +333,7 @@
 		53D0C8282CD213ED00034179 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		53D0C82F2CD214DA00034179 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		53D0C8322CD215A100034179 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		53D601582D1186390084AECF /* CreateDMQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDMQuery.swift; sourceTree = "<group>"; };
 		53DA0C0B2CF7925600564938 /* DMListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListModel.swift; sourceTree = "<group>"; };
 		53DA0C0D2CF7926000564938 /* DMListIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListIntentHandler.swift; sourceTree = "<group>"; };
 		53DA0C0F2CF7926700564938 /* DMListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListView.swift; sourceTree = "<group>"; };
@@ -766,6 +768,7 @@
 			isa = PBXGroup;
 			children = (
 				5357ADD32CD92B2000FB391A /* DMChatQuery.swift */,
+				53D601582D1186390084AECF /* CreateDMQuery.swift */,
 			);
 			path = Query;
 			sourceTree = "<group>";
@@ -1128,6 +1131,7 @@
 				48486B4C2CE787D4006C668E /* ChannelResponse.swift in Sources */,
 				48486B462CE6FD8C006C668E /* ChannelSettingModelStateProtocol.swift in Sources */,
 				484F52DE2CDB5E3A008F20D3 /* ChannelChatEntity.swift in Sources */,
+				53D601592D1186390084AECF /* CreateDMQuery.swift in Sources */,
 				48088C052CD73402008DC165 /* ChannelChattingModelStateProtocol.swift in Sources */,
 				533EDAEE2D0180CD00FD701E /* WorkspaceModelStateProtocol.swift in Sources */,
 				48088BAA2CD4A7D7008DC165 /* RawDataFetchable.swift in Sources */,
