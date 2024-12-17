@@ -107,7 +107,13 @@ struct WorkspaceView: View {
                 VStack(alignment: .leading) {
                     Text(workspace.name)
                         .bold()
-                    Text(workspace.createdAt.toString(style: .yymmddDot) ?? "")
+                    if let description = workspace.description {
+                        Text(description)
+                            .lineLimit(1)
+                            .font(.footnote)
+                            .foregroundStyle(.gray)
+                            
+                    }
                 }
                 
                 Spacer()

@@ -94,7 +94,6 @@ extension DMListModel: DMListActionProtocol {
                 
                     member = value.filter { $0.userID != UserDefaultsManager.shared.userProfile.userID }
                         .map { $0.convertToModel() }
-                    
                 }
                 .store(in: &cancellables)
         } catch {
@@ -125,6 +124,26 @@ extension DMListModel: DMListActionProtocol {
                     dmlist.append(value.convertToModel())
                     chatMemeberId.insert(opponentID)
                     selectedChat = value.convertToModel()
+                }
+                .store(in: &cancellables)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func fetchThumbnail(_ url: String, idx: Int) {
+        do {
+            let request = try DMRouter.fetchImage(url: url).makeRequest()
+            
+            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
+                .sink { completion in
+                    if case .failure(let error) = completion {
+                        print(error)
+                    }
+                } receiveValue: { [weak self] value in
+                    guard let self else { return }
+                    
+                    member[idx].profileImagefile = value
                 }
                 .store(in: &cancellables)
         } catch {

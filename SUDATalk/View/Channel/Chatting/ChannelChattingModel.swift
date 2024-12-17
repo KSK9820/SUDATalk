@@ -80,7 +80,6 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         }
     }
     
-
     func sendMessage(workspaceID: String, channelID: String, input: ChannelChatInputModel) {
         let imageData = ImageConverter.shared.convertToData(images: input.images)
         let query = ChatQuery(content: input.content, files: imageData)

@@ -23,6 +23,7 @@ extension Image {
     func roundedImageStyle(width: CGFloat, height: CGFloat) -> some View {
         self
             .resizable()
+            .scaledToFill()
             .modifier(RoundedSquareImageView(width: width, height: height, cornerRadius: 8))
     }
 }

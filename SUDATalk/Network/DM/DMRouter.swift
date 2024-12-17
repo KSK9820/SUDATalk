@@ -66,7 +66,7 @@ extension DMRouter {
                 path: ["workspaces", workspaceID, "members"],
                 header: EndPointHeader.authorization.header
             ).asURLRequest()
-    case .createChat(let workspaceID, let opponentID):
+        case .createChat(let workspaceID, let opponentID):
             return try EndPoint(
                 method: .post,
                 path: ["workspaces", workspaceID, "dms"],

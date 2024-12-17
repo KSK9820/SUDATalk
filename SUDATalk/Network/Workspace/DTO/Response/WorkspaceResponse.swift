@@ -29,6 +29,7 @@ extension WorkspaceResponse {
     func converToModel() -> WorkspacePresentationModel {
         .init(workspaceID: self.workspaceID,
               name: self.name,
+              description: self.description,
               coverImage: self.coverImage,
               ownerID: self.ownerID,
               createdAt: self.createdAt.convertToDate())
@@ -37,6 +38,7 @@ extension WorkspaceResponse {
     func convertToDomainModel() -> WorkspaceDomainModel {
         .init(workspaceID: self.workspaceID,
               name: self.name,
+              description: self.description,
               coverImage: self.coverImage,
               ownerID: self.ownerID,
               createdAt: self.createdAt.convertToDate())

@@ -12,25 +12,27 @@ struct HomeDMView: View {
     @StateObject private var container: Container<HomeDMIntentHandler, HomeDMModelStateProtocol>
     
     var body: some View {
-        LazyVStack(spacing: 12) {
-            ForEach(Array(container.model.dmlist.enumerated()), id: \.offset) { index, value in
-                NavigationLink {
-                    NavigationLazyView(DMChatView.build(value))
-                } label: {
-                    HomeDMListView(dm: value)
-                        .task {
-                            if let profileURL = value.user.profileImage {
-                                if value.user.profileImageData == nil {
-                                    container.intent.handle(intent: .getProfileImage(url: profileURL, idx: index))
-                                    container.intent.handle(intent: .getUnreadChat(idx: index, roomID: value.roomID))
+        ScrollView {
+            LazyVStack(spacing: 12) {
+                ForEach(Array(container.model.dmlist.enumerated()), id: \.offset) { index, value in
+                    NavigationLink {
+                        NavigationLazyView(DMChatView.build(value))
+                    } label: {
+                        HomeDMListView(dm: value)
+                            .task {
+                                if let profileURL = value.user.profileImage {
+                                    if value.user.profileImageData == nil {
+                                        container.intent.handle(intent: .getProfileImage(url: profileURL, idx: index))
+                                        container.intent.handle(intent: .getUnreadChat(idx: index, roomID: value.roomID))
+                                    }
                                 }
                             }
-                        }
+                    }
                 }
             }
-        }
-        .task {
-            container.intent.handle(intent: .getDMList)
+            .task {
+                container.intent.handle(intent: .getDMList)
+            }
         }
     }
     

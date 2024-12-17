@@ -12,7 +12,15 @@ struct WorkspaceMemeberPresentationModel {
     let email: String
     let nickname: String
     let profileImage: String?
-    let profileImagefile: Data?
+    var profileImagefile: Data?
+    
+    var profileSwiftUIImage: Image {
+        if let image = profileImagefile,
+           let uiimage = UIImage(data: image) {
+            return Image(uiImage: uiimage)
+        }
+        return Images.userDefaultImage
+    }
     
     init(userID: String, email: String, nickname: String, profileImage: String?, profileImagefile: Data? = nil) {
         self.userID = userID

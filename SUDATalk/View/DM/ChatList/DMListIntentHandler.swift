@@ -27,6 +27,8 @@ final class DMListIntentHandler: IntentProtocol {
             Task {
                 await model.setSelectedChat(opponentID: opponentID)
             }
+        case .getProfileImage(let url, let idx):
+            model.fetchThumbnail(url, idx: idx)
         }
     }
 }
@@ -36,4 +38,5 @@ enum DMListIntent: IntentType {
     case getWorkspaceMember
     case getUnreadChat(idx: Int, roomID: String)
     case selectedMember(opponentID: String)
+    case getProfileImage(url: String, idx: Int)
 }
