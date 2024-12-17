@@ -71,7 +71,7 @@ extension DMRouter {
                 method: .post,
                 path: ["workspaces", workspaceID, "dms"],
                 header: EndPointHeader.authorization.header,
-                parameter: [URLQueryItem(name: "opponent_id", value: opponentID)]
+                body: CreateDMQuery(opponentID: opponentID)
             ).asURLRequest()
         }
     }

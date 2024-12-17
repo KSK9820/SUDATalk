@@ -24,9 +24,7 @@ struct DMListView: View {
                     ForEach(Array(container.model.member.enumerated()), id: \.element.userID) { index, member in
                         DMMemeberListView(member)
                             .onTapGesture {
-                                isNavigating = false
                                 container.intent.handle(intent: .selectedMember(opponentID: member.userID))
-                                isNavigating = true
                             }
                             .task {
                                 if let profileImage = member.profileImage,
@@ -36,7 +34,7 @@ struct DMListView: View {
                             }
                     }
                 }
-                .navigationDestination(isPresented: $isNavigating) {
+                .navigationDestination(isPresented: $container.model.isSelected) {
                     if let chatRoom = container.model.selectedChat {
                         NavigationLazyView(DMChatView.build(chatRoom))
                     }
@@ -111,14 +109,6 @@ struct DMListView: View {
         
         var body: some View {
             VStack(alignment: .center, spacing: 4) {
-//                if let profileData = member.profileImagefile,
-//                   let profileImage = UIImage(data: profileData) {
-//                    Image(uiImage: profileImage)
-//                        .roundedImageStyle(width: 40, height: 40)
-//                } else {
-//                    Images.userDefaultImage
-//                        .roundedImageStyle(width: 40, height: 40)
-//                }
                 member.profileSwiftUIImage
                     .roundedImageStyle(width: 40, height: 40)
                 Text(member.nickname)
