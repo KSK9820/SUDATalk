@@ -26,6 +26,8 @@ struct ChannelChattingView: View {
         })
         
         .navigationTitle(container.model.channel?.name ?? "")
+        .navigationBarTitleDisplayMode(.inline)
+                .wrapToBackButton()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink {

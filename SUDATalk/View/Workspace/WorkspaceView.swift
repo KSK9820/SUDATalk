@@ -17,7 +17,8 @@ struct WorkspaceView: View {
                 .bold()
                 .padding(.top, 60)
                 .padding(.bottom, 20)
-                .frame(width: ContentSize.workspaceScreen.size.width)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20)
                 .background(Colors.lightGray)
             
             switch container.model.workspaceStatus {
