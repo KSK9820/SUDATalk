@@ -41,4 +41,3 @@ struct ChannelPresentationModel {
         self.channelMembers = []
     }
 }
-

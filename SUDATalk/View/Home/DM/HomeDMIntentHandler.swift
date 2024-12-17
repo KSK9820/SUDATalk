@@ -32,4 +32,3 @@ enum HomeDMIntent: IntentType {
     case getProfileImage(url: String, idx: Int)
     case getUnreadChat(idx: Int, roomID: String)
 }
-
