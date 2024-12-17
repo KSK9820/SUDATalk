@@ -43,10 +43,10 @@ struct HomeDMView: View {
             HStack(spacing: 12, content: {
                 if let uiimage = dm.user.profileImageData {
                     Image(uiImage: uiimage)
-                        .roundedImageStyle(width: 30, height: 30)
+                        .roundedImageStyle(width: 50, height: 50)
                 } else {
                     Images.userDefaultImage
-                        .roundedImageStyle(width: 30, height: 30)
+                        .roundedImageStyle(width: 50, height: 50)
                 }
                 
                 Text(dm.user.nickname)
@@ -58,11 +58,12 @@ struct HomeDMView: View {
                     Text("\(dm.unreadChat.count)")
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
+                        .textStyle(.body)
                         .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.primary)
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Colors.primary)
                         )
-                        .foregroundColor(.white)
+                        .foregroundColor(Colors.white)
                 }
             })
         }
