@@ -55,8 +55,8 @@ struct SectionWrap<Content: View>: View {
             }, label: {
                 HStack {
                     Text(title)
-                        .textStyle(.title2)
-                        .foregroundColor(.black)
+                        .textStyle(.title1)
+                        .foregroundColor(Colors.textSecondary)
                     
                     Spacer()
                     
