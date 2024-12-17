@@ -143,8 +143,14 @@ struct DMListView: View {
                         .bold()
                     if let lastChat = roomInfo.unreadChat.last?.content {
                         Text(lastChat)
+                            .font(.callout)
+                            .lineLimit(1)
+                            .multilineTextAlignment(.leading)
                     } else if let lastChat = roomInfo.lastChat?.content {
                         Text(lastChat)
+                            .font(.callout)
+                            .lineLimit(1)
+                            .multilineTextAlignment(.leading)
                     }
                 }
                 
@@ -153,11 +159,11 @@ struct DMListView: View {
                 VStack(alignment: .trailing) {
                     if let lastChat = roomInfo.unreadChat.last {
                         Text(lastChat.createdAt.toMessageDate())
-                            .font(.callout)
+                            .font(.footnote)
                             .foregroundStyle(.gray)
                     } else if let lastChat = roomInfo.lastChat?.createdAt {
                         Text(lastChat.toMessageDate())
-                            .font(.callout)
+                            .font(.footnote)
                             .foregroundStyle(.gray)
                     }
                     
@@ -165,11 +171,12 @@ struct DMListView: View {
                         Text("\(roomInfo.unreadChat.count)")
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
+                            .textStyle(.body)
                             .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(.primary)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Colors.primary)
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(Colors.white)
                     }
                 }
             }
