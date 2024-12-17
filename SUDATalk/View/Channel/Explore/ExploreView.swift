@@ -37,7 +37,7 @@ struct ExploreView: View {
                             .onTapGesture {
                                 container.intent.action(.onTapList)
                             }
-                            .alert("채널 참여", isPresented: container.binding(for: \.showAlert)) {
+                            .alert("GroupChat 참여", isPresented: container.binding(for: \.showAlert)) {
                                 NavigationLink {
                                     NavigationLazyView(ChannelChattingView.build(item, workspaceID: container.model.workspaceID))
                                         .onAppear {

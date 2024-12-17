@@ -51,7 +51,7 @@ struct ChannelSettingView: View {
             }
             .padding()
         }
-        .navigationTitle("채널 설정")
+        .navigationTitle("GroupChat 설정")
         .onAppear {
             container.intent.action(.viewOnAppear)
         }
@@ -62,7 +62,7 @@ struct ChannelSettingView: View {
                     container.intent.action(.edittedChannel(value))
                 }
             } else if container.model.selectedSheet == .changeAdmin {
-                //채널 관리자 변경 뷰
+                //GroupChat 관리자 변경 뷰
             }
         }
         .onChange(of: container.model.goToList) { newValue in
