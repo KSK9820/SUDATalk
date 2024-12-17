@@ -19,24 +19,33 @@ struct DMListView: View {
             Divider()
                 .padding(.vertical, 8)
             
-            LazyHStack(spacing: 12) {
-                ForEach(container.model.member, id: \.userID) { member in
-                    DMMemeberListView(member)
-                        .onTapGesture {
-                            isNavigating = false
-                            container.intent.handle(intent: .selectedMember(opponentID: member.userID))
-                            isNavigating = true
-                        }
+            ScrollView(.horizontal, content: {
+                LazyHStack(spacing: 12) {
+                    ForEach(Array(container.model.member.enumerated()), id: \.element.userID) { index, member in
+                        DMMemeberListView(member)
+                            .onTapGesture {
+                                isNavigating = false
+                                container.intent.handle(intent: .selectedMember(opponentID: member.userID))
+                                isNavigating = true
+                            }
+                            .task {
+                                if let profileImage = member.profileImage,
+                                   member.profileImagefile == nil {
+                                    container.intent.handle(intent: .getProfileImage(url: profileImage, idx: index))
+                                }
+                            }
+                    }
                 }
-            }
-            .navigationDestination(isPresented: $isNavigating) {
-                if let chatRoom = container.model.selectedChat {
-                    NavigationLazyView(DMChatView.build(chatRoom))
+                .navigationDestination(isPresented: $isNavigating) {
+                    if let chatRoom = container.model.selectedChat {
+                        NavigationLazyView(DMChatView.build(chatRoom))
+                    }
                 }
-            }
-            .padding(20)
-            .frame(maxHeight: 60)
-            
+                .padding(20)
+                .frame(maxHeight: 70)
+            })
+            .scrollIndicators(.hidden)
+          
             Divider()
                 .padding(.vertical, 8)
             
@@ -54,7 +63,7 @@ struct DMListView: View {
             }
             Spacer()
         }
-        .task {
+        .onAppear {
             container.intent.handle(intent: .getDMList)
             container.intent.handle(intent: .getWorkspaceMember)
         }
@@ -102,16 +111,19 @@ struct DMListView: View {
         
         var body: some View {
             VStack(alignment: .center, spacing: 4) {
-                if let profileData = member.profileImagefile,
-                   let profileImage = UIImage(data: profileData) {
-                    Image(uiImage: profileImage)
-                        .roundedImageStyle(width: 40, height: 40)
-                } else {
-                    Images.userDefaultImage
-                        .roundedImageStyle(width: 40, height: 40)
-                }
+//                if let profileData = member.profileImagefile,
+//                   let profileImage = UIImage(data: profileData) {
+//                    Image(uiImage: profileImage)
+//                        .roundedImageStyle(width: 40, height: 40)
+//                } else {
+//                    Images.userDefaultImage
+//                        .roundedImageStyle(width: 40, height: 40)
+//                }
+                member.profileSwiftUIImage
+                    .roundedImageStyle(width: 40, height: 40)
                 Text(member.nickname)
-            }
+                    .textStyle(.caption)
+                }
         }
     }
     
