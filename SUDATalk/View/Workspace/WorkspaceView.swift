@@ -108,12 +108,12 @@ struct WorkspaceView: View {
                 VStack(alignment: .leading) {
                     Text(workspace.name)
                         .bold()
+                        .foregroundStyle(Colors.black)
                     if let description = workspace.description {
                         Text(description)
                             .lineLimit(1)
                             .font(.footnote)
                             .foregroundStyle(.gray)
-                            
                     }
                 }
                 

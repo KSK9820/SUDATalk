@@ -21,7 +21,7 @@ struct HomeDMView: View {
                         HomeDMListView(dm: value)
                             .task {
                                 if let profileURL = value.user.profileImage {
-                                    if value.user.profileImageData == nil {
+                                    if value.user.profileSwiftUIImage == nil {
                                         container.intent.handle(intent: .getProfileImage(url: profileURL, idx: index))
                                         container.intent.handle(intent: .getUnreadChat(idx: index, roomID: value.roomID))
                                     }
@@ -34,6 +34,7 @@ struct HomeDMView: View {
                 container.intent.handle(intent: .getDMList)
             }
         }
+        .scrollIndicators(.hidden)
     }
     
     private struct HomeDMListView: View {
@@ -41,16 +42,17 @@ struct HomeDMView: View {
         
         var body: some View {
             HStack(spacing: 12, content: {
-                if let uiimage = dm.user.profileImageData {
-                    Image(uiImage: uiimage)
+                if let profileImage = dm.user.profileSwiftUIImage {
+                    profileImage
                         .roundedImageStyle(width: 50, height: 50)
                 } else {
                     Images.userDefaultImage
                         .roundedImageStyle(width: 50, height: 50)
                 }
-                
+
                 Text(dm.user.nickname)
                     .bold()
+                    .foregroundStyle(Colors.black)
                 
                 Spacer()
                 
@@ -63,7 +65,7 @@ struct HomeDMView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Colors.primary)
                         )
-                        .foregroundColor(Colors.white)
+                        .foregroundStyle(Colors.white)
                 }
             })
         }

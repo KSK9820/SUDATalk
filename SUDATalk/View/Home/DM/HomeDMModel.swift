@@ -56,9 +56,7 @@ extension HomeDMModel: HomeDMActionProtocol {
                 } receiveValue: { [weak self] value in
                     guard let self else { return }
                     
-                    if let uiImage = UIImage(data: value) {
-                        self.dmlist[idx].user.profileImageData = uiImage
-                    }
+                    self.dmlist[idx].user.profileImageData = value
                 }
                 .store(in: &cancellables)
         } catch {

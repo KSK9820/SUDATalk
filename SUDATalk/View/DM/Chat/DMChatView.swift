@@ -52,7 +52,7 @@ struct DMChatView: View {
                 LazyVStack {
                     ForEach(container.model.chatting.indices, id: \.self) { index in
                         let item = container.model.chatting[index]
-                        let profileImage = item.user.userID == container.model.dmRoomInfo.user.userID ? container.model.opponentProfileImage : container.model.myProfileImage
+                        let profileImage = item.user.userID == container.model.dmRoomInfo.user.userID ? container.model.opponentProfileImage ?? Images.userDefaultImage : container.model.myProfileImage
                         
                         ChatCellView(image: profileImage, userName: item.user.nickname, message: item.content, images: item.convertedImage, time: item.createdAt.toMessageDate())
                             .task {
