@@ -11,7 +11,7 @@ import SwiftUI
 protocol DMChatModelStateProtocol: AnyObject {
     var dmRoomInfo: DMRoomInfoPresentationModel { get }
     var chatting: [DMChatPresentationModel] { get }
-    var opponentProfileImage: Image { get }
+    var opponentProfileImage: Image? { get }
     var myProfileImage: Image { get }
     var dmInput: DMChatSendPresentationModel { get set }
 }

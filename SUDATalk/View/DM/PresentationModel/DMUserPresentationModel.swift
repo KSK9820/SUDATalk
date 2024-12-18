@@ -6,12 +6,20 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 
 struct DMUserPresentationModel {
     let userID, email, nickname: String
     var profileImage: String?
-    var profileImageData: UIImage?
+    var profileImageData: Data?
+    var profileSwiftUIImage: Image? {
+        guard let imageData = profileImageData,
+              let uiimage = UIImage(data: imageData) else {
+            return nil
+        }
+        
+        return Image(uiImage: uiimage)
+    }
     
     init() {
         self.userID = ""
@@ -21,7 +29,7 @@ struct DMUserPresentationModel {
         self.profileImageData = nil
     }
     
-    init(userID: String, email: String, nickname: String, profileImage: String?, profileImageData: UIImage?) {
+    init(userID: String, email: String, nickname: String, profileImage: String?, profileImageData: Data?) {
         self.userID = userID
         self.email = email
         self.nickname = nickname

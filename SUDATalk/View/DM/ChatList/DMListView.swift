@@ -20,7 +20,7 @@ struct DMListView: View {
                 .padding(.vertical, 8)
             
             ScrollView(.horizontal, content: {
-                LazyHStack(spacing: 12) {
+                HStack(spacing: 12) {
                     ForEach(Array(container.model.member.enumerated()), id: \.element.userID) { index, member in
                         DMMemeberListView(member)
                             .onTapGesture {
@@ -141,16 +141,19 @@ struct DMListView: View {
                 VStack(alignment: .leading) {
                     Text(roomInfo.user.nickname)
                         .bold()
+                        .foregroundStyle(Colors.black)
                     if let lastChat = roomInfo.unreadChat.last?.content {
                         Text(lastChat)
                             .font(.callout)
                             .lineLimit(1)
                             .multilineTextAlignment(.leading)
+                            .foregroundStyle(Colors.black)
                     } else if let lastChat = roomInfo.lastChat?.content {
                         Text(lastChat)
                             .font(.callout)
                             .lineLimit(1)
                             .multilineTextAlignment(.leading)
+                            .foregroundStyle(Colors.black)
                     }
                 }
                 

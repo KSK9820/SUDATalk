@@ -20,12 +20,8 @@ final class DMChatModel: ObservableObject, DMChatModelStateProtocol {
     @Published var chatting: [DMChatPresentationModel] = []
     
     var dmRoomInfo: DMRoomInfoPresentationModel
-    var opponentProfileImage: Image {
-        if let profileImageData = dmRoomInfo.user.profileImageData {
-            Image(uiImage: profileImageData)
-        } else {
-            Images.userDefaultImage
-        }
+    var opponentProfileImage: Image? {
+        dmRoomInfo.user.profileSwiftUIImage
     }
     var myProfileImage: Image {
         if let profileImageData = UserDefaultsManager.shared.userProfile.profileImageData,
@@ -39,6 +35,7 @@ final class DMChatModel: ObservableObject, DMChatModelStateProtocol {
     init(_ dmRoomInfo: DMRoomInfoPresentationModel) {
         self.dmRoomInfo = dmRoomInfo
         self.socketManager = SocketIOManager(event: DMSocketEvent(roomID: dmRoomInfo.roomID))
+        fetchProfileImage(dmRoomInfo.user.profileImage)
     }
 }
 
@@ -211,7 +208,7 @@ extension DMChatModel: DMChatModelActionProtocol {
                         }
                         
                         dmRoomInfo.user.profileImage = url
-                        dmRoomInfo.user.profileImageData = UIImage(data: value)
+                        dmRoomInfo.user.profileImageData = value
                     }
                     .store(in: &cancellables)
             } catch {
@@ -219,7 +216,7 @@ extension DMChatModel: DMChatModelActionProtocol {
             }
         } else {
             dmRoomInfo.user.profileImage = nil
-            dmRoomInfo.user.profileImageData = UIImage.userDefault
+            dmRoomInfo.user.profileImageData = nil
         }
     }
 }

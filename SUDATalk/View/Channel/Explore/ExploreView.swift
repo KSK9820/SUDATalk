@@ -82,6 +82,7 @@ struct ExploreView: View {
                 Text(item.name)
                     .textStyle(.title2)
                     .foregroundColor(Colors.textPrimary)
+                    .padding(.bottom, 1)
                 
                 Text(item.description ?? "")
                     .textStyle(.caption)
@@ -100,7 +101,7 @@ struct ExploreView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(Colors.primary)
                     )
-                    .foregroundColor(Colors.white)
+                    .foregroundStyle(Colors.white)
             }
         }
         .padding(.horizontal)

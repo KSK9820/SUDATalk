@@ -164,7 +164,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
         let request = try ChannelRouter.fetchImage(url: url).makeRequest()
         
         return try await withCheckedThrowingContinuation { continuation in
-            _ = networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
+            networkManager.getCachingImageDataTaskPublisher(request: request, key: url)
                 .sink { completion in
                     if case .failure(let error) = completion {
                         continuation.resume(throwing: error)
@@ -172,6 +172,7 @@ extension ChannelChattingModel: ChannelChattingActionsProtocol {
                 } receiveValue: { value in
                     continuation.resume(returning: value)
                 }
+                .store(in: &cancellables)
         }
     }
     
