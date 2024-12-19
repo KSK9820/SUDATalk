@@ -8,7 +8,7 @@
 ## **프로젝트 환경**
 - 인원: iOS 개발자 2명, backend 개발자 1명
 
-<table style="width: 100%; border-collapse: collapse; table-layout: fixed; text-align: center;">
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
   <thead>
     <tr>
       <th style="background-color: #f4f4f4; width: 50%;">김수경</th>
@@ -16,12 +16,12 @@
     </tr>
   </thead>
   <tbody>
-     <tr>
+    <tr>
       <td>
-        <img src="https://avatars.githubusercontent.com/u/68066104?v=4" style="width: 200px; display: block; margin: 0 auto;">
+        <div align="center"><img src="https://avatars.githubusercontent.com/u/68066104?v=4" style="width: 200px;"></div>
       </td>
       <td>
-        <img src="https://avatars.githubusercontent.com/u/85213387?v=4" style="width: 200px; display: block; margin: 0 auto;">
+        <div align="center"><img src="https://avatars.githubusercontent.com/u/85213387?v=4" style="width: 200px;"></div>
       </td>
     </tr>
     <tr>
@@ -33,6 +33,7 @@
     </tr>
   </tbody>
 </table>
+
 
 - 기간: 2024년 10월 30일 - 12월 13일(6주)
 - 최소 버전: iOS 16 +
@@ -65,12 +66,12 @@
  
 <br/>
 
+
 ## 화면
 | 홈 뷰 | 실시간 채팅(DM) | 이미지 송신(그룹챗) |
 |-|-|-|
-|![simulator_screenshot_24AA8EF3-6FEC-442E-A30A-A28DDCC4FC1F](https://github.com/user-attachments/assets/c68cc949-2b0b-4fb6-aae5-1a478977ed9a)|![홈뷰](https://github.com/user-attachments/assets/6480d117-8ad9-445e-8d42-73528aa2bb78)|![디엠3](https://github.com/user-attachments/assets/bb4bf07b-9cbf-4fb9-97d0-b8da1c7b16d3)|![그룹챗_이미지](https://github.com/user-attachments/assets/e5f812b6-c386-4df9-bc2e-b58534ad90fc)|
+|![홈뷰](https://github.com/user-attachments/assets/6480d117-8ad9-445e-8d42-73528aa2bb78)|![디엠3](https://github.com/user-attachments/assets/bb4bf07b-9cbf-4fb9-97d0-b8da1c7b16d3)|![그룹챗_이미지](https://github.com/user-attachments/assets/e5f812b6-c386-4df9-bc2e-b58534ad90fc)|
 | 워크스페이스 | 이미지 송수신(2개) | 그룹챗 설정 |
-|-|-|-|
 |![simulator_screenshot_D047B1FD-1BD8-4779-823E-57769D82A645](https://github.com/user-attachments/assets/52d47dbc-3dd4-476b-9ebb-46104054fc60)|![그룹챗뷰2](https://github.com/user-attachments/assets/133b747e-c81f-489e-ac1f-655750dc739f)|![그룹챗설정2](https://github.com/user-attachments/assets/8272e5c3-17f2-4ab2-850b-1f2adcae0bb9)|
 
 <br/>
@@ -111,7 +112,7 @@
     - 이를 통해 Combine의 **Publisher** 값을 **continuation**으로 변환할 수 있었습니다. 기존 네트워크 통신 코드에서 **sink**를 통해 이벤트를 처리하는 부분을 **`withCheckedThrowingContinuation`** 으로 바꿔 **async/await** 기반의 코드로 변환했습니다.
     - 이후, 변환된 네트워크 코드를 **`withTaskGroup`** 과 **`for await in`** 구문을 사용하여 여러 데이터를 병렬로 처리했습니다. 이로써 네트워크 병렬 처리의 가독성과 효율성을 모두 개선했습니다.
 - **채팅 로직**
-  ![image](https://github.com/user-attachments/assets/bd37f96f-a73a-48d3-ab65-cfc5eb5054af)
+  ![Readme Image](https://github.com/user-attachments/assets/d5e334d1-cd47-44c9-8c2b-feeef62f49d3)
     1. 로컬 데이터베이스에 저장된 채팅 정보를 읽습니다.
     2. 저장된 채팅 정보의 마지막 채팅을 바탕으로 읽지 않은 채팅을 서버에 요청합니다.
         - 로컬 데이터베이스에 저장된 채팅 정보가 없다면 이전의 채팅 내역 전체를 서버에 요청합니다.
