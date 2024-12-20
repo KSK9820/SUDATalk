@@ -77,7 +77,7 @@
 <br/>
 
 ## 아키택처
-![image](https://github.com/user-attachments/assets/37bd8adf-3e1b-49c0-9a61-7d0878c9bc8d)
+![Untitled FigJam jpg](https://github.com/user-attachments/assets/011c0233-4b6e-4181-92de-6b138343153d)
 
 
 - `Container`: `Model`과 `Intent`를 연결하는 중심 역할
