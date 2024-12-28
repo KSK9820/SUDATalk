@@ -90,18 +90,22 @@
 ## 기술 스택 상세
 
 - **네트워크(HTTP 통신)**
-    - **Router Pattern과 URLSession을 사용한 Custom TargetType 활용**
-        - Endpoint의 구성요소의 제약 사항을 명세하는 `EndpointConfigurable` 프로토콜을 사용했습니다.
-            - 이 프로토콜은 `Endpoint`의 요소를 명세하는 용도로, `URLRequest`를 직접 생성하지 않도록 설계하여 **SOLID의 단일 책임 원칙(SRP)**을 준수했습니다.
-        - 그러나 `EndpointConfigurable`의 구성 요소를 활용해 URLRequest를 생성할 필요가 있으므로, `URLRequestConvertible` 프로토콜을 채택하여 `URLRequest`를 생성할 수 있도록 구조화했습니다.
-        - Login, Workspace, GroupChat, Dm은 개별 라우터를 생성해서 개별 View의 Model에서 네트워크 통신을 수행합니다.
-    - **에러 처리**
+    - 네트워크 통신의 **구성 요소와 URLRequst의 분리**
+      - `EndpointConfigurable` 프로토콜을 사용하여 각 `Endpoint`의 구성 요소를 명세합니다.
+      - `EndPointConfigurable` 프로토콜이 **`URLRequestConvertible`** 프로토콜을 별도로 채택하여 네트워크 요청을 수행할 준비를 하는 `URLRequest`를 생성합니다.
+    
+      → 이를 통해 **SOLID의 단일 책임 원칙(SRP)** 을 준수하며, 이를 통해 코드의 유지보수성과 확장성을 높였습니다.
+    
+   - Login, Workspace, GroupChat, DM 등 각 기능별로 **개별 Router를 생성하여 관리**
+     - 각 가능의 네트워크 요청을 라우터 별로 독립적으로 모듈화하였습니다.
+     - 공통 라우팅 로직을 캡슐화하여 재사용성을 높이고, 새로운 라우트 추가 시 기존 코드에 영향을 최소화할 수 있도록 확장성이 높은 구조를 유지할 수 있게 하였습니다.
+  - **에러 처리**
         - [Response의 SatausCode가 400으로 네트워크 통신이 실패하였을 때 Error만 리턴하는 dataTaskPublisher를 사용하지 않고 `dataTask`를 사용해서 **HTTPResponse를 디코딩하여 NetworkAPIError로 매핑**하여 에러 케이스를 분류합니다.](https://github.com/KSK9820/SUDATalk/pull/9/commits/a2c4c7cb400d659f6c3f1b2cf2beff4216d6fb61#diff-45539c40eab836d56e05ea596d32ea6439c9a6205aded10b84ab0627566e45e5)
-    - **토큰 갱신**
+  - **토큰 갱신**
         - NetworkAPIError 중 토큰 만료 오류(E02, E05)가 발생할 경우, UserDefaults에 저장되어 있는 refreshToken을 사용하여, accessToken을 갱신한 후, 재통신을 수행합니다.
         - [토큰 갱신 트러블 슈팅](https://github.com/KSK9820/SUDATalk/pull/12)
 - **Socket 통신**
-    - GroupChat과 DM의 URL 상세 주소 및 처리할 이벤트가 다르기 때문에 이를 SocektEventHandler로 분리하여 **SRP**를 준수하고자 하였습니다.
+    - `SocketEventProtocol`은 소켓의 구성 요소을 명세하는 프로토콜이고, 이를 채택 한 `SocketEvent` 객체들(DM, GroupChat)은 각 소켓에 필요한 **상세 주소**와 **처리할 이벤트들**을 명확하게 분리하여 관리합니다. 이러한 구조는 **단일 책임 원칙(SRP)** 을 충실히 준수하는 방식으로, 각 객체가 자신에게 주어진 책임을 명확히 분리하여 구현하도록 돕습니다.
     - Socket 통신 URL 구성요소의 제약 사항을 명세하는 `SocketEnvironmentConfigurable` 프로토콜을 사용했습니다.
     - 소켓 이벤트와 핸들러를 가지고 있는 `SocketEventProtocol` 을 준수하는 GrouptChat과 DM 이벤트 객체가 있고, 객체 내부의 핸들러는 `SocketEventHandler` 프로토콜의 기본 구현인 decode를 사용해서 수신된 이벤트의 결과를 `SocketIoManager`에 전달합니다.
     - SocketIOManager는 소켓 통신 설정 및 디코드를 해서 View에 전달합니다.
@@ -124,9 +128,13 @@
 - **영속성 관리**
     - `KeyChain`을 사용하여 암호화된 형태로 민감한 정보인 token을 저장합니다.
     - `UserDefaults`를 사용하여 민감하지 않은 workspace 또는 profile 정보를 저장합니다.
-- **이미지 캐싱**
-    - 이미지 데이터를 요청을 할 때 URL값을 Key값으로 `CacheManger` → `FileManager` 에 저장된 값을 찾고, 없는 경우 네트워크 순서로 이미지를 로드합니다.
-    - 네트워크에서 로드한 이미지는 CacheManager와 FileManager에 저장하여 `빠른 입출력 속도`와 `네트워크 연결이 없는 상황`에서도 이미지를 확인할 수 있습니다.
+- **이미지 저장 및 처리**
+  - **NSCache**를 활용한 메모리 캐싱
+    - 네트워크 요청으로 불러온 이미지를 `NSCache`에 저장하여, 동일한 요청 시 네트워크 사용을 줄이고 빠르게 이미지를 조회할 수 있도록 구현했습니다.
+    - 앱 실행 중 반복적인 이미지 로드를 효율적으로 처리합니다.
+  - **FileManager**를 활용한 디스크 저장
+    - 네트워크가 유실되었을 때에도 이미지를 조회할 수 있도록, `FileManager`를 사용하여 이미지를 디스크에 저장합니다.
+    - 캐시된 이미지는 앱 재실행 후에도 유지되며, 지속성을 제공합니다.
 - **NavigationLazyView를 사용하여 초기 뷰 로드 최적화**
     - NavigationLazyView를 사용해서 init 시점에 불필요한 메모리 소비를 줄이고 뷰를 사용하는 시점에 rendering을 해서 앱의 성능을 향상시킬 수 있습니다.
 
@@ -136,3 +144,23 @@
 - [토큰 갱신과 Value 값의 KeyChainManager](https://github.com/KSK9820/SUDATalk/pull/12)
 - [비동기로 응답받는 시점의 문제](https://github.com/KSK9820/SUDATalk/pull/30)
 - [이미지 로드시 이중 해제 문제](https://github.com/KSK9820/SUDATalk/pull/31)
+
+<br/>
+
+## 회고
+- 이미지 처리의 최적화
+    - 기존에는 메모리 캐싱과 FileManager를 사용한 디스크 저장을 사용하고 있다. 이 중 디스크 저장의 경우 이미지를 디스크에 저장하고 불러오는 과정은 디스크 캐싱의 기본적인 기능만 구현되어 있는데
+        - 디스크에 저장된 데이터의 만료 시간, 최대 용량 등을 관리하는 등의 캐싱 정책
+        - 오래된 데이터 삭제, 정렬 등의 저장된 이미지의 관리하고 디스크 저장 구조를 개선하는 등의 최적화
+      
+    → 이러한 개선을 통해 이미지를 더욱 효율적으로 처리하고, 사용자가 빠르고 안정적으로 이미지를 조회할 수 있도록 하여 **더 나은 사용자 경험**을 제공하도록 개선하고 싶다.
+    
+- Decoder와 네트워크
+    - 처음에는 이미지와 같이 decoder가 필요하지 않는 경우가 있기 때문에 decoder를 갖고 있는 객체와 갖고 있지 않은 객체로 분리하여 필요한 기능만을 갖게끔 설계하려고 했습니다. 
+    그러나 이후 서버 문서를 확인하면서, 서버에서 제공하는 에러 코드가 데이터에 포함이 되어 있기 때문에 이를 디코드하여 처리해야 한다는 요구사항을 발견했습니다. 이로 인해 결국 모든 네트워크 객체가 디코더를 갖도록 수정해야 했습니다.
+    - **배운 점**
+      - **서버 설계를 기반으로 한 구조 설계의 중요성**: 원하는 구조를 구현하는 것만큼 중요한 점은, **서버의 설계**와 일치하는 방식으로 클라이언트 구조를 설계하는 것입니다.
+      - **유연한 설계 필요성**: 프로젝트 초기에 지나치게 이상적인 설계를 고수하기보다는, 실제 시스템의 동작 방식을 반영할 수 있도록 설계를 유연하게 변경할 필요가 있다는 점을 배웠습니다.
+      
+    → 이번 경험을 통해 서버와 클라이언트 간의 **상호작용**을 고려한 설계가 얼마나 중요한지, 그리고 그에 따라 구조를 수정할 수 있는 유연성을 갖추는 것이 중요하다는 교훈을 얻었습니다.
+
