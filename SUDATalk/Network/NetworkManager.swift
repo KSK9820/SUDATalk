@@ -9,12 +9,12 @@ import Combine
 import Foundation
 
 final class NetworkManager: RawDataFetchable, DecodedDataFetchable {
-    private let session: URLSession
+    private let session: URLSessionProtocol
     private let decoder = DecodedService()
     private let authInterceptor = AuthInterceptor()
     private var cancellables: Set<AnyCancellable> = []
     
-    init(session: URLSession = URLSession.shared) {
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
 
