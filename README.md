@@ -99,6 +99,9 @@
    - Login, Workspace, GroupChat, DM 등 각 기능별로 **개별 Router를 생성하여 관리**
      - 각 가능의 네트워크 요청을 라우터 별로 독립적으로 모듈화하였습니다.
      - 공통 라우팅 로직을 캡슐화하여 재사용성을 높이고, 새로운 라우트 추가 시 기존 코드에 영향을 최소화할 수 있도록 확장성이 높은 구조를 유지할 수 있게 하였습니다.
+    
+   - MockURLSession을 사용한 네트워크 테스트
+     - `URLSessionProtocol`을 따르는 `MockURLSession`을 `NetworkManager`에 DIP 하여 테스트 가능한 네트워크 매니저를 생성했습니다. 이를 통해 실제 네트워크 통신 없이 mock data를 사용하여 네트워크 요청에 대한 정확한 응답 처리 및 예외 처리가 제대로 이루어지는지 검증할 수 있었습니다.
   - **에러 처리**
         - [Response의 SatausCode가 400으로 네트워크 통신이 실패하였을 때 Error만 리턴하는 dataTaskPublisher를 사용하지 않고 `dataTask`를 사용해서 **HTTPResponse를 디코딩하여 NetworkAPIError로 매핑**하여 에러 케이스를 분류합니다.](https://github.com/KSK9820/SUDATalk/pull/9/commits/a2c4c7cb400d659f6c3f1b2cf2beff4216d6fb61#diff-45539c40eab836d56e05ea596d32ea6439c9a6205aded10b84ab0627566e45e5)
   - **토큰 갱신**
