@@ -30,4 +30,22 @@ extension WorkspaceRouter {
             ).asURLRequest()
         }
     }
+    
+    func makeURL() throws -> URL {
+        switch self {
+        case .workspaceList:
+            return try EndPoint(
+                method: .get,
+                path: ["workspaces"],
+                header: EndPointHeader.authorization.header
+            ).asURL()
+        case .fetchImage(let url):
+            let boundary = "Boundary-\(UUID().uuidString)"
+            return try EndPoint(
+                method: .get,
+                path: url.split(separator: "/").map { String($0) },
+                header: EndPointHeader.multipartType(boundary: boundary).header
+            ).asURL()
+        }
+    }
 }
