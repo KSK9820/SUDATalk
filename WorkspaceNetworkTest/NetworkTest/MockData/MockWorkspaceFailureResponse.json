@@ -1,0 +1,45 @@
+[
+  {
+    "name": "next.js",
+    "description": "로고 간지나지",
+    "coverImage": "/static/workspaceCoverImages/1734073530868.png",
+    "owner_id": "ba18fb56-94ae-46c2-9c17-1c9cde84d9f3",
+    "createdAt": "2024-12-13T07:05:30.874Z"
+  },
+  {
+    "name": "자바스크립트할줄알아?리액트해",
+    "description": "웹이랑 모바일 둘 다 잡아야지",
+    "coverImage": "/static/workspaceCoverImages/1734072680438.png",
+    "owner_id": "ba18fb56-94ae-46c2-9c17-1c9cde84d9f3",
+    "createdAt": "2024-12-13T06:51:20.442Z"
+  },
+  {
+    "name": "플러터업뎃넘빨라",
+    "description": "예?어제업데이트했는데오늘또업데이트됐어요??",
+    "coverImage": "/static/workspaceCoverImages/1734072518845.png",
+    "owner_id": "ba18fb56-94ae-46c2-9c17-1c9cde84d9f3",
+    "createdAt": "2024-12-13T06:48:38.850Z"
+  },
+  {
+    "name": "요즘은코틀린이지",
+    "description": "자바?백엔드에요?",
+    "coverImage": "/static/workspaceCoverImages/1734072385373.jpeg",
+    "owner_id": "ba18fb56-94ae-46c2-9c17-1c9cde84d9f3",
+    "createdAt": "2024-12-13T06:46:25.383Z"
+  },
+  {
+    "name": "자바를자바라",
+    "description": "자바?코틀린하세여 ㅋ",
+    "coverImage": "/static/workspaceCoverImages/1734072298747.png",
+    "owner_id": "ba18fb56-94ae-46c2-9c17-1c9cde84d9f3",
+    "createdAt": "2024-12-13T06:44:58.765Z"
+  },
+  {
+    "name": "스위프트짱",
+    "description": "외스위프트안헤?나만할거야하지마",
+    "coverImage": "/static/workspaceCoverImages/1734072196160.png",
+    "owner_id": "ba18fb56-94ae-46c2-9c17-1c9cde84d9f3",
+    "createdAt": "2024-12-13T06:43:16.171Z"
+  }
+]
+

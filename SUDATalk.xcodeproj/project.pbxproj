@@ -81,6 +81,7 @@
 		484F53002CE0E90E008F20D3 /* ChannelListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F52FF2CE0E90E008F20D3 /* ChannelListResponse.swift */; };
 		484F53022CE10B86008F20D3 /* ChannelInputModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F53012CE10B85008F20D3 /* ChannelInputModel.swift */; };
 		484F53122CE1E741008F20D3 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484F53112CE1E741008F20D3 /* AuthInterceptor.swift */; };
+		488689D42D268FC900535BF5 /* MockWorkspaceFailureResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = 488689D32D268FC900535BF5 /* MockWorkspaceFailureResponse.json */; };
 		488E3BFD2CD9011100B1E7F6 /* CreateChannelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3BFC2CD9011100B1E7F6 /* CreateChannelView.swift */; };
 		488E3BFF2CD901B300B1E7F6 /* CreateChannelIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3BFE2CD901B300B1E7F6 /* CreateChannelIntent.swift */; };
 		488E3C012CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E3C002CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift */; };
@@ -276,6 +277,7 @@
 		484F52FF2CE0E90E008F20D3 /* ChannelListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelListResponse.swift; sourceTree = "<group>"; };
 		484F53012CE10B85008F20D3 /* ChannelInputModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelInputModel.swift; sourceTree = "<group>"; };
 		484F53112CE1E741008F20D3 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		488689D32D268FC900535BF5 /* MockWorkspaceFailureResponse.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockWorkspaceFailureResponse.json; sourceTree = "<group>"; };
 		488E3BFC2CD9011100B1E7F6 /* CreateChannelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelView.swift; sourceTree = "<group>"; };
 		488E3BFE2CD901B300B1E7F6 /* CreateChannelIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelIntent.swift; sourceTree = "<group>"; };
 		488E3C002CD9021700B1E7F6 /* CreateChannelModelStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChannelModelStateProtocol.swift; sourceTree = "<group>"; };
@@ -1018,6 +1020,7 @@
 			children = (
 				53D2301E2D24567A00DE5F3E /* MockWorkspaceResponse.json */,
 				53D230202D2456D400DE5F3E /* JSONLoader.swift */,
+				488689D32D268FC900535BF5 /* MockWorkspaceFailureResponse.json */,
 			);
 			path = MockData;
 			sourceTree = "<group>";
@@ -1157,6 +1160,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				488689D42D268FC900535BF5 /* MockWorkspaceFailureResponse.json in Resources */,
 				53D2301F2D24567A00DE5F3E /* MockWorkspaceResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

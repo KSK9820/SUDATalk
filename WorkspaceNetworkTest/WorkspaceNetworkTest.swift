@@ -76,4 +76,52 @@ final class WorkspaceNetworkTest: XCTestCase {
         XCTAssertEqual(result, expectation)
     }
 
+    func test_Workspace의_디코딩을_실패할_경우() {
+        let request = WorkspaceRouter.workspaceList
+        
+        // given
+        let mockResponse: MockURLSession.Response = {
+            let url = try! request.makeURL()
+            let data = JSONLoader.loadData(filename: "MockWorkspaceFailureResponse")
+            let successResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            
+            return (data: data, urlResponse: successResponse, error: nil)
+        }()
+        
+        let mockURLSession = MockURLSession(response: mockResponse)
+        sut = NetworkManager(session: mockURLSession)
+        
+        // when
+        var result: [WorkspaceResponse]?
+        var receivedError: Error?
+        
+        sut.getDecodedDataTaskPublisher(try! request.makeRequest(), model: [WorkspaceResponse].self)
+            .sink { completion in
+                
+                if case .failure(let error) = completion {
+                    print(error)
+                    receivedError = error
+                    
+                    if let decodingError = error as? DecodingError {
+                        switch decodingError {
+                        case .keyNotFound(let key, let context):
+                            XCTAssertEqual(key.stringValue, "workspace_id")
+                            XCTAssertNotNil(context.codingPath)
+                        default:
+                            XCTFail("Unexpected decoding error")
+                        }
+                    } else {
+                        XCTFail("Expected DecodingError, but got \(error)")
+                    }
+                }
+            } receiveValue: { value in
+                result = value
+            }
+            .store(in: &cancellables)
+        
+        // then
+        XCTAssertNil(result)
+        XCTAssertNotNil(receivedError)
+        XCTAssertTrue(receivedError is DecodingError, "Error should be of type DecodingError")
+    }
 }
