@@ -100,13 +100,15 @@
      - 각 가능의 네트워크 요청을 라우터 별로 독립적으로 모듈화하였습니다.
      - 공통 라우팅 로직을 캡슐화하여 재사용성을 높이고, 새로운 라우트 추가 시 기존 코드에 영향을 최소화할 수 있도록 확장성이 높은 구조를 유지할 수 있게 하였습니다.
     
-   - MockURLSession을 사용한 네트워크 테스트
-     - `URLSessionProtocol`을 따르는 `MockURLSession`을 `NetworkManager`에 DIP 하여 테스트 가능한 네트워크 매니저를 생성했습니다. 이를 통해 실제 네트워크 통신 없이 mock data를 사용하여 네트워크 요청에 대한 정확한 응답 처리 및 예외 처리가 제대로 이루어지는지 검증할 수 있었습니다.
   - **에러 처리**
         - [Response의 SatausCode가 400으로 네트워크 통신이 실패하였을 때 Error만 리턴하는 dataTaskPublisher를 사용하지 않고 `dataTask`를 사용해서 **HTTPResponse를 디코딩하여 NetworkAPIError로 매핑**하여 에러 케이스를 분류합니다.](https://github.com/KSK9820/SUDATalk/pull/9/commits/a2c4c7cb400d659f6c3f1b2cf2beff4216d6fb61#diff-45539c40eab836d56e05ea596d32ea6439c9a6205aded10b84ab0627566e45e5)
   - **토큰 갱신**
         - NetworkAPIError 중 토큰 만료 오류(E02, E05)가 발생할 경우, UserDefaults에 저장되어 있는 refreshToken을 사용하여, accessToken을 갱신한 후, 재통신을 수행합니다.
         - [토큰 갱신 트러블 슈팅](https://github.com/KSK9820/SUDATalk/pull/12)
+
+- **MockURLSession을 사용한 네트워크 테스트**
+    - `URLSessionProtocol`을 따르는 `MockURLSession`을 `NetworkManager`에 DIP 하여 테스트 가능한 네트워크 매니저를 생성했습니다. 이를 통해 실제 네트워크 통신 없이 mock data를 사용하여 네트워크 요청에 대한 정확한 응답 처리 및 예외 처리가 제대로 이루어지는지 검증할 수 있었습니다.    
+
 - **Socket 통신**
     - `SocketEventProtocol`은 소켓의 구성 요소을 명세하는 프로토콜이고, 이를 채택 한 `SocketEvent` 객체들(DM, GroupChat)은 각 소켓에 필요한 **상세 주소**와 **처리할 이벤트들**을 명확하게 분리하여 관리합니다. 이러한 구조는 **단일 책임 원칙(SRP)** 을 충실히 준수하는 방식으로, 각 객체가 자신에게 주어진 책임을 명확히 분리하여 구현하도록 돕습니다.
     - Socket 통신 URL 구성요소의 제약 사항을 명세하는 `SocketEnvironmentConfigurable` 프로토콜을 사용했습니다.
